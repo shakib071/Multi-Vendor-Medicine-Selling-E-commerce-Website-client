@@ -3,8 +3,22 @@ import logoImg  from '../../assets/medicalLogo.png'
 import { NavLink } from 'react-router';
 import { GiHamburgerMenu } from "react-icons/gi";
 import UserAvatar from '../../assets/UserAVatar.png'
+import { Link } from 'react-router';
+import useAuth from '../../Hooks/getAuth/useAuth';
 
 const NavBar = () => {
+
+    const {logOut} = useAuth();
+
+    const handleLogout = () => {
+        logOut()
+        .then(() => {
+
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    }
     return (
        <div className='bg-white border-b-2  py-1 md:py-0 sticky top-0 z-50 rounded-lg shadow-xl'>
 
@@ -24,16 +38,16 @@ const NavBar = () => {
                    
                     <NavLink to='/'><p className='font-semibold'>Cart</p></NavLink>
                     
-                    <NavLink to='/'>
+                    <div>
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="font-semibold">Languages</div>
                             <ul tabIndex={0} className="dropdown-content menu text-xl font-semibold bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                <li>Bangla</li>
-                                <li>English</li>
+                                <li><Link>Bangla</Link></li>
+                                <li><Link>English</Link></li>
                                 
                             </ul>
                         </div>
-                    </NavLink>
+                    </div>
                     <NavLink to='/'><p className='font-semibold'>Join US</p></NavLink>
         
             
@@ -42,22 +56,22 @@ const NavBar = () => {
                 </div>
                 <div className='hidden md:flex  gap-2 items-center md:gap-3 lg:gap-5 text-[11px] sm:text-lg md:text-xl lg:text-2xl xl:text-[29px] 2xl:text-[33px]'>
                    
-                    <NavLink to='/'><p className='font-semibold'>Join US</p></NavLink>
+                    <NavLink to='/login'><p className='font-semibold'>Join US</p></NavLink>
                     
                     
-                    <NavLink>
+                    <div>
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="font-semibold">
                                 <img className='w-17' src={UserAvatar} alt="" />
                             </div>
                             <ul tabIndex={0} className="dropdown-content text-xl font-semibold menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                <li>Update Profile</li>
-                                <li>Dashboard</li>
-                                <li>Dashboard</li>
+                                <li><Link>Update Profile</Link></li>
+                                <li><Link>Dashboard</Link></li>
+                                <li onClick={handleLogout}><Link>Logout</Link></li>
                                 
                             </ul>
                         </div>
-                    </NavLink>
+                    </div>
                     
                     
 
