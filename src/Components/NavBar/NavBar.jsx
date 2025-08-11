@@ -2,6 +2,7 @@ import React from 'react';
 import logoImg  from '../../assets/medicalLogo.png'
 import { NavLink } from 'react-router';
 import { GiHamburgerMenu } from "react-icons/gi";
+import UserAvatar from '../../assets/UserAVatar.png'
 
 const NavBar = () => {
     return (
@@ -22,7 +23,17 @@ const NavBar = () => {
                     <NavLink to='available-cars'><p className='font-semibold'>Shop</p></NavLink>
                    
                     <NavLink to='/'><p className='font-semibold'>Cart</p></NavLink>
-                    <NavLink to='/'><p className='font-semibold'>Languages</p></NavLink>
+                    
+                    <NavLink to='/'>
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="font-semibold">Languages</div>
+                            <ul tabIndex={0} className="dropdown-content menu text-xl font-semibold bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                <li><NavLink>Bangla</NavLink></li>
+                                <li><NavLink>English</NavLink></li>
+                                
+                            </ul>
+                        </div>
+                    </NavLink>
                     <NavLink to='/'><p className='font-semibold'>Join US</p></NavLink>
         
             
@@ -34,7 +45,19 @@ const NavBar = () => {
                     <NavLink to='/'><p className='font-semibold'>Join US</p></NavLink>
                     
                     
-                    <NavLink><p className='font-semibold'>Profile</p></NavLink>
+                    <NavLink>
+                        <div className="dropdown dropdown-end">
+                            <div tabIndex={0} role="button" className="font-semibold">
+                                <img className='w-17' src={UserAvatar} alt="" />
+                            </div>
+                            <ul tabIndex={0} className="dropdown-content text-xl font-semibold menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                <li><NavLink>Update Profile</NavLink></li>
+                                <li><NavLink>Dashboard</NavLink></li>
+                                <li><NavLink>Dashboard</NavLink></li>
+                                
+                            </ul>
+                        </div>
+                    </NavLink>
                     
                     
 
