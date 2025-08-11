@@ -25,7 +25,7 @@ Implement tanstack query in all the data fetching functionality (For GET method 
 Main Tasks
 
 1. HOME PAGE:
-    Navbar has a logo + website name, Home, Shop, cart icon, languages dropdown, and Join US (when not logged in) button. If the user is logged in, his/her profile picture should appear on the navbar. 
+    Navbar has a  Join US (when not logged in) button. If the user is logged in, his/her profile picture should appear on the navbar. 
     If the user clicks on the profile picture,  a drop-down will appear with the following items: Update Profile, Dashboard, and Logout button.
 
     Slider Section: Here you will see all the Product slides added by the Admin in the Manage banner Advertise. (note: admin can add and remove product slides from his dashboard). (see details in admin dashboard page instruction)
@@ -35,7 +35,6 @@ Main Tasks
     Discount products: here the user will see all the product cards that have discounts. This section will be a draggable multiple-card slider. (look at Swiperjs slider demos)
 
     Make two extra sections related to your website.
-    Footer:  Make a Relevant footer for the website
 
 
 2. User Registration and Authentication:

@@ -28,8 +28,8 @@ const NavBar = () => {
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="font-semibold">Languages</div>
                             <ul tabIndex={0} className="dropdown-content menu text-xl font-semibold bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                <li><NavLink>Bangla</NavLink></li>
-                                <li><NavLink>English</NavLink></li>
+                                <li>Bangla</li>
+                                <li>English</li>
                                 
                             </ul>
                         </div>
@@ -51,9 +51,9 @@ const NavBar = () => {
                                 <img className='w-17' src={UserAvatar} alt="" />
                             </div>
                             <ul tabIndex={0} className="dropdown-content text-xl font-semibold menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                <li><NavLink>Update Profile</NavLink></li>
-                                <li><NavLink>Dashboard</NavLink></li>
-                                <li><NavLink>Dashboard</NavLink></li>
+                                <li>Update Profile</li>
+                                <li>Dashboard</li>
+                                <li>Dashboard</li>
                                 
                             </ul>
                         </div>
