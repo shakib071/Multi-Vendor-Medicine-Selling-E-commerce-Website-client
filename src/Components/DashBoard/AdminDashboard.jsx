@@ -5,6 +5,8 @@ import AdminHome from "./AdminComponents/AdminHome";
 import AdminManageUser from "./AdminComponents/AdminManageUser";
 import AdminManageCategory from './AdminComponents/AdminManageCategory';
 import AdminPaymentManage from './AdminComponents/AdminPaymentManage';
+import AdminSalesReport from "./AdminComponents/AdminSalesReport";
+import AdminManageAd from "./AdminComponents/AdminManageAd";
 
 
 const NavButton = ({ icon, label, active, setActive, collapsed }) => (
@@ -57,8 +59,8 @@ export default function AdminDashboard() {
         {active === "Manage Users" && <div className="text-2xl font-bold"><AdminManageUser></AdminManageUser></div>}
         {active === "Manage Category" && <div className="text-2xl font-bold"><AdminManageCategory></AdminManageCategory></div>}
         {active === "Payment management" && <div className="text-2xl font-bold"><AdminPaymentManage></AdminPaymentManage></div>}
-        {active === "Sales Report" && <h1 className="text-2xl font-bold">Sales Report</h1>}
-        {active === "Manage Advertise" && <h1 className="text-2xl font-bold">Manage banner Advertise</h1>}
+        {active === "Sales Report" && <div className="text-2xl font-bold"><AdminSalesReport></AdminSalesReport></div>}
+        {active === "Manage Advertise" && <div className="text-2xl font-bold"><AdminManageAd></AdminManageAd></div>}
       </div>
     </div>
   );
