@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { FaHome, FaPills, FaMoneyBill, FaBullhorn, FaBars } from "react-icons/fa";
+import SalerHome from "./SalerComponet/SalerHome";
+import ManageMedicine from "./SalerComponet/ManageMedicine";
+import SalerPaymentHistory from "./SalerComponet/SalerPaymentHistory";
+import SalerAdvertisement from "./SalerComponet/SalerAdvertisement";
 
 const NavButton = ({ icon, label, active, setActive, collapsed }) => (
   <button
@@ -14,7 +18,7 @@ const NavButton = ({ icon, label, active, setActive, collapsed }) => (
 );
 
 export default function SalerDashboard() {
-  const [active, setActive] = useState("home");
+  const [active, setActive] = useState("Home");
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -36,6 +40,7 @@ export default function SalerDashboard() {
 
         {/* Navigation */}
         <nav className="flex flex-col gap-2 px-2">
+          
           <NavButton icon={<FaHome  className="text-[#03e003cc]"/>} label="Home" active={active} setActive={setActive} collapsed={collapsed} />
           <NavButton icon={<FaPills className="text-[#e0037ccc]"/>} label="Manage Medicines" active={active} setActive={setActive} collapsed={collapsed} />
           <NavButton icon={<FaMoneyBill className="text-[#03b4e0cc]"/>} label="Payment History" active={active} setActive={setActive} collapsed={collapsed} />
@@ -45,10 +50,10 @@ export default function SalerDashboard() {
 
       {/* Main content */}
       <div className="flex-1 p-6 bg-gray-100">
-        {active === "Home" && <h1 className="text-2xl font-bold">Home</h1>}
-        {active === "Manage Medicines" && <h1 className="text-2xl font-bold">Manage Medicines</h1>}
-        {active === "Payment History" && <h1 className="text-2xl font-bold">Payment History</h1>}
-        {active === "Advertisement" && <h1 className="text-2xl font-bold">Ask For Advertisement</h1>}
+        {active === "Home" && <div className="text-2xl font-bold"><SalerHome></SalerHome></div> }
+        {active === "Manage Medicines" && <div className="text-2xl font-bold"><ManageMedicine></ManageMedicine></div>}
+        {active === "Payment History" && <div className="text-2xl font-bold"><SalerPaymentHistory></SalerPaymentHistory></div>}
+        {active === "Advertisement" && <div className="text-2xl font-bold"><SalerAdvertisement></SalerAdvertisement></div>}
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const NavButton = ({ icon, label, active, setActive, collapsed }) => (
 );
 
 export default function UserDashboard() {
-  const [active, setActive] = useState("home");
+  const [active, setActive] = useState("Home");
   const [collapsed, setCollapsed] = useState(false);
 
   return (
