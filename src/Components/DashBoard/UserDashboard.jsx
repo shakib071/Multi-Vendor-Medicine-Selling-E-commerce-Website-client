@@ -1,55 +1,52 @@
-import { useState } from "react";
-import { FaHome, FaPills, FaMoneyBill, FaBullhorn, FaBars } from "react-icons/fa";
+import React from 'react';
 
-const NavButton = ({ icon, label, active, setActive, collapsed }) => (
-  <button
-    onClick={() => setActive(label)}
-    className={`flex items-center w-full p-3 rounded-md transition ${
-      active === label ? "bg-blue-500 text-white" : "text-gray-200 hover:bg-blue-400"
-    }`}
-  >
-    {icon}
-    {!collapsed && <span className="ml-3">{label}</span>}
-  </button>
-);
+const dummyPayments = [
+  { id: 1, transactionId: 'TXN123456', amount: 100, status: 'Paid', date: '2025-08-12' },
+  { id: 2, transactionId: 'TXN654321', amount: 50, status: 'Pending', date: '2025-08-10' },
+  { id: 3, transactionId: 'TXN789012', amount: 75, status: 'Paid', date: '2025-08-08' },
+];
 
-export default function UserDashboard() {
-  const [active, setActive] = useState("Home");
-  const [collapsed, setCollapsed] = useState(false);
-
+const UserDashboard = () => {
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <div
-        className={`${
-          collapsed ? "w-16" : "w-56"
-        } bg-[#3d4a5a] text-white flex flex-col transition-all duration-300`}
-      >
-        {/* Top section with toggle */}
-        <div className="flex items-center justify-between p-3">
-          {!collapsed && <h1 className="font-bold text-lg">Dashboard</h1>}
-          <FaBars
-            className="cursor-pointer"
-            onClick={() => setCollapsed(!collapsed)}
-          />
-        </div>
-
-        {/* Navigation */}
-        <nav className="flex flex-col gap-2 px-2">
-          <NavButton icon={<FaHome  className="text-[#03e003cc]"/>} label="Home" active={active} setActive={setActive} collapsed={collapsed} />
-          <NavButton icon={<FaPills className="text-[#e0037ccc]"/>} label="Manage Medicines" active={active} setActive={setActive} collapsed={collapsed} />
-          <NavButton icon={<FaMoneyBill className="text-[#03b4e0cc]"/>} label="Payment History" active={active} setActive={setActive} collapsed={collapsed} />
-          <NavButton icon={<FaBullhorn className="text-[#e00307cc]"/>} label="Advertisement" active={active} setActive={setActive} collapsed={collapsed} />
-        </nav>
-      </div>
-
-      {/* Main content */}
-      <div className="flex-1 p-6 bg-gray-100">
-        {active === "Home" && <h1 className="text-2xl font-bold">Home</h1>}
-        {active === "Manage Medicines" && <h1 className="text-2xl font-bold">Manage Medicines</h1>}
-        {active === "Payment History" && <h1 className="text-2xl font-bold">Payment History</h1>}
-        {active === "Advertisement" && <h1 className="text-2xl font-bold">Ask For Advertisement</h1>}
-      </div>
+    <div className='pt-6 min-h-screen bg-[#aaa6a669]'>
+    <div className="p-7 rounded-2xl bg-white  shadow-md max-w-5xl mx-auto">
+      <h2 className="text-2xl text-center font-bold mb-6">Payment History</h2>
+      <table className="min-w-full border border-gray-300">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="py-2 px-4 border-b">Transaction ID</th>
+            <th className="py-2 px-4 border-b">Amount</th>
+            <th className="py-2 px-4 border-b">Date</th>
+            <th className="py-2 px-4 border-b">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {dummyPayments.map(({ id, transactionId, amount, status, date }) => (
+            <tr key={id} className="text-center border-b hover:bg-gray-50">
+              <td className="py-2 px-4">{transactionId}</td>
+              <td className="py-2 px-4">${amount.toFixed(2)}</td>
+              <td className="py-2 px-4">{date}</td>
+              <td
+                className={`py-2 px-4 font-semibold ${
+                  status === 'Paid' ? 'text-green-600' : 'text-yellow-600'
+                }`}
+              >
+                {status}
+              </td>
+            </tr>
+          ))}
+          {dummyPayments.length === 0 && (
+            <tr>
+              <td colSpan={4} className="py-4 text-center text-gray-500">
+                No payment history found.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
     </div>
   );
-}
+};
+
+export default UserDashboard;
