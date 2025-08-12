@@ -1,0 +1,248 @@
+import React, { useState } from "react";
+
+const fakeCategories = [
+  {
+    id: 1,
+    categoryName: "Painkillers",
+    categoryImage:
+      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=80&q=80",
+  },
+  {
+    id: 2,
+    categoryName: "Antibiotics",
+    categoryImage:
+      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=80&q=80",
+  },
+  {
+    id: 3,
+    categoryName: "Vitamins",
+    categoryImage:
+      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=80&q=80",
+  },
+];
+
+export default function AdminManageCategory() {
+  const [categories, setCategories] = useState(fakeCategories);
+  const [showModal, setShowModal] = useState(false);
+  const [editingCategory, setEditingCategory] = useState(null);
+  const [formData, setFormData] = useState({
+    categoryName: "",
+    categoryImageURL: "",
+    categoryImageFile: null,
+  });
+
+  // Open modal for adding or editing
+  const openModal = (category = null) => {
+    setEditingCategory(category);
+    if (category) {
+      setFormData({
+        categoryName: category.categoryName,
+        categoryImageURL: category.categoryImage || "",
+        categoryImageFile: null,
+      });
+    } else {
+      setFormData({
+        categoryName: "",
+        categoryImageURL: "",
+        categoryImageFile: null,
+      });
+    }
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setEditingCategory(null);
+    setFormData({
+      categoryName: "",
+      categoryImageURL: "",
+      categoryImageFile: null,
+    });
+  };
+
+  // Handle text and file inputs
+  const handleInputChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "categoryImageFile") {
+      setFormData((prev) => ({ ...prev, categoryImageFile: files[0] || null }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  // Simulate image upload - in real app you'd upload file and get URL
+  const getImageURL = () => {
+    if (formData.categoryImageFile) {
+      // For demo: create local URL from file
+      return URL.createObjectURL(formData.categoryImageFile);
+    }
+    return formData.categoryImageURL;
+  };
+
+  const handleAddOrUpdateCategory = (e) => {
+    e.preventDefault();
+    if (!formData.categoryName.trim()) {
+      alert("Category name is required");
+      return;
+    }
+
+    const imageURL = getImageURL();
+
+    if (editingCategory) {
+      // Update existing category
+      setCategories((prev) =>
+        prev.map((cat) =>
+          cat.id === editingCategory.id
+            ? { ...cat, categoryName: formData.categoryName, categoryImage: imageURL }
+            : cat
+        )
+      );
+    } else {
+      // Add new category
+      const newCat = {
+        id: Date.now(),
+        categoryName: formData.categoryName,
+        categoryImage: imageURL,
+      };
+      setCategories((prev) => [...prev, newCat]);
+    }
+
+    closeModal();
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this category?")) {
+      setCategories((prev) => prev.filter((cat) => cat.id !== id));
+    }
+  };
+
+  return (
+    <div className="max-w-7xl mx-auto p-8 bg-white rounded-xl shadow-lg">
+      <header className="flex justify-between items-center mb-8">
+        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+          Manage Categories
+        </h1>
+        <button
+          onClick={() => openModal()}
+          className="px-6 py-3 bg-indigo-600 text-xl hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md transition"
+        >
+          + Add Category
+        </button>
+      </header>
+
+      <table className="w-full table-auto border-collapse shadow-md rounded-lg overflow-hidden">
+        <thead className="bg-indigo-600 text-white text-left text-lg">
+          <tr>
+            <th className="py-4 px-6 font-semibold">Image</th>
+            <th className="py-4 px-6 font-semibold">Category Name</th>
+            <th className="py-4 px-6 font-semibold">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {categories.map(({ id, categoryName, categoryImage }, i) => (
+            <tr
+              key={id}
+              className={`${
+                i % 2 === 0 ? "bg-gray-50" : "bg-white"
+              } hover:bg-indigo-50 transition-colors`}
+            >
+              <td className="p-4">
+                {categoryImage ? (
+                  <img
+                    src={categoryImage}
+                    alt={categoryName}
+                    className="w-20 h-20 object-cover rounded-md shadow-sm"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="w-20 h-20 bg-gray-200 rounded-md flex items-center justify-center text-gray-400 text-sm font-medium">
+                    No Image
+                  </div>
+                )}
+              </td>
+              <td className="py-4 px-6 text-gray-900 font-semibold text-lg">
+                {categoryName}
+              </td>
+              <td className="py-4 px-6 space-x-3">
+                <button
+                  onClick={() => openModal({ id, categoryName, categoryImage })}
+                  className="px-4 py-2 text-xl rounded-md bg-yellow-400 text-gray-900 hover:bg-yellow-500 font-semibold transition"
+                >
+                  Update
+                </button>
+                <button
+                  onClick={() => handleDelete(id)}
+                  className="px-4 py-2 text-xl rounded-md bg-red-600 text-white hover:bg-red-700 font-semibold transition"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+          {categories.length === 0 && (
+            <tr>
+              <td
+                colSpan={3}
+                className="text-center text-gray-500 py-10 text-lg font-medium"
+              >
+                No categories available.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              {editingCategory ? "Update Category" : "Add New Category"}
+            </h2>
+            <form onSubmit={handleAddOrUpdateCategory} className="space-y-5">
+              <input
+                type="text"
+                name="categoryName"
+                placeholder="Category Name"
+                value={formData.categoryName}
+                onChange={handleInputChange}
+                required
+                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-indigo-400 text-lg"
+              />
+
+
+              <div>
+                <label className="block mb-3 font-semibold text-gray-700">
+                   Upload Image
+                </label>
+                <input
+                  type="file"
+                  name="categoryImageFile"
+                  accept="image/*"
+                  onChange={handleInputChange}
+                  className="w-full border text-xl px-3 py-2 text-gray-700"
+                />
+               
+              </div>
+
+              <div className="flex justify-end space-x-4">
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="px-5 py-2 text-xl rounded-lg bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2 text-xl rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition shadow-md"
+                >
+                  {editingCategory ? "Update Category" : "Add Category"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
