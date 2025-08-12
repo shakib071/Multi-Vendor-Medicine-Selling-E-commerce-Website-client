@@ -79,9 +79,9 @@ const NavBar = () => {
                             <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="font-semibold cursor-pointer">
                                 {user?.photoURL ? (
-                                <img className="w-11 rounded-full" src={user?.photoURL} alt="User Avatar" />
+                                <img className="w-11 rounded-full" src={user?.photoURL} alt="photo" />
                                 ) : (
-                                <img className="w-11" src={UserAvatar} alt="Default Avatar" />
+                                <img className="w-11" src={UserAvatar} alt="Avatar" />
                                 )}
                             </div>
                             <ul
