@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { AuthContext } from '../AuthContext/AuthContext';
 import { GithubAuthProvider, GoogleAuthProvider } from 'firebase/auth';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
-import {auth} from '../../../Firebase/firebase.config'
+import {auth} from '../../../Firebase/firebase.config';
+import useAxios from '../../../Hooks/AxiosHook/useAxios';
 
 
 const AuthProvider = ({children}) => {
 
     const [user,setUser] = useState(null);
     const [loading,setLoading] = useState(true);
+    const axiosInstance = useAxios();
 
     //google 
     const googleProvider = new GoogleAuthProvider();
@@ -57,6 +59,11 @@ const AuthProvider = ({children}) => {
         }
     },[]);
 
+    const addUserToDataBase =async(data) => {
+        const res = await axiosInstance.post('/users',data);
+        return await res.data;
+    }
+
     
 
     const AuthData = {
@@ -70,6 +77,7 @@ const AuthProvider = ({children}) => {
         login,
         logOut,
         handleGithubLogin,
+        addUserToDataBase,
     }
     return (
         <AuthContext.Provider value={AuthData}>

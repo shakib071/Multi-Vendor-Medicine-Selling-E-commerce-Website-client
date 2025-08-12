@@ -13,7 +13,7 @@ import useAuth from '../../../Hooks/getAuth/useAuth';
 
 const Login = () => {
 
-    const {handleGoogleLogin,handleGithubLogin,login} = useAuth();
+    const {handleGoogleLogin,handleGithubLogin,login,addUserToDataBase} = useAuth();
     const navigate = useNavigate();
 
 
@@ -26,6 +26,7 @@ const Login = () => {
 
         login(email,password)
         .then(()=> {
+
             navigate('/');
         })
         .catch((error)=> {
@@ -38,7 +39,18 @@ const Login = () => {
 
     const handleGoogleSignUp = () => {
         handleGoogleLogin()
-        .then(()=> {
+        .then((result)=> {
+             const user = result.user;
+            const userData = {
+                // username,email,role,photoURL,uid
+                username: user.displayName,
+                email: user.email,
+                role: "user",
+                photoURL: user.photoURL,
+                uid: user.uid
+
+            }
+            addUserToDataBase(userData);
             navigate('/');
         })
         .catch((error) => {
@@ -49,7 +61,18 @@ const Login = () => {
 
     const handleGithubSignIn = () => {
         handleGithubLogin()
-        .then(()=>{
+        .then((result)=>{
+             const user = result.user;
+            const userData = {
+                // username,email,role,photoURL,uid
+                username: user.displayName,
+                email: user.email,
+                role: "user",
+                photoURL: user.photoURL,
+                uid: user.uid
+
+            }
+            addUserToDataBase(userData);
             navigate('/');
         })
         .catch((error)=> {

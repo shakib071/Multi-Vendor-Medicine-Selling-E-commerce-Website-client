@@ -9,7 +9,7 @@ import useAuth from '../../../Hooks/getAuth/useAuth';
 const Register = () => {
     const [error,setError] = useState('');
     const [userRole,setUserRole] = useState('user');
-    const {createUser,setUser,updateUserData,setLoading,handleGoogleLogin,handleGithubLogin} = useAuth();
+    const {createUser,setUser,updateUserData,setLoading,handleGoogleLogin,handleGithubLogin,addUserToDataBase} = useAuth();
     const navigate = useNavigate();
     
 
@@ -64,10 +64,11 @@ const Register = () => {
                     .then((result)=> {
                     const user = result.user;
 
-                    updateUserData({displayName : username, photoURL : data.data.url})
+                     updateUserData({displayName : username, photoURL : data.data.url})
                         .then(()=>{
                             setUser({...user,displayName : username, photoURL : data.data.url});
                             setLoading(false);
+
                             navigate('/');
                             
                         })
@@ -76,6 +77,19 @@ const Register = () => {
                             setUser(user);
                             setLoading(false);
                         });
+
+                        const userData = {
+                            username,
+                            email,
+                            role,
+                            photoURL: data.data.url,
+                            uid: user.uid
+
+                        }
+
+                        // username,email,role,photoURL,uid
+
+                        addUserToDataBase(userData);
                     
                     })
 
@@ -102,7 +116,18 @@ const Register = () => {
 
     const handleGoogleSignUp = () => {
         handleGoogleLogin()
-        .then(()=> {
+        .then((result)=> {
+            const user = result.user;
+            const userData = {
+                // username,email,role,photoURL,uid
+                username: user.displayName,
+                email: user.email,
+                role: "user",
+                photoURL: user.photoURL,
+                uid: user.uid
+
+            }
+            addUserToDataBase(userData);
             navigate('/');
         })
         .catch((error) => {
@@ -113,7 +138,18 @@ const Register = () => {
 
     const handleGithubSignIn = () => {
         handleGithubLogin()
-        .then(()=>{
+        .then((result)=>{
+             const user = result.user;
+            const userData = {
+                // username,email,role,photoURL,uid
+                username: user.displayName,
+                email: user.email,
+                role: "user",
+                photoURL: user.photoURL,
+                uid: user.uid
+
+            }
+            addUserToDataBase(userData);
             navigate('/');
         })
         .catch((error)=> {
