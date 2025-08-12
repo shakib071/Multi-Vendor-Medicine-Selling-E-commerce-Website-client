@@ -4,6 +4,7 @@ import HomeRoot from "../Components/HomeLayout/HomeRoot/HomeRoot";
 import Auth from "../Components/AuthLayout/Auth/Auth";
 import Login from "../Components/AuthLayout/Login/Login";
 import Register from "../Components/AuthLayout/Register/Register";
+import Dashboard from "../Components/DashBoard/Dashboard";
 
 
 export const router = createBrowserRouter([
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>,
+      },
+      {
+        path: '/dashboard',
+        element: <Dashboard></Dashboard>,
       }
     ]
   }
