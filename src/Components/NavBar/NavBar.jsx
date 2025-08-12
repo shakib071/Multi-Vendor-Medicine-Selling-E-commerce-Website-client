@@ -1,14 +1,21 @@
 import React from 'react';
 import logoImg  from '../../assets/medicalLogo.png'
-import { NavLink } from 'react-router';
+import { NavLink, useNavigation } from 'react-router';
 import { GiHamburgerMenu } from "react-icons/gi";
 import UserAvatar from '../../assets/UserAVatar.png'
 import { Link } from 'react-router';
 import useAuth from '../../Hooks/getAuth/useAuth';
+import Loading from '../Loading/Loading';
+import { FaShoppingCart } from "react-icons/fa";
 
 const NavBar = () => {
 
-    const {logOut} = useAuth();
+    const {logOut,user,loading} = useAuth();
+    const navigation = useNavigation();
+
+    if(loading || navigation.state === 'loading'){
+        return <Loading></Loading>;
+    }
 
     const handleLogout = () => {
         logOut()
@@ -36,7 +43,10 @@ const NavBar = () => {
                     <NavLink to='/'><p className='font-semibold '>Home</p></NavLink>
                     <NavLink to='available-cars'><p className='font-semibold'>Shop</p></NavLink>
                    
-                    <NavLink to='/'><p className='font-semibold'>Cart</p></NavLink>
+                    <NavLink to='/'>
+                        <FaShoppingCart   color="#3b82f6" />
+                    </NavLink>
+                    
                     
                     <div>
                         <div className="dropdown dropdown-end">
@@ -48,30 +58,40 @@ const NavBar = () => {
                             </ul>
                         </div>
                     </div>
-                    <NavLink to='/'><p className='font-semibold'>Join US</p></NavLink>
+                    
         
             
 
                     
                 </div>
                 <div className='hidden md:flex  gap-2 items-center md:gap-3 lg:gap-5 text-[11px] sm:text-lg md:text-xl lg:text-2xl xl:text-[29px] 2xl:text-[33px]'>
-                   
-                    <NavLink to='/login'><p className='font-semibold'>Join US</p></NavLink>
+                   {
+                        !user && <NavLink to='/login'><p className='font-semibold'>Join US</p></NavLink>
+                   }
                     
                     
-                    <div>
-                        <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="font-semibold">
-                                <img className='w-17' src={UserAvatar} alt="" />
+                   {
+                        user  && 
+                        <div>
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="font-semibold">
+                                    {user?.photoURL != null &&
+                                        <img className='w-11 rounded-full' src={user?.photoURL} alt="" />
+                                    } 
+                                    {user?.photoURL == null &&
+                                        <img className='w-17' src={UserAvatar} alt="" />
+                                    }
+                                    
+                                </div>
+                                <ul tabIndex={0} className="dropdown-content text-xl font-semibold menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                                    <li><Link>Update Profile</Link></li>
+                                    <li><Link>Dashboard</Link></li>
+                                    <li onClick={handleLogout}><Link>Logout</Link></li>
+                                    
+                                </ul>
                             </div>
-                            <ul tabIndex={0} className="dropdown-content text-xl font-semibold menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                                <li><Link>Update Profile</Link></li>
-                                <li><Link>Dashboard</Link></li>
-                                <li onClick={handleLogout}><Link>Logout</Link></li>
-                                
-                            </ul>
                         </div>
-                    </div>
+                    } 
                     
                     
 
