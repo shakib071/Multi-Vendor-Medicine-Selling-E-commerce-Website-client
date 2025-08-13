@@ -43,9 +43,9 @@ const NavBar = () => {
                 </div>
                 <div className='hidden md:flex gap-2 sm:gap-6 md:gap-4 lg:gap-6 items-center text-[11px] sm:text-lg md:text-lg lg:text-2xl xl:text-[29px] 2xl:text-[33px]'>
                     <NavLink to='/'><p className='font-semibold '>Home</p></NavLink>
-                    <NavLink to='/'><p className='font-semibold'>Shop</p></NavLink>
+                    <NavLink to='/shop'><p className='font-semibold'>Shop</p></NavLink>
                    
-                    <NavLink to='/'>
+                    <NavLink to='/cart'>
                         <FaShoppingCart   color="#3b82f6" />
                     </NavLink>
                     
