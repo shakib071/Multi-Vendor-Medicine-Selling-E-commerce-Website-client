@@ -9,6 +9,7 @@ import Shop from "../Components/Shop/Shop";
 import Cart from "../Components/Cart/Cart";
 import Checkout from "../Components/Checkout/Checkout";
 import Invoice from "../Components/Invoice/Invoice";
+import CategoryDetails from "../Components/HomeLayout/CategorySection/CategoryDetails";
 
 
 export const router = createBrowserRouter([
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
       {
         path:'/invoice',
         element: <Invoice></Invoice>,
+      },
+      {
+        path: '/category-details',
+        element: <CategoryDetails></CategoryDetails>,
       }
     ]
   },
