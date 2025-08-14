@@ -10,10 +10,12 @@ import useCategories from "../../../Hooks/getCategories/useCategories";
 export default function AdminManageCategory() {
   
   const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
   const {loading} = useAuth();
   const Navigation = useNavigation();
   const axiosInstance = useAxios();
   const {data:categories, isLoading ,refetch} = useCategories();
+  const [updateData,setUpdateData] = useState([]);
   
   
 
@@ -57,6 +59,77 @@ export default function AdminManageCategory() {
     catch(error){
       console.log(error);
     }
+  }
+
+  const deleteCategory = async(id) => {
+    console.log(id);
+    const res = await axiosInstance.delete(`/delete-category/${id}`);
+    console.log(res.data);
+    if(res.data.deletedCount){
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "category deleted successfully",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      refetch();
+    }
+  }
+
+  const handleUpdateModal = (id, categoryName, categoryImage) => {
+    setShowUpdateModal(true);
+    const updatedData = {
+        id,
+        categoryName,
+        categoryImage
+    }
+    setUpdateData(updatedData);
+    
+
+  }
+
+
+  const updateCategoryToDatabase = async(upData) => {
+    console.log(upData.id);
+    try{
+      const res = await axiosInstance.patch(`/update-category/${updateData.id}`,upData);
+      console.log(res.data);
+      if(res.data.modifiedCount){
+        Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "category updated  successfully",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      setShowUpdateModal(false);
+      refetch();
+      }
+      
+    }
+    catch(error) {
+      console.log(error);
+    }
+    
+  }
+  
+  const updateCategory = async(e) => {
+    e.preventDefault();
+    const form = e.target;
+    const categoryName = form.categoryName.value;
+    const categoryImageFile = form.categoryImageFile.files[0];
+    let photoUrl = null;
+    if(categoryImageFile){
+       photoUrl = await uploadImageBB(categoryImageFile);
+    }
+   
+    const upData = {
+      categoryName,
+      categoryImage:photoUrl,
+    }
+    updateCategoryToDatabase(upData);
+    
   }
 
   const handleAddCategory = async(e) => {
@@ -136,13 +209,13 @@ export default function AdminManageCategory() {
               </td>
               <td className="py-4 px-6 space-x-3">
                 <button
-                  
+                  onClick={() => handleUpdateModal(_id, categoryName, categoryImage)}
                   className="px-4 py-2 text-xl rounded-md bg-yellow-400 text-gray-900 hover:bg-yellow-500 font-semibold transition"
                 >
                   Update
                 </button>
                 <button
-                  
+                  onClick={() => deleteCategory(_id)}
                   className="px-4 py-2 text-xl rounded-md bg-red-600 text-white hover:bg-red-700 font-semibold transition"
                 >
                   Delete
@@ -206,6 +279,56 @@ export default function AdminManageCategory() {
                   className="px-6 py-2 text-xl rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition shadow-md"
                 >
                   Add Category
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )} 
+      
+      {showUpdateModal && (
+        <div className="fixed inset-0 bg-[#ffffff87] bg-opacity-60 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-8">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              Update Category
+            </h2>
+            <form onSubmit={updateCategory} className="space-y-5">
+              <input
+                type="text"
+                name="categoryName"
+                placeholder="Category Name"
+                defaultValue={updateData.categoryName}
+                required
+                className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-indigo-400 text-lg"
+              />
+
+
+              <div>
+                <label className="block mb-3 font-semibold text-gray-700">
+                   Upload Image (optional)
+                </label>
+                <input
+                  type="file"
+                  name="categoryImageFile"
+                  accept="image/*"
+                  className="w-full border text-xl px-3 py-2 text-gray-700"
+                />
+               
+              </div>
+
+              <div className="flex justify-end space-x-4">
+                <button
+                  type="button"
+                  onClick={()=>setShowUpdateModal(false)}
+                  className="px-5 py-2 text-xl rounded-lg bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2 text-xl rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition shadow-md"
+                >
+                  Update Category
                 </button>
               </div>
             </form>
