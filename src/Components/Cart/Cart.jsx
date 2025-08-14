@@ -98,6 +98,22 @@ const Cart = () => {
     }
   }
 
+  const deleteCartItem = async(name) => {
+    const res = await axiosInstance.delete(`/delete-cart-item/${user?.uid}/med/${name}`)
+    console.log(res.data);
+
+    if(res.data.modifiedCount){
+      Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Item Deleted successfully",
+      showConfirmButton: false,
+      timer: 1500
+    });
+      refetch();
+    }
+  }
+
 
   if( isLoading || loading){
     return <Loading></Loading>;
@@ -163,7 +179,7 @@ const Cart = () => {
                     </td>
                     <td className="px-4 py-3 text-center">
                       <button
-                        
+                        onClick={()=> deleteCartItem(item.name)}
                         className="text-red-500 hover:text-red-700"
                       >
                         <Trash2 size={18} />
