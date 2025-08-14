@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Trash2, Plus, Minus } from "lucide-react";
 import { FaShoppingCart } from "react-icons/fa";
-import { useParams } from "react-router";
 import useUserCartMed from "../../Hooks/getUserCart/useUserCartMed";
 
 import Loading from "../Loading/Loading";
 import useAxios from "../../Hooks/AxiosHook/useAxios";
+import Swal from "sweetalert2";
+import useAuth from "../../Hooks/getAuth/useAuth";
 
 
 const Cart = () => {
 
     
-  const {userId} = useParams();
+  
+  const {user,loading} = useAuth();
+  const {data: cart,isLoading,refetch} = useUserCartMed(user?.uid);
   const [total,setTotal] = useState(0);
-   
-  const {data: cart,isLoading,refetch} = useUserCartMed(userId);
   const axiosInstance = useAxios();
 
+
+    useEffect(() => {
+      if (user?.uid) {
+        refetch();
+      }
+    }, [user?.uid]);
   
 
   
@@ -27,7 +34,7 @@ const Cart = () => {
       increment: true,
     }
     try{
-      const res = await axiosInstance.patch(`/incOrDec-cat-quantity/${userId}`,data)
+      const res = await axiosInstance.patch(`/incOrDec-cat-quantity/${user?.uid}`,data)
       
       if(res.data.modifiedCount){
         refetch();
@@ -47,7 +54,7 @@ const Cart = () => {
     
     if(quantity > 1){
       try{
-      const res = await axiosInstance.patch(`/incOrDec-cat-quantity/${userId}`,data)
+      const res = await axiosInstance.patch(`/incOrDec-cat-quantity/${user?.uid}`,data)
       
       if(res.data.modifiedCount){
         refetch();
@@ -66,7 +73,7 @@ const Cart = () => {
       for(let i=0;i<cart?.medicines?.length;i++){
         // console.log(cart.medicines[i].price,cart.medicines[i].quantity)
         intialTotal += cart.medicines[i].price * cart.medicines[i].quantity;
-        console.log(intialTotal);
+        // console.log(intialTotal);
       }
       setTotal(intialTotal);
     } 
@@ -75,12 +82,24 @@ const Cart = () => {
   },[cart?.medicines?.map(med => `${med.price}-${med.quantity}`).join(",")]);
 
   
-  const handleClearCart = () => {
+  const handleClearCart = async() => {
     console.log('10');
+    const res = await axiosInstance.delete(`/delete-cart/${user?.uid}`);
+    console.log(res.data);
+    if(res.data.deletedCount){
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your cart has been deleted",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      refetch();
+    }
   }
 
 
-  if( isLoading){
+  if( isLoading || loading){
     return <Loading></Loading>;
   }
 

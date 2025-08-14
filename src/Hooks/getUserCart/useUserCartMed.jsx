@@ -8,7 +8,7 @@ const useUserCartMed = (uid) => {
         queryKey: ['userCart',uid],
         queryFn: async() => await axiosSecureInstance.get(`/cart-medicines/${uid}`).then(res=> res.data),
         enabled: !!uid,
-        staleTime: 1000*300,
+        staleTime: 1000*5*60,
     });
 };
 

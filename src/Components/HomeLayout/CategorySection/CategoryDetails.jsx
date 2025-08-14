@@ -28,7 +28,7 @@ const CategoryDetails = () => {
     // add to datbase 
     try{
       const res = await axiosInstance.post(`/cart/${user.uid}`,catMedicine);
-      console.log(res.data);
+      // console.log(res.data);
       if(res.data.insertedId || res.data._id){
         Swal.fire({
           position: "center",
@@ -37,7 +37,7 @@ const CategoryDetails = () => {
           showConfirmButton: false,
           timer: 1500
         });
-        
+        navigate(`/cart/${user.uid}`)
       }
 
       else{
@@ -48,9 +48,10 @@ const CategoryDetails = () => {
           showConfirmButton: false,
           timer: 1500
         });
+        navigate(`/cart/${user.uid}`)
       }
 
-      navigate(`/cart/${user.uid}`)
+      
 
     }
     catch(error){

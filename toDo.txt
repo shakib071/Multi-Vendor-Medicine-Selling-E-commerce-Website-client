@@ -27,7 +27,7 @@ Main Tasks
     On this page, the user will see all medicines information in tabular format. Each row will have a select button and an eye button. Clicking the eye button a modal will pop up where the user can see all the information of that medicine with its image. Clicking the select button will add the medicine to the cart.
 
 5. CART PAGE: 
-	On this page, the user will see all of his selected medicines with some basic information (name, company, price per unit, quantity). Users can increase or decrease the quantity, can remove specific medicine, or can clear all of the carts. 
+	can remove specific medicine, 
     There will be a checkout button which will navigate to the checkout page.
 
 6. Checkout page:
