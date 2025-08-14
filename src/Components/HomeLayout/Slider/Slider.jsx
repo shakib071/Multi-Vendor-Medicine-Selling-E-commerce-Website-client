@@ -51,9 +51,9 @@ const Slider = () => {
                           />
                         </div>
                         
-                        <div>
-                          <h3 className="font-semibold text-xl text-gray-800 mb-2">{slide.name}</h3>
-                        <p className="text-gray-600 text-base">{slide.description}</p>
+                        <div className="">
+                          <h3 className="font-semibold text-white text-3xl  mb-2">{slide.name}</h3>
+                        <p className="text-gray-600 text-xl ">{slide.description}</p>
                         </div>
                        </div>
                     </div>

@@ -1,31 +1,126 @@
 import { useState } from "react";
+import useAuth from "../../../Hooks/getAuth/useAuth";
+import useAxios from "../../../Hooks/AxiosHook/useAxios";
+import Swal from "sweetalert2";
+import Loading from '../../Loading/Loading';
+import useSalerMedicineData from '../../../Hooks/salerMedicineData/useSalerMedicineData';
 
 export default function ManageMedicine() {
   const [showModal, setShowModal] = useState(false);
-  const [medicines, setMedicines] = useState([
-    {
-      id: 1,
-      name: "Paracetamol",
-      genericName: "Acetaminophen",
-      category: "Painkiller",
-      company: "Pharma Inc",
-      massUnit: "Mg",
-      price: 5,
-      discount: 0,
-    },
-    // Add more medicines here or fetch from API
-  ]);
+  // const [medicines, setMedicines] = useState([
+  //   {
+  //     id: 1,
+  //     name: "Paracetamol",
+  //     genericName: "Acetaminophen",
+  //     category: "Painkiller",
+  //     company: "Pharma Inc",
+  //     massUnit: "Mg",
+  //     price: 5,
+  //     discount: 0,
+  //   },
+    
+  // ]);
+  const [itemMass,setItemMass] = useState('Mg');
+  const {user,loading,setLoading} = useAuth();
+  const axiosInstance = useAxios();
+  const {data:medicines, isLoading} = useSalerMedicineData(user?.uid);
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  const handleSubmit = (e) => {
+
+  const addMedicineToDatabase = async(medicinesData) => {
+    // console.log(medicinesData);
+     try{
+        setLoading(true);
+        const res = await axiosInstance.post('/medicines',medicinesData);
+        
+        
+        if(res.data.acknowledged){
+          setLoading(false);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+     }
+     catch(error) {
+      console.log(error);
+     }
+    
+
+  }
+
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle adding medicine logic
+    const form = e.target;
+    const name = form.name.value;
+    const genericName = form.genericName.value;
+    const description = form.description.value;
+    const photo = form.image.files[0];
+    const category = form.category.value;
+    const company = form.company.value;
+    const itemMassUnit = itemMass;
+    const price = form.price.value;
+    const discount = form.discount.value;
+    // console.log(name,genericName,description,photo,category,company,itemMassUnit,price,discount);
+
+    //get the image link 
+    const imgBBApi = import.meta.env.VITE_ImgBB_API;
+
+    const imageData = new FormData();
+    imageData.append("image",photo);
+
+    try{
+      const res = await fetch(`https://api.imgbb.com/1/upload?key=${imgBBApi}`,{
+            method:"POST",
+            body: imageData,
+        });
+        const data = await res.json();
+        // console.log(data.data.url);
+        const medicinesData = {
+          name,
+          genericName,
+          description,
+          photo:data.data.url,
+          category,
+          company,
+          itemMassUnit,
+          price: parseInt(price),
+          discount:parseInt(discount),
+          addedDate : new Date(),
+          saler: {
+            name: user.displayName,
+            email: user.email,
+            uid: user.uid,
+          }
+        }
+        addMedicineToDatabase(medicinesData);
+    }
+    catch(error){
+      console.log(error);
+    }
+
+ 
+
+    
+
     closeModal();
   };
 
+  if(loading || isLoading){
+    return <Loading></Loading>;
+  }
+
+  console.log(medicines);
+
   return (
+    
+
+    
     <div className="p-1  min-h-screen">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-semibold text-gray-800">Manage Medicines</h1>
@@ -63,7 +158,7 @@ export default function ManageMedicine() {
 
           <tbody className="divide-y text-[16px] text-center divide-gray-50">
             {medicines.map((med) => (
-              <tr key={med.id} className="hover:bg-indigo-50 transition">
+              <tr key={med._id} className="hover:bg-indigo-50 transition">
                 <td className="px-2 py-4 whitespace-nowrap text-[16px] font-medium text-gray-900">
                   {med.name}
                 </td>
@@ -152,14 +247,16 @@ export default function ManageMedicine() {
                     <option value="Pharma Inc">Pharma Inc</option>
                     <option value="MediCorp">MediCorp</option>
                 </select>
-
+                <label className="text-xl pl-2">Item Mass Unit</label>
                 <div className="flex gap-6 text-lg px-5 py-2 items-center">
+                  
                     <label className="flex items-center gap-3 cursor-pointer text-gray-700">
                     <input
                         type="radio"
                         name="massUnit"
                         value="Mg"
-                        defaultChecked
+                        checked = {itemMass === 'Mg'}
+                        onChange={(e)=> setItemMass(e.target.value)}
                         className="form-radio h-5 w-5 text-indigo-600"
                     />
                     Mg
@@ -169,6 +266,8 @@ export default function ManageMedicine() {
                         type="radio"
                         name="massUnit"
                         value="ML"
+                        checked = {itemMass === 'ML'}
+                        onChange={(e)=> setItemMass(e.target.value)}
                         className="form-radio h-5 w-5  text-indigo-600"
                     />
                     ML
@@ -184,6 +283,7 @@ export default function ManageMedicine() {
                     required
                     className="w-full border border-gray-300 rounded-lg text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
+                <label className="text-xl">Discount</label>
                 <input
                     type="number"
                     name="discount"
@@ -216,5 +316,7 @@ export default function ManageMedicine() {
 
       )}
     </div>
+    
+    
   );
 }
