@@ -5,6 +5,7 @@ import Loading from "../../Loading/Loading";
 import { useNavigation } from "react-router";
 import useAxios from "../../../Hooks/AxiosHook/useAxios";
 import Swal from "sweetalert2";
+import useCategories from "../../../Hooks/getCategories/useCategories";
 
 
 const fakeCategories = [
@@ -29,11 +30,12 @@ const fakeCategories = [
 ];
 
 export default function AdminManageCategory() {
-  const [categories, setCategories] = useState(fakeCategories);
+  
   const [showModal, setShowModal] = useState(false);
   const {loading} = useAuth();
   const Navigation = useNavigation();
   const axiosInstance = useAxios();
+  const {data:categories, isLoading ,refetch} = useCategories();
   
   
 
@@ -49,7 +51,7 @@ export default function AdminManageCategory() {
     try{
       const res = await axiosInstance.post('/category',categoryData);
     
-      console.log(res.data);
+      // console.log(res.data);
       if(res.data.acknowledged){
         Swal.fire({
           position: "center",
@@ -58,7 +60,8 @@ export default function AdminManageCategory() {
           showConfirmButton: false,
           timer: 1500
         });
-         setShowModal(false);
+        refetch();
+        setShowModal(false);
         
       }
       else {
@@ -100,7 +103,7 @@ export default function AdminManageCategory() {
     
   }
 
-  if(loading || Navigation.state == 'loading'){
+  if(loading || Navigation.state == 'loading' || isLoading){
     return <Loading></Loading>;
   }
 
@@ -121,19 +124,21 @@ export default function AdminManageCategory() {
       <table className="w-full table-auto border-collapse shadow-md rounded-lg overflow-hidden">
         <thead className="bg-indigo-600 text-white text-left text-lg">
           <tr>
+            <th className="py-4 px-6 font-semibold">No</th>
             <th className="py-4 px-6 font-semibold">Image</th>
             <th className="py-4 px-6 font-semibold">Category Name</th>
             <th className="py-4 px-6 font-semibold">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {categories.map(({ id, categoryName, categoryImage }, i) => (
+          {categories.map(({ _id, categoryName, categoryImage }, i) => (
             <tr
-              key={id}
+              key={_id}
               className={`${
-                i % 2 === 0 ? "bg-gray-50" : "bg-white"
+                i % 2 === 0 ? "bg-gray-300" : "bg-white"
               } hover:bg-indigo-50 transition-colors`}
             >
+              <td className="text-center">{i+1}</td>
               <td className="p-4">
                 {categoryImage ? (
                   <img
