@@ -2,6 +2,8 @@ import React from "react";
 import useUsers from "../../../Hooks/getUser/useUsers";
 import Loading from "../../Loading/Loading";
 import useAuth from "../../../Hooks/getAuth/useAuth";
+import useAxios from "../../../Hooks/AxiosHook/useAxios";
+import Swal from "sweetalert2";
 
 
 
@@ -9,11 +11,26 @@ const AdminManageUser = () => {
  
   const roles = ["user", "saler", "admin"];
   const {user,loading} = useAuth();
-  const  {data: users, isLoading} = useUsers(user.uid);
+  const  {data: users, isLoading,refetch} = useUsers(user.uid);
+  const axiosInstance = useAxios();
   console.log(users);
 
   const changeRole = (id, newRole) => {
-    console.log(id,newRole);
+    // console.log(id,newRole);
+    axiosInstance.patch(`/update-role/${id}`,{role: newRole})
+    .then(res =>{
+      if(res.data.acknowledged){
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Role has been Updated",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        refetch();
+      }
+    });
+    
   };
 
   if(isLoading || loading){
@@ -27,7 +44,10 @@ const AdminManageUser = () => {
       <table className="w-full border-collapse">
         <thead className="text-lg ">
           <tr>
-            <th className="text-left  px-6 py-3 font-semibold uppercase bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-tl-lg">
+            <th className="text-left  px-6 py-3 font-semibold uppercase bg-gradient-to-r from-green-300 to-teal-600 text-white rounded-tl-lg">
+              No
+            </th> 
+            <th className="text-left  px-6 py-3 font-semibold uppercase bg-gradient-to-r from-purple-500 to-indigo-600 text-white ">
               Username
             </th>
             <th className="text-left px-6 py-3 font-semibold uppercase bg-gradient-to-r from-green-400 to-teal-500 text-white">
@@ -43,11 +63,12 @@ const AdminManageUser = () => {
         </thead>
 
         <tbody>
-          {users.map(({ _id, username, email, role }) => (
+          {users.map(({ _id, username, email, role },index) => (
             <tr
               key={_id}
               className="bg-gray-50 text-xl hover:bg-gray-100 transition-colors"
             >
+              <td className="text-center">{index+1}</td>
               <td className="px-6 py-4 text-gray-900 font-medium">{username ? username : 'No name'}</td>
               <td className="px-6 py-4 text-gray-700">{email}</td>
               <td className="px-6 py-4 capitalize text-indigo-800 font-semibold">
