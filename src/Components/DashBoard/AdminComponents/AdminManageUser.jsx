@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
+import useUsers from "../../../Hooks/getUser/useUsers";
+import Loading from "../../Loading/Loading";
+import useAuth from "../../../Hooks/getAuth/useAuth";
 
-const roles = ["user", "seller", "admin"];
+
 
 const AdminManageUser = () => {
-  const [users, setUsers] = useState([
-    { id: 1, username: "Alice", email: "alice@example.com", role: "user" },
-    { id: 2, username: "Bob", email: "bob@example.com", role: "seller" },
-    { id: 3, username: "Charlie", email: "charlie@example.com", role: "admin" },
-  ]);
+ 
+  const roles = ["user", "saler", "admin"];
+  const {user,loading} = useAuth();
+  const  {data: users, isLoading} = useUsers(user.uid);
+  console.log(users);
 
   const changeRole = (id, newRole) => {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user.id === id ? { ...user, role: newRole } : user
-      )
-    );
+    console.log(id,newRole);
   };
+
+  if(isLoading || loading){
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -40,12 +43,12 @@ const AdminManageUser = () => {
         </thead>
 
         <tbody>
-          {users.map(({ id, username, email, role }) => (
+          {users.map(({ _id, username, email, role }) => (
             <tr
-              key={id}
+              key={_id}
               className="bg-gray-50 text-xl hover:bg-gray-100 transition-colors"
             >
-              <td className="px-6 py-4 text-gray-900 font-medium">{username}</td>
+              <td className="px-6 py-4 text-gray-900 font-medium">{username ? username : 'No name'}</td>
               <td className="px-6 py-4 text-gray-700">{email}</td>
               <td className="px-6 py-4 capitalize text-indigo-800 font-semibold">
                 {role}
@@ -53,7 +56,7 @@ const AdminManageUser = () => {
               <td className="px-6 py-4">
                 <select
                   value={role}
-                  onChange={(e) => changeRole(id, e.target.value)}
+                  onChange={(e) => changeRole(_id, e.target.value)}
                   className="border border-gray-300 rounded-md px-3 py-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 >
                   {roles.map((r) => (

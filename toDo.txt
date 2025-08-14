@@ -76,8 +76,6 @@ Main Tasks
 
     (Features of seller dashboard)
 
-    Manage Medicines: Here sellers will see all of their added medicines information in a tabular form. There will be an add medicine button. Clicking the button a modal form will pop up with some input fields( Item name, item generic name, short description, image upload, category dropdown, company dropdown, Item Mass Unit (Mg or ML), per unit price, discount percentage(DEFAULT ZERO)  if available). It will be stored in the database. 
-
     Payment History: Here the seller will see all of the purchase history of his medicines by users. With their payment status(paid,pending(default))
 
     Ask For Advertisement: Here seller will see all of his referred medicine information for the advertisement slider, and their status(if they are getting used in the slider section or not). There will be an add advertise button, clicking the button modal will pop up where the seller can input a medicine image and some description for the advertisement slider.

@@ -4,40 +4,30 @@ import useAxios from "../../../Hooks/AxiosHook/useAxios";
 import Swal from "sweetalert2";
 import Loading from '../../Loading/Loading';
 import useSalerMedicineData from '../../../Hooks/salerMedicineData/useSalerMedicineData';
+import { useNavigation } from "react-router";
 
 export default function ManageMedicine() {
   const [showModal, setShowModal] = useState(false);
-  // const [medicines, setMedicines] = useState([
-  //   {
-  //     id: 1,
-  //     name: "Paracetamol",
-  //     genericName: "Acetaminophen",
-  //     category: "Painkiller",
-  //     company: "Pharma Inc",
-  //     massUnit: "Mg",
-  //     price: 5,
-  //     discount: 0,
-  //   },
-    
-  // ]);
+  const navigation = useNavigation();
+
   const [itemMass,setItemMass] = useState('Mg');
-  const {user,loading,setLoading} = useAuth();
+  const {user,loading} = useAuth();
   const axiosInstance = useAxios();
-  const {data:medicines, isLoading} = useSalerMedicineData(user?.uid);
+  const {data:medicines, isLoading,refetch} = useSalerMedicineData(user?.uid);
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
 
   const addMedicineToDatabase = async(medicinesData) => {
-    // console.log(medicinesData);
+    
      try{
-        setLoading(true);
+        
         const res = await axiosInstance.post('/medicines',medicinesData);
         
         
         if(res.data.acknowledged){
-          setLoading(false);
+          
           Swal.fire({
             position: "center",
             icon: "success",
@@ -45,6 +35,7 @@ export default function ManageMedicine() {
             showConfirmButton: false,
             timer: 1500
           });
+          refetch();
         }
      }
      catch(error) {
@@ -111,7 +102,7 @@ export default function ManageMedicine() {
     closeModal();
   };
 
-  if(loading || isLoading){
+  if(loading || isLoading || navigation.state === 'loading'){
     return <Loading></Loading>;
   }
 
@@ -144,7 +135,7 @@ export default function ManageMedicine() {
                 "Mass Unit",
                 "Price",
                 "Discount",
-                "Actions",
+                
               ].map((header) => (
                 <th
                   key={header}
@@ -180,13 +171,7 @@ export default function ManageMedicine() {
                 <td className="px-2 py-4 whitespace-nowrap text-[16px] text-gray-700">
                   {med.discount}%
                 </td>
-                <td className="px-2 py-4  whitespace-nowrap text-[16px] text-gray-700">
-                    <div className="flex ">
-                        <button className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</button>
-                        <button className="text-red-600 hover:text-red-900">Delete</button>
-                    </div>
-                  
-                </td>
+               
               </tr>
             ))}
           </tbody>
