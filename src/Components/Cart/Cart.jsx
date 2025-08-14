@@ -7,6 +7,7 @@ import Loading from "../Loading/Loading";
 import useAxios from "../../Hooks/AxiosHook/useAxios";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/getAuth/useAuth";
+import { useNavigate } from "react-router";
 
 
 const Cart = () => {
@@ -17,6 +18,7 @@ const Cart = () => {
   const {data: cart,isLoading,refetch} = useUserCartMed(user?.uid);
   const [total,setTotal] = useState(0);
   const axiosInstance = useAxios();
+  const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -114,6 +116,10 @@ const Cart = () => {
     }
   }
 
+  const handleCheckOut = () => {
+    navigate('/checkout', {state : total});
+  }
+
 
   if( isLoading || loading){
     return <Loading></Loading>;
@@ -203,7 +209,7 @@ const Cart = () => {
               <h2 className="text-lg font-bold">
                 Total: <span className="text-green-600">{total}</span>
               </h2>
-              <button  className="bg-blue-500 text-white px-5 py-2 rounded-lg hover:bg-blue-600">
+              <button onClick={()=> handleCheckOut()} className="bg-blue-500 text-white px-5 py-2 rounded-lg hover:bg-blue-600">
                 Checkout
               </button>
             </div>

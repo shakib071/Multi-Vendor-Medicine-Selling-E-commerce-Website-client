@@ -1,12 +1,13 @@
 // src/components/Checkout.jsx
 import { FaCreditCard } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const fakeTotal = 245.75; // Fake grand total
-
+  const location = useLocation();
+  const total = location.state || 0;
+  console.log(total);
   const handlePay = () => {
     navigate('/invoice')
   }
@@ -23,7 +24,7 @@ const Checkout = () => {
         <h2 className="text-lg font-semibold mb-3">Order Summary</h2>
         <div className="flex justify-between text-gray-700">
           <span>Grand Total:</span>
-          <span className="font-bold text-xl text-green-600">${fakeTotal}</span>
+          <span className="font-bold text-xl text-green-600">${total}</span>
         </div>
       </div>
 
@@ -75,7 +76,7 @@ const Checkout = () => {
           type="button"
           className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-200"
         >
-          Pay ${fakeTotal}
+          Pay ${total}
         </button>
       </form>
     </div>
