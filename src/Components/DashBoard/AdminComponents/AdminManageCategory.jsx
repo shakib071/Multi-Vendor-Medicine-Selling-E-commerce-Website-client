@@ -7,28 +7,6 @@ import useAxios from "../../../Hooks/AxiosHook/useAxios";
 import Swal from "sweetalert2";
 import useCategories from "../../../Hooks/getCategories/useCategories";
 
-
-const fakeCategories = [
-  {
-    id: 1,
-    categoryName: "Painkillers",
-    categoryImage:
-      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=80&q=80",
-  },
-  {
-    id: 2,
-    categoryName: "Antibiotics",
-    categoryImage:
-      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=80&q=80",
-  },
-  {
-    id: 3,
-    categoryName: "Vitamins",
-    categoryImage:
-      "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=80&q=80",
-  },
-];
-
 export default function AdminManageCategory() {
   
   const [showModal, setShowModal] = useState(false);
