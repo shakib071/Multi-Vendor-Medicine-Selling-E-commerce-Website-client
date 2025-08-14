@@ -82,8 +82,8 @@ export default function ManageMedicine() {
           category,
           company,
           itemMassUnit,
-          price: parseInt(price),
-          discount:parseInt(discount),
+          price: parseFloat(price),
+          discount:parseFloat(discount),
           addedDate : new Date(),
           saler: {
             name: user.displayName,

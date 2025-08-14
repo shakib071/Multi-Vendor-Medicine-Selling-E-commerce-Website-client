@@ -18,8 +18,6 @@ Main Tasks
 
     Slider Section: Here you will see all the Product slides added by the Admin in the Manage banner Advertise. (note: admin can add and remove product slides from his dashboard). (see details in admin dashboard page instruction)
 
-    Category Card Section: In this section, users will see all Category cards(minimum 6 cards), each displaying basic information such as the category name, a basic image, and the number of medicines in that category. Clicking on any Category card will navigate the user to a page where all medicines within that specific category are displayed in a tabular format..(see details in Category details page instruction)
-
     Discount products: here the user will see all the product cards that have discounts. This section will be a draggable multiple-card slider. (look at Swiperjs slider demos)
 
     Make two extra sections related to your website.
@@ -27,11 +25,6 @@ Main Tasks
 
 3. SHOP  PAGE:
     On this page, the user will see all medicines information in tabular format. Each row will have a select button and an eye button. Clicking the eye button a modal will pop up where the user can see all the information of that medicine with its image. Clicking the select button will add the medicine to the cart.
-
-
-4. CATEGORY DETAILS MEDICINE PAGE:
-	 On this page, the user will see all medicines information of a specific category(tablet, syrup, capsule, injection, others), in tabular format. Each row will have a select button and an eye button. Clicking the eye button a modal will pop up where the user can see all the information of that medicine with its image. Clicking the select button will add the medicine to the cart.
-
 
 5. CART PAGE: 
 	On this page, the user will see all of his selected medicines with some basic information (name, company, price per unit, quantity). Users can increase or decrease the quantity, can remove specific medicine, or can clear all of the carts. 
@@ -83,4 +76,6 @@ Main Tasks
 12. OPTIONAL PART:
     Translate the whole website into different languages
     Add a digital  time clock in the navbar of the website 
+
+13.. jwt and private route
     
