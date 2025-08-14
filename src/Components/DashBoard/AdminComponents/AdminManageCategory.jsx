@@ -91,7 +91,7 @@ export default function AdminManageCategory() {
 
 
   const updateCategoryToDatabase = async(upData) => {
-    console.log(upData.id);
+    // console.log(upData.id);
     try{
       const res = await axiosInstance.patch(`/update-category/${updateData.id}`,upData);
       console.log(res.data);

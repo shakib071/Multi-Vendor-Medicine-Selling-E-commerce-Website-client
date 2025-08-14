@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import Loading from '../../Loading/Loading';
 import useSalerMedicineData from '../../../Hooks/salerMedicineData/useSalerMedicineData';
 import { useNavigation } from "react-router";
+import useCategories from "../../../Hooks/getCategories/useCategories";
 
 export default function ManageMedicine() {
   const [showModal, setShowModal] = useState(false);
@@ -14,6 +15,7 @@ export default function ManageMedicine() {
   const {user,loading} = useAuth();
   const axiosInstance = useAxios();
   const {data:medicines, isLoading,refetch} = useSalerMedicineData(user?.uid);
+  const {data:categories , isLoading:categoriesLoading} = useCategories();
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
@@ -95,18 +97,16 @@ export default function ManageMedicine() {
       console.log(error);
     }
 
- 
-
-    
 
     closeModal();
   };
 
-  if(loading || isLoading || navigation.state === 'loading'){
+  if(loading || isLoading || navigation.state === 'loading' ||categoriesLoading){
     return <Loading></Loading>;
   }
 
-  console.log(medicines);
+  console.log(categories);
+  
 
   return (
     
@@ -163,7 +163,7 @@ export default function ManageMedicine() {
                   {med.company}
                 </td>
                 <td className="px-2 py-4 whitespace-nowrap text-[16px] text-gray-700">
-                  {med.massUnit}
+                  {med.itemMassUnit}
                 </td>
                 <td className="px-2 py-4 whitespace-nowrap text-[16px] text-gray-700">
                   ${med.price.toFixed(2)}
@@ -220,8 +220,12 @@ export default function ManageMedicine() {
                     className="w-full border border-gray-300 rounded-lg text-lg px-5 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 >
                     <option value="">Select Category</option>
-                    <option value="Painkiller">Painkiller</option>
-                    <option value="Antibiotic">Antibiotic</option>
+                    {
+                      categories.map((cat)=> (
+                        <option key={cat._id} value={cat.categoryName}>{cat.categoryName}</option>
+                      ))
+                    }
+      
                 </select>
                 <select
                     name="company"
@@ -231,6 +235,11 @@ export default function ManageMedicine() {
                     <option value="">Select Company</option>
                     <option value="Pharma Inc">Pharma Inc</option>
                     <option value="MediCorp">MediCorp</option>
+                    <option value="HealCare Pharma">HealCare Pharma</option>
+                    <option value="CurePlus Pharma">CurePlus Pharma</option>
+                    <option value="BioMed Pharma">BioMed Pharma</option>
+                    <option value="LifeWell Pharma">LifeWell Pharma</option>
+                    <option value="MediLife Labs">MediLife Labs</option>
                 </select>
                 <label className="text-xl pl-2">Item Mass Unit</label>
                 <div className="flex gap-6 text-lg px-5 py-2 items-center">

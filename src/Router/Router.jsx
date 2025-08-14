@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
         element: <Invoice></Invoice>,
       },
       {
-        path: '/category-details',
+        path: '/category-details/:category',
         element: <CategoryDetails></CategoryDetails>,
       },
      
