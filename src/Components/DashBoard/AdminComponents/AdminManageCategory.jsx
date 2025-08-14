@@ -1,4 +1,11 @@
 import React, { useState } from "react";
+import uploadImageBB from '../../../Hooks/UploadImage/uploadImageBB'
+import useAuth from "../../../Hooks/getAuth/useAuth";
+import Loading from "../../Loading/Loading";
+import { useNavigation } from "react-router";
+import useAxios from "../../../Hooks/AxiosHook/useAxios";
+import Swal from "sweetalert2";
+
 
 const fakeCategories = [
   {
@@ -24,97 +31,78 @@ const fakeCategories = [
 export default function AdminManageCategory() {
   const [categories, setCategories] = useState(fakeCategories);
   const [showModal, setShowModal] = useState(false);
-  const [editingCategory, setEditingCategory] = useState(null);
-  const [formData, setFormData] = useState({
-    categoryName: "",
-    categoryImageURL: "",
-    categoryImageFile: null,
-  });
+  const {loading} = useAuth();
+  const Navigation = useNavigation();
+  const axiosInstance = useAxios();
+  
+  
 
-  // Open modal for adding or editing
-  const openModal = (category = null) => {
-    setEditingCategory(category);
-    if (category) {
-      setFormData({
-        categoryName: category.categoryName,
-        categoryImageURL: category.categoryImage || "",
-        categoryImageFile: null,
-      });
-    } else {
-      setFormData({
-        categoryName: "",
-        categoryImageURL: "",
-        categoryImageFile: null,
-      });
-    }
+  const openModal = () => {
     setShowModal(true);
-  };
+  }
 
   const closeModal = () => {
     setShowModal(false);
-    setEditingCategory(null);
-    setFormData({
-      categoryName: "",
-      categoryImageURL: "",
-      categoryImageFile: null,
-    });
-  };
+  }
 
-  // Handle text and file inputs
-  const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "categoryImageFile") {
-      setFormData((prev) => ({ ...prev, categoryImageFile: files[0] || null }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
+  const addCategoryToDatabase = async(categoryData) => {
+    try{
+      const res = await axiosInstance.post('/category',categoryData);
+    
+      console.log(res.data);
+      if(res.data.acknowledged){
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Category Has been added",
+          showConfirmButton: false,
+          timer: 1500
+        });
+         setShowModal(false);
+        
+      }
+      else {
+ 
+        Swal.fire({
+          position: "center",
+          icon: "warning",
+          title: "Category Already Exists",
+          showConfirmButton: false,
+          timer: 2500
+        });
+         setShowModal(false);
+      }
     }
-  };
-
-  // Simulate image upload - in real app you'd upload file and get URL
-  const getImageURL = () => {
-    if (formData.categoryImageFile) {
-      // For demo: create local URL from file
-      return URL.createObjectURL(formData.categoryImageFile);
+    catch(error){
+      console.log(error);
     }
-    return formData.categoryImageURL;
-  };
+  }
 
-  const handleAddOrUpdateCategory = (e) => {
+  const handleAddCategory = async(e) => {
     e.preventDefault();
-    if (!formData.categoryName.trim()) {
-      alert("Category name is required");
-      return;
+    const form = e.target ;
+    const categoryName = form.categoryName.value;
+    const categoryImageFile = form.categoryImageFile.files[0];
+    const imageUrl = await uploadImageBB(categoryImageFile);
+
+    const categoryData = {
+      categoryName,
+      categoryImage : imageUrl,
     }
 
-    const imageURL = getImageURL();
+    //add to database  
 
-    if (editingCategory) {
-      // Update existing category
-      setCategories((prev) =>
-        prev.map((cat) =>
-          cat.id === editingCategory.id
-            ? { ...cat, categoryName: formData.categoryName, categoryImage: imageURL }
-            : cat
-        )
-      );
-    } else {
-      // Add new category
-      const newCat = {
-        id: Date.now(),
-        categoryName: formData.categoryName,
-        categoryImage: imageURL,
-      };
-      setCategories((prev) => [...prev, newCat]);
-    }
+    addCategoryToDatabase(categoryData);
 
-    closeModal();
-  };
+    
+    
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this category?")) {
-      setCategories((prev) => prev.filter((cat) => cat.id !== id));
-    }
-  };
+    
+  }
+
+  if(loading || Navigation.state == 'loading'){
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="max-w-7xl mx-auto p-8 bg-white rounded-xl shadow-lg">
@@ -165,13 +153,13 @@ export default function AdminManageCategory() {
               </td>
               <td className="py-4 px-6 space-x-3">
                 <button
-                  onClick={() => openModal({ id, categoryName, categoryImage })}
+                  
                   className="px-4 py-2 text-xl rounded-md bg-yellow-400 text-gray-900 hover:bg-yellow-500 font-semibold transition"
                 >
                   Update
                 </button>
                 <button
-                  onClick={() => handleDelete(id)}
+                  
                   className="px-4 py-2 text-xl rounded-md bg-red-600 text-white hover:bg-red-700 font-semibold transition"
                 >
                   Delete
@@ -193,18 +181,16 @@ export default function AdminManageCategory() {
       </table>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-[#ffffff87] bg-opacity-60 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              {editingCategory ? "Update Category" : "Add New Category"}
+              Add New Category
             </h2>
-            <form onSubmit={handleAddOrUpdateCategory} className="space-y-5">
+            <form onSubmit={handleAddCategory} className="space-y-5">
               <input
                 type="text"
                 name="categoryName"
                 placeholder="Category Name"
-                value={formData.categoryName}
-                onChange={handleInputChange}
                 required
                 className="w-full px-5 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-indigo-400 text-lg"
               />
@@ -218,7 +204,7 @@ export default function AdminManageCategory() {
                   type="file"
                   name="categoryImageFile"
                   accept="image/*"
-                  onChange={handleInputChange}
+                  required
                   className="w-full border text-xl px-3 py-2 text-gray-700"
                 />
                
@@ -236,7 +222,7 @@ export default function AdminManageCategory() {
                   type="submit"
                   className="px-6 py-2 text-xl rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition shadow-md"
                 >
-                  {editingCategory ? "Update Category" : "Add Category"}
+                  Add Category
                 </button>
               </div>
             </form>

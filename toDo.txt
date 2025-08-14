@@ -61,7 +61,7 @@ Main Tasks
     (Features of the admin dashboard)
 
 
-    Manage Category: Here admin can see all the categories of medicines in tabular format. He can update or delete any category from this page. There will be an add category button, clicking that button admin can add a new category using a modal form. A form will contain a minimum( categoryName, categoryImage URL, or image upload. )
+    Manage Category:  He can update or delete any category from this page. There will be an add category button, clicking that button admin can add a new category using a modal form. A form will contain a minimum( categoryName, categoryImage URL, or image upload. )
 
     Payment management: Here admin will see all the payment information (pending (default) and paid). The pending payment row will have an accept payment button, clicking that payment status will be paid. 
 
