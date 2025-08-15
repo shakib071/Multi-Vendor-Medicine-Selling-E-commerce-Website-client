@@ -45,7 +45,7 @@ const NavBar = () => {
                     <NavLink to='/'><p className='font-semibold '>Home</p></NavLink>
                     <NavLink to='/shop'><p className='font-semibold'>Shop</p></NavLink>
                    
-                    <NavLink to={`cart/${user.uid}`}>
+                    <NavLink to={`cart/${user?.uid}`}>
                         <FaShoppingCart   color="#3b82f6" />
                     </NavLink>
                     

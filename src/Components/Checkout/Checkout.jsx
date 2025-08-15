@@ -1,16 +1,15 @@
-// src/components/Checkout.jsx
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from '@stripe/react-stripe-js';
 import { FaCreditCard } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router";
+import PaymentForm from "./PaymentForm";
 
 const Checkout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const total = location.state || 0;
-  console.log(total);
-  const handlePay = () => {
-    navigate('/invoice')
-  }
+  const stripePromise = loadStripe(import.meta.env.VITE_Stripe_Publisher_key);
 
   return (
     <div className="max-w-3xl text-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
@@ -22,63 +21,23 @@ const Checkout = () => {
       {/* Order Summary */}
       <div className="border rounded-lg p-4 mb-6 bg-gray-50">
         <h2 className="text-lg font-semibold mb-3">Order Summary</h2>
-        <div className="flex justify-between text-gray-700">
+        <div className="flex gap-5 text-gray-700">
           <span>Grand Total:</span>
           <span className="font-bold text-xl text-green-600">${total}</span>
         </div>
       </div>
 
-      {/* Payment Form (UI only) */}
-      <form className="space-y-4 ">
-        <div>
-          <label className="block text-sm font-medium mb-1">Cardholder Name</label>
-          <input
-            type="text"
-            placeholder="John Doe"
-            className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500"
-          />
+      {/* Secure Stripe Payment Form */}
+      <div className="space-y-4">
+        <div className="border rounded-lg p-4 bg-gray-50">
+          <h3 className="font-semibold mb-3 flex items-center gap-2">
+            <FaCreditCard /> Secure Payment
+          </h3>
+          <Elements stripe={stripePromise}>
+            <PaymentForm total={total} navigate={navigate} />
+          </Elements>
         </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Card Number</label>
-          <div className="flex items-center border rounded-md px-3 py-2">
-            <FaCreditCard className="text-gray-500 mr-2" />
-            <input
-              type="text"
-              placeholder="1234 5678 9012 3456"
-              className="w-full focus:outline-none"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Expiry Date</label>
-            <input
-              type="text"
-              placeholder="MM/YY"
-              className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">CVC</label>
-            <input
-              type="text"
-              placeholder="123"
-              className="w-full border rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-        </div>
-
-        {/* Pay Button */}
-        <button
-          onClick={handlePay}
-          type="button"
-          className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-200"
-        >
-          Pay ${total}
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

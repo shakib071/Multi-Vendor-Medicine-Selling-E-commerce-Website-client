@@ -1,28 +1,40 @@
-
 import { FaPrint } from "react-icons/fa";
 import Logo  from '../../assets/medicalLogo.png';
+import useUserCartMed from "../../Hooks/getUserCart/useUserCartMed";
+import useAuth from '../../Hooks/getAuth/useAuth';
+import Loading from '../Loading/Loading';
 
 const Invoice = () => {
-  // Fake data
-  const invoiceData = {
-    invoiceId: "INV-2025-001",
-    date: "14 Aug 2025",
-    customer: {
-      name: "Shakib Hasan",
-      email: "shakib@example.com",
-      address: "123 Main Street, Dhaka, Bangladesh",
-    },
-    items: [
-      { name: "Paracetamol 500mg", company: "ACME Pharma", quantity: 2, price: 10 },
-      { name: "Vitamin C Tablets", company: "HealthCare Ltd", quantity: 1, price: 8 },
-      { name: "Cough Syrup", company: "MediLife", quantity: 3, price: 6 },
-    ],
-  };
 
-  const totalAmount = invoiceData.items.reduce(
+  const {loading,user} = useAuth();
+  const {data: invoiceData,isLoading} = useUserCartMed(user?.uid);
+  console.log(invoiceData);
+
+  const todaysDate = () => {
+    const todaysDate = new Date();
+
+      const year = todaysDate.getFullYear();
+      const month = todaysDate.getMonth() + 1;
+      const day = todaysDate.getDate();
+      if(month<10){
+        return `${day}-0${month}-${year}`;
+      }
+      return `${day}-${month}-${year}`;
+  }
+
+
+  
+
+  const totalAmount = invoiceData?.medicines.reduce(
     (sum, item) => sum + item.quantity * item.price,
     0
   );
+  // console.log(totalAmount);
+
+  if(loading || isLoading){
+    return <Loading></Loading>;
+  }
+  
 
   return (
     <div className="max-w-4xl mx-auto bg-white p-8 mt-10 shadow-lg rounded-lg">
@@ -37,17 +49,16 @@ const Invoice = () => {
           <p className="text-gray-500">Your Trusted Online Pharmacy</p>
         </div>
         <div>
-          <p className="font-semibold">Invoice #: {invoiceData.invoiceId}</p>
-          <p className="text-gray-500">Date: {invoiceData.date}</p>
+          <p className="font-semibold">Invoice #: INV-2025-001</p>
+          <p className="text-gray-500">Date: {todaysDate()} </p>
         </div>
       </div>
 
       {/* Customer Info */}
       <div className="mb-6">
-        <h2 className="text-lg font-semibold mb-2">Bill To:</h2>
-        <p>{invoiceData.customer.name}</p>
-        <p>{invoiceData.customer.email}</p>
-        <p>{invoiceData.customer.address}</p>
+        <h2 className="text-lg font-semibold mb-2">Bill To:{user?.displayName}</h2>
+        <p>{user?.email}</p>
+        
       </div>
 
       {/* Items Table */}
@@ -62,17 +73,21 @@ const Invoice = () => {
           </tr>
         </thead>
         <tbody>
-          {invoiceData.items.map((item, index) => (
-            <tr key={index}>
-              <td className="border border-gray-300 px-4 py-2">{item.name}</td>
-              <td className="border border-gray-300 px-4 py-2">{item.company}</td>
-              <td className="border border-gray-300 px-4 py-2 text-center">{item.quantity}</td>
-              <td className="border border-gray-300 px-4 py-2 text-center">${item.price}</td>
-              <td className="border border-gray-300 px-4 py-2 text-center">
-                ${item.price * item.quantity}
-              </td>
-            </tr>
-          ))}
+        
+            {
+              invoiceData.medicines.map((med,index)=>(
+                    <tr key={index}>
+                  <td className="border border-gray-300 px-4 py-2">{med.name}</td>
+                  <td className="border border-gray-300 px-4 py-2">{med.company}</td>
+                  <td className="border border-gray-300 px-4 py-2 text-center">{med.quantity}</td>
+                  <td className="border border-gray-300 px-4 py-2 text-center">${med.price}</td>
+                  <td className="border border-gray-300 px-4 py-2 text-center">
+                    ${med.price * med.quantity}
+                  </td>
+                </tr>
+              ))
+            }
+        
         </tbody>
       </table>
 
