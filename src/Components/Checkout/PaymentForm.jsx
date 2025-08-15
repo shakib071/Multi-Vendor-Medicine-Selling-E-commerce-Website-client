@@ -1,13 +1,34 @@
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useState } from 'react';
 import useAxios from '../../Hooks/AxiosHook/useAxios'
+import useUserCartMed from '../../Hooks/getUserCart/useUserCartMed';
+import useAuth from '../../Hooks/getAuth/useAuth';
+import Loading from '../Loading/Loading';
 
 const PaymentForm = ({ total, navigate }) => {
   const stripe = useStripe();
+  const {user,loading}= useAuth();
   const elements = useElements();
   const [error, setError] = useState(null);
   const axiosInstance = useAxios()
   const [processing, setProcessing] = useState(false);
+  const {data:cartData, isLoading} = useUserCartMed(user?.uid);
+
+  const  addSaleToSalerInDatabase = async() => {
+    
+    const medicines = cartData?.medicines;
+    const length = medicines?.length || 0;
+    for(let i=0;i<length;i++){
+      console.log(medicines[i]);
+      const {saler , ...medicine}= medicines[i];
+      console.log('saler os',saler?.uid,medicine);
+      medicine.paid_status = "pending";
+      const res = await axiosInstance.post(`/saler-sold-items/${saler?.uid}`,{soldItems:medicine});
+      console.log(res.data);
+    }
+  }
+
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,7 +59,7 @@ const PaymentForm = ({ total, navigate }) => {
 
       // 3. Handle successful payment
       if (paymentIntent.status === 'succeeded') {
-        console.log("success");
+        addSaleToSalerInDatabase();
         navigate('/invoice', { state: { paymentId: paymentIntent.id } });
       }
     } catch (err) {
@@ -47,6 +68,10 @@ const PaymentForm = ({ total, navigate }) => {
       setProcessing(false);
     }
   };
+
+  if(loading || isLoading){
+    return <Loading></Loading>;
+  }
 
   return (
     <form onSubmit={handleSubmit}>

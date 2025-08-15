@@ -1,112 +1,162 @@
+import { useRef } from "react";
 import { FaPrint } from "react-icons/fa";
-import Logo  from '../../assets/medicalLogo.png';
+import Logo from '../../assets/medicalLogo.png';
 import useUserCartMed from "../../Hooks/getUserCart/useUserCartMed";
 import useAuth from '../../Hooks/getAuth/useAuth';
 import Loading from '../Loading/Loading';
+import jsPDF from "jspdf";
+import { toPng } from 'html-to-image';
+import { useLocation, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const Invoice = () => {
+  const invoiceRef = useRef(null);
+  const { loading, user } = useAuth();
+  const { data: invoiceData, isLoading } = useUserCartMed(user?.uid);
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log('state',location.state);
 
-  const {loading,user} = useAuth();
-  const {data: invoiceData,isLoading} = useUserCartMed(user?.uid);
-  console.log(invoiceData);
-
-  const todaysDate = () => {
-    const todaysDate = new Date();
-
-      const year = todaysDate.getFullYear();
-      const month = todaysDate.getMonth() + 1;
-      const day = todaysDate.getDate();
-      if(month<10){
-        return `${day}-0${month}-${year}`;
-      }
-      return `${day}-${month}-${year}`;
+  if(!location?.state){
+    navigate(`/cart/${user?.uid}`);
   }
 
+  const formatDate = () => {
+    const today = new Date();
+    return today.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+  };
 
-  
+  const generatePDF = async () => {
+    if (!invoiceRef.current) return;
 
-  const totalAmount = invoiceData?.medicines.reduce(
-    (sum, item) => sum + item.quantity * item.price,
-    0
-  );
-  // console.log(totalAmount);
+      const dataUrl = await toPng(invoiceRef.current);
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgProps = pdf.getImageProperties(dataUrl);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('invoice.pdf');
 
-  if(loading || isLoading){
-    return <Loading></Loading>;
-  }
-  
+    
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Your pdf has been saved",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    
+  };
+
+  const calculateTotal = () => {
+    return invoiceData?.medicines.reduce(
+      (sum, item) => sum + (item.quantity * item.price),
+      0
+    ).toFixed(2);
+  };
+
+  if (loading || isLoading) return <Loading />;
 
   return (
-    <div className="max-w-4xl mx-auto bg-white p-8 mt-10 shadow-lg rounded-lg">
-      {/* Header */}
-      <div className="flex justify-between items-center border-b pb-4 mb-6">
-        <div>
-            <div className="text-3xl flex items-center font-bold text-blue-600">
-                <img className="w-12" src={Logo} alt="" />
-                <h1 className=""> MedStore</h1>
+    <div className="flex justify-center p-4">
+      <div 
+        ref={invoiceRef}
+        className="w-[210mm] bg-[#ffffff] p-8 " // A4 paper size
+        style={{
+          minHeight: '297mm', // A4 height
+          boxSizing: 'border-box'
+        }}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-center border-b pb-4 mb-6">
+          <div className="flex items-center gap-3">
+            <img className="w-16 h-16" src={Logo} alt="MedStore Logo" />
+            <div>
+              <h1 className="text-3xl font-bold text-[#2563eb]">MedStore</h1>
+              <p className="text-[#5a5c5f]">Your Trusted Online Pharmacy</p>
             </div>
-          
-          <p className="text-gray-500">Your Trusted Online Pharmacy</p>
+          </div>
+          <div className="text-right">
+            <p className="font-semibold">Invoice #: INV-{Date.now().toString().slice(-6)}</p>
+            <p className="text-[#73767d]">Date: {formatDate()}</p>
+          </div>
         </div>
-        <div>
-          <p className="font-semibold">Invoice #: INV-2025-001</p>
-          <p className="text-gray-500">Date: {todaysDate()} </p>
+
+        {/* Customer Info */}
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-2">Bill To:</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="font-medium">Customer Name:</p>
+              <p>{user?.displayName || 'N/A'}</p>
+            </div>
+            <div>
+              <p className="font-medium">Email:</p>
+              <p>{user?.email}</p>
+            </div>
+          </div>
         </div>
-      </div>
 
-      {/* Customer Info */}
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold mb-2">Bill To:{user?.displayName}</h2>
-        <p>{user?.email}</p>
-        
-      </div>
-
-      {/* Items Table */}
-      <table className="w-full border-collapse border border-gray-300 mb-6">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2 text-left">Medicine</th>
-            <th className="border border-gray-300 px-4 py-2 text-left">Company</th>
-            <th className="border border-gray-300 px-4 py-2 text-center">Quantity</th>
-            <th className="border border-gray-300 px-4 py-2 text-center">Price</th>
-            <th className="border border-gray-300 px-4 py-2 text-center">Total</th>
-          </tr>
-        </thead>
-        <tbody>
-        
-            {
-              invoiceData.medicines.map((med,index)=>(
-                    <tr key={index}>
-                  <td className="border border-gray-300 px-4 py-2">{med.name}</td>
-                  <td className="border border-gray-300 px-4 py-2">{med.company}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-center">{med.quantity}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-center">${med.price}</td>
-                  <td className="border border-gray-300 px-4 py-2 text-center">
-                    ${med.price * med.quantity}
-                  </td>
+        {/* Items Table */}
+        <div className="mb-8">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-[#f3f4f6]">
+                <th className="border p-3 text-left">Medicine</th>
+                <th className="border p-3 text-left">Company</th>
+                <th className="border p-3 text-center">Qty</th>
+                <th className="border p-3 text-center">Price</th>
+                <th className="border p-3 text-center">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {invoiceData?.medicines?.map((med, index) => (
+                <tr key={index}>
+                  <td className="border p-3">{med.name}</td>
+                  <td className="border p-3">{med.company}</td>
+                  <td className="border p-3 text-center">{med.quantity}</td>
+                  <td className="border p-3 text-center">${med.price.toFixed(2)}</td>
+                  <td className="border p-3 text-center">${(med.price * med.quantity).toFixed(2)}</td>
                 </tr>
-              ))
-            }
-        
-        </tbody>
-      </table>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      {/* Total */}
-      <div className="flex justify-end mb-6">
-        <div className="text-right">
-          <p className="text-lg font-semibold">
-            Total Amount: <span className="text-green-600">${totalAmount}</span>
-          </p>
+        {/* Totals */}
+        <div className="flex justify-end border-t pt-4">
+          <div className="w-64">
+            <div className="flex justify-between mb-2">
+              <span className="font-semibold">Subtotal:</span>
+              <span>${calculateTotal()}</span>
+            </div>
+           
+            <div className="flex justify-between text-lg font-bold">
+              <span>Total:</span>
+              <span className="text-[#16a34a]">${calculateTotal()}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="mt-12 pt-4 border-t text-center text-sm text-[#5a5c5f]">
+          <p>Thank you for your purchase!</p>
+          <p className="mt-2">CureCart • 123 Pharmacy St • Healthcare City</p>
         </div>
       </div>
 
-      {/* Print Button */}
-      <div className="flex justify-end">
+      {/* Download Button (outside printable area) */}
+      <div className="fixed bottom-20 right-20">
         <button
-          type="button"
-          className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700 transition duration-200"
+          onClick={generatePDF}
+          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg transition-all"
         >
-          <FaPrint /> Print Invoice
+          <FaPrint className="text-lg" />
+          <span>Download Invoice</span>
         </button>
       </div>
     </div>
