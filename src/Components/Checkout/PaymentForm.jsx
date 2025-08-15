@@ -21,12 +21,26 @@ const PaymentForm = ({ total, navigate }) => {
     for(let i=0;i<length;i++){
       console.log(medicines[i]);
       const {saler , ...medicine}= medicines[i];
-      console.log('saler os',saler?.uid,medicine);
+      // console.log('saler os',saler?.uid,medicine);
       medicine.paid_status = "pending";
       const res = await axiosInstance.post(`/saler-sold-items/${saler?.uid}`,{soldItems:medicine});
       console.log(res.data);
     }
   }
+
+
+  const addUserPurchasedToDatabase = async() => {
+    const medicines = cartData?.medicines;
+    const length = medicines?.length || 0;
+      for(let i=0;i<length;i++){
+      console.log(medicines[i]);
+      const {saler , ...medicine}= medicines[i];
+      console.log('user info',user?.uid,medicine);
+      const res = await axiosInstance.post(`/user-purchased-items/${user?.uid}`,{purchasedItem:medicine});
+      console.log(res.data);
+    }
+  }
+  
 
 
 
@@ -60,6 +74,7 @@ const PaymentForm = ({ total, navigate }) => {
       // 3. Handle successful payment
       if (paymentIntent.status === 'succeeded') {
         addSaleToSalerInDatabase();
+        addUserPurchasedToDatabase();
         navigate('/invoice', { state: { paymentId: paymentIntent.id } });
       }
     } catch (err) {
