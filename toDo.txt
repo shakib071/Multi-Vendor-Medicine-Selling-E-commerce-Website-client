@@ -23,10 +23,6 @@ Main Tasks
     Make two extra sections related to your website.
 
 
-3. SHOP  PAGE:
-    On this page, the user will see all medicines information in tabular format. Each row will have a select button and an eye button. Clicking the eye button a modal will pop up where the user can see all the information of that medicine with its image. Clicking the select button will add the medicine to the cart.
-
-
 8. Admin Dashboard PAGE:
     Admin homepage: The admin will see the total sales revenue of the website. Paid total, pending total
 
