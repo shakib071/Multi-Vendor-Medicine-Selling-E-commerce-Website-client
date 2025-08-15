@@ -11,15 +11,15 @@ export default function SelerHome() {
   const calculateTotal = () => {
     return purchases?.soldItems?.reduce(
       (sum,item)=> sum + (item.price * item.quantity),0
-    )
+    ) || 0;
   }
 
   const calculatePendingTotal = () => {
-    const pendingItems = purchases?.soldItems.filter(item => item.paid_status === 'pending')
+    const pendingItems = purchases?.soldItems?.filter(item => item.paid_status === 'pending')
     // console.log('pendub',pendingItems);
     return pendingItems?.reduce(
       (sum,item) => sum + (item.price * item.quantity),0
-    )
+    ) || 0;
   }
 
   

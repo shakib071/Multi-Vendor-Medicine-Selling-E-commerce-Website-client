@@ -66,7 +66,7 @@ const SalerPaymentHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {purchases?.soldItems.map((sold,index) => (
+            {purchases?.soldItems?.map((sold,index) => (
               <tr key={index} className="hover:bg-gray-50">
                 <td className="py-3 px-6 text-sm text-gray-800">{index+1}</td>
                 <td className="py-3 px-6 text-sm text-gray-800">{sold.name}</td>

@@ -16,6 +16,7 @@ export default function ManageMedicine() {
   const axiosInstance = useAxios();
   const {data:medicines, isLoading,refetch} = useSalerMedicineData(user?.uid);
   const {data:categories , isLoading:categoriesLoading} = useCategories();
+ 
 
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
@@ -59,6 +60,7 @@ export default function ManageMedicine() {
     const itemMassUnit = itemMass;
     const price = form.price.value;
     const discount = form.discount.value;
+    
     // console.log(name,genericName,description,photo,category,company,itemMassUnit,price,discount);
 
     //get the image link 
@@ -85,6 +87,7 @@ export default function ManageMedicine() {
           price: parseFloat(price),
           discount:parseFloat(discount),
           addedDate : new Date(),
+         
           saler: {
             name: user.displayName,
             email: user.email,

@@ -46,7 +46,7 @@ const UserDashboard = () => {
           </tr>
         </thead>
         <tbody>
-          {payments?.purchasedItem.map((purce,index) => (
+          {payments?.purchasedItem?.map((purce,index) => (
             <tr key={index} className="text-center border-b hover:bg-gray-50">
               <td className="py-2 px-4">{index+1}</td>
               <td className="py-2 px-4">{purce.transaction_ID}</td>

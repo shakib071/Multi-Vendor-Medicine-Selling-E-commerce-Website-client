@@ -4,6 +4,7 @@ import useAxios from '../../Hooks/AxiosHook/useAxios'
 import useUserCartMed from '../../Hooks/getUserCart/useUserCartMed';
 import useAuth from '../../Hooks/getAuth/useAuth';
 import Loading from '../Loading/Loading';
+import useSaleBuyId from '../../Hooks/getSaleBuyId/useSaleBuyId';
 
 const PaymentForm = ({ total, navigate }) => {
   const stripe = useStripe();
@@ -13,6 +14,8 @@ const PaymentForm = ({ total, navigate }) => {
   const axiosInstance = useAxios()
   const [processing, setProcessing] = useState(false);
   const {data:cartData, isLoading} = useUserCartMed(user?.uid);
+  const {data:buysaleid, isLoading:bsLoading} = useSaleBuyId();
+  console.log(buysaleid?.idSB);
 
   const  addSaleToSalerInDatabase = async() => {
     
@@ -24,6 +27,7 @@ const PaymentForm = ({ total, navigate }) => {
       // console.log('saler os',saler?.uid,medicine);
       medicine.paid_status = "pending";
       medicine.buyerName = user?.displayName;
+      medicine.sbId= buysaleid?.idSB;
       const res = await axiosInstance.post(`/saler-sold-items/${saler?.uid}`,{soldItems:medicine});
       console.log(res.data);
     }
@@ -38,6 +42,7 @@ const PaymentForm = ({ total, navigate }) => {
       const {saler , ...medicine}= medicines[i];
       medicine.paid_status = "pending";
       medicine.transaction_ID = transaction_ID,
+      medicine.sbId= buysaleid?.idSB;
       console.log('user info',user?.uid,medicine);
       const res = await axiosInstance.post(`/user-purchased-items/${user?.uid}`,{purchasedItem:medicine});
       console.log(res.data);
@@ -50,7 +55,7 @@ const PaymentForm = ({ total, navigate }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     
-    if (!stripe || !elements) {
+    if (!stripe || !elements || bsLoading) {
       return;
     }
 
