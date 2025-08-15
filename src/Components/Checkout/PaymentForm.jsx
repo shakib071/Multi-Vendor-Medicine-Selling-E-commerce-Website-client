@@ -23,6 +23,7 @@ const PaymentForm = ({ total, navigate }) => {
       const {saler , ...medicine}= medicines[i];
       // console.log('saler os',saler?.uid,medicine);
       medicine.paid_status = "pending";
+      medicine.buyerName = user?.displayName;
       const res = await axiosInstance.post(`/saler-sold-items/${saler?.uid}`,{soldItems:medicine});
       console.log(res.data);
     }
