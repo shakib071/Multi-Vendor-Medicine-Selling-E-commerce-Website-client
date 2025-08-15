@@ -105,7 +105,7 @@ export default function ManageMedicine() {
     return <Loading></Loading>;
   }
 
-  console.log(categories);
+  // console.log(categories);
   
 
   return (

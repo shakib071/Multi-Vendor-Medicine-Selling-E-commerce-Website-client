@@ -27,7 +27,7 @@ const SalerPaymentHistory = () => {
   const {user,loading} = useAuth();
   const {data:purchases,isLoading} = useSoldMeds(user?.uid);
 
-  console.log(purchases?.soldItems);
+  // console.log(purchases?.soldItems);
 
    const getTimeAndDate = (utcDate) => {
    

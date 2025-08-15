@@ -1,9 +1,32 @@
 import { FaMoneyBillWave, FaClock, FaCheckCircle } from "react-icons/fa";
+import useAuth from "../../../Hooks/getAuth/useAuth";
+import useSoldMeds from "../../../Hooks/getSalerSoldItems/useSoldMeds";
+import Loading from "../../Loading/Loading";
 
 export default function SelerHome() {
-  const paidTotal = 12500; 
-  const pendingTotal = 3500;
-  const totalRevenue = paidTotal + pendingTotal;
+  const {user,loading} = useAuth();
+  const {data:purchases,isLoading} = useSoldMeds(user?.uid);
+
+
+  const calculateTotal = () => {
+    return purchases?.soldItems?.reduce(
+      (sum,item)=> sum + (item.price * item.quantity),0
+    )
+  }
+
+  const calculatePendingTotal = () => {
+    const pendingItems = purchases?.soldItems.filter(item => item.paid_status === 'pending')
+    // console.log('pendub',pendingItems);
+    return pendingItems?.reduce(
+      (sum,item) => sum + (item.price * item.quantity),0
+    )
+  }
+
+  
+
+  if(loading || isLoading){
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="p-6">
@@ -16,7 +39,7 @@ export default function SelerHome() {
           <div>
             <h2 className="text-gray-500 text-sm">Total Revenue</h2>
             <p className="text-xl font-bold text-gray-800">
-              ${totalRevenue.toLocaleString()}
+              ${calculateTotal()}
             </p>
           </div>
         </div>
@@ -27,7 +50,7 @@ export default function SelerHome() {
           <div>
             <h2 className="text-gray-500 text-sm">Paid Total</h2>
             <p className="text-xl font-bold text-gray-800">
-              ${paidTotal.toLocaleString()}
+              ${calculateTotal() - calculatePendingTotal()}
             </p>
           </div>
         </div>
@@ -38,7 +61,7 @@ export default function SelerHome() {
           <div>
             <h2 className="text-gray-500 text-sm">Pending Total</h2>
             <p className="text-xl font-bold text-gray-800">
-              ${pendingTotal.toLocaleString()}
+              ${calculatePendingTotal()}
             </p>
           </div>
         </div>

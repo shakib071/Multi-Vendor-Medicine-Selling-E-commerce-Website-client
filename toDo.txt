@@ -36,8 +36,6 @@ Main Tasks
 9. Seller Dashboard PAGE:
     Seller homepage: seller will see the total sales revenue of his medicines. (Paid total, pending total)
 
-    Payment History: Here the seller will see all of the purchase history of his medicines by users. With their payment status(paid,pending(default))
-
     Ask For Advertisement: Here seller will see all of his referred medicine information for the advertisement slider, and their status(if they are getting used in the slider section or not). There will be an add advertise button, clicking the button modal will pop up where the seller can input a medicine image and some description for the advertisement slider.
 
 
