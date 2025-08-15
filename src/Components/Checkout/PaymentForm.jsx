@@ -29,12 +29,14 @@ const PaymentForm = ({ total, navigate }) => {
   }
 
 
-  const addUserPurchasedToDatabase = async() => {
+  const addUserPurchasedToDatabase = async(transaction_ID) => {
     const medicines = cartData?.medicines;
     const length = medicines?.length || 0;
       for(let i=0;i<length;i++){
       console.log(medicines[i]);
       const {saler , ...medicine}= medicines[i];
+      medicine.paid_status = "pending";
+      medicine.transaction_ID = transaction_ID,
       console.log('user info',user?.uid,medicine);
       const res = await axiosInstance.post(`/user-purchased-items/${user?.uid}`,{purchasedItem:medicine});
       console.log(res.data);
@@ -74,7 +76,7 @@ const PaymentForm = ({ total, navigate }) => {
       // 3. Handle successful payment
       if (paymentIntent.status === 'succeeded') {
         addSaleToSalerInDatabase();
-        addUserPurchasedToDatabase();
+        addUserPurchasedToDatabase(paymentIntent.id);
         navigate('/invoice', { state: { paymentId: paymentIntent.id } });
       }
     } catch (err) {
