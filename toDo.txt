@@ -16,17 +16,9 @@ Main Tasks
 
 1. HOME PAGE:
 
-    Slider Section: Here you will see all the Product slides added by the Admin in the Manage banner Advertise. (note: admin can add and remove product slides from his dashboard). (see details in admin dashboard page instruction)
-
     Discount products: here the user will see all the product cards that have discounts. This section will be a draggable multiple-card slider. (look at Swiperjs slider demos)
 
     Make two extra sections related to your website.
-
-
-8. Admin Dashboard PAGE:
-
-    Manage banner Advertise: Here admin will see all Advertise medicine details (medicine image, medicine name, description, seller email). There will be a toggle button for each row, add to slide remove from slide. Added medicines images will be shown on the homepage slider section banner(user homepage).
-
 
 11. CHALLENGE PART:
     For all of  the medicine tables, you have to implement pagination, sort by price, and search for any information (medicine name, generic name, company name. etc)

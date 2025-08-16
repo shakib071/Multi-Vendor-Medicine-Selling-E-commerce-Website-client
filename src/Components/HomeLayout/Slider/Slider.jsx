@@ -2,6 +2,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Autoplay, Pagination } from "swiper/modules";
+import { Typewriter } from 'react-simple-typewriter';
 
 
 import "swiper/css";
@@ -9,21 +10,24 @@ import 'swiper/css/navigation';
 
 
 import './slider.css';
+import useAllAdvertisement from "../../../Hooks/getAllAdversiment/useAllAdvertisement";
+import Loading from "../../Loading/Loading";
 
 
-
-// Fake data for slides
-const slidesData = [
-  { id: 1, name: "Pain Relief Medicine", description: "Fast acting painkiller for headaches", image: "https://cdn.pixabay.com/photo/2023/10/01/14/40/medicine-8287535_1280.jpg" },
-  { id: 2, name: "Antibiotic Capsule", description: "For bacterial infections", image: "https://cdn.pixabay.com/photo/2023/10/01/14/40/medicine-8287535_1280.jpg" },
-  { id: 3, name: "Vitamin C", description: "Boosts immunity", image: "https://cdn.pixabay.com/photo/2023/10/01/14/40/medicine-8287535_1280.jpg" },
-  { id: 4, name: "Cough Syrup", description: "Soothes cough and throat", image: "https://cdn.pixabay.com/photo/2023/10/01/14/40/medicine-8287535_1280.jpg" },
-];
 
 const Slider = () => {
+
+  const {data,isLoading} = useAllAdvertisement();
+
+  const slidesData = data?.filter(item => item.status == 'active');
+  console.log(slidesData);
+
+  if(isLoading){
+    return <Loading></Loading>;
+  }
   
   return (
-    <div className="py-10 ">
+    <div className="py-10 w-[90%] mx-auto rounded-2xl">
       <h2 className="text-3xl font-bold text-center  text-blue-600 mb-8">
         🩺 Featured Products
       </h2>
@@ -41,22 +45,27 @@ const Slider = () => {
         >
                 {slidesData.map((slide) => (
                     <SwiperSlide key={slide.id}>
-                    <div className="   shadow-lg  flex flex-col items-center text-center w-full  mx-auto">
-                       <div className="bg-white rounded-2xl p-3">
-                         <div className="h-110 w-230  object-cover rounded-lg mb-5">
-                          <img
-                          src={slide.image}
-                          alt={slide.name}
-                          className=" " 
-                          />
-                        </div>
-                        
-                        <div className="">
-                          <h3 className="font-semibold text-white text-3xl  mb-2">{slide.name}</h3>
-                        <p className="text-gray-600 text-xl ">{slide.description}</p>
-                        </div>
-                       </div>
-                    </div>
+                    
+                      <div className="relative w-full h-140 bg-center bg-no-repeat  bg-contain transition-transform duration-500 hover:scale-110" style={{backgroundImage: `url(${slide.imageUrl})`}}>
+                                     <div className='absolute bottom-3 sm:bottom-10 w-[60%] sm:w-[40%]  px-2 sm:px-6'>
+                                        <p className="text-sm sm:text-5xl 2xl:text-6xl font-bold text-[#E11D48]">
+                                           <Typewriter
+                                                words={[slide.name]}
+                                                loop={0}
+                                                cursor
+                                                cursorStyle='_'
+                                                typeSpeed={200}
+                                                deleteSpeed={80}
+                                                delaySpeed={1000}
+                                                // onLoopDone={handleDone}
+                                                // onType={handleType}
+                                              />
+                                          </p>
+                                        {/* <p className="text-5xl font-bold text-[#E11D48]">{item.title}</p> */}
+                                        <p className='	text-orange-400 text-[11px] sm:text-sm md:text-[14px] lg:text-lg 2xl:text-xl mt-4 font-semibold'>{slide.description}</p>
+                                     </div>
+                                  </div>
+                   
                     </SwiperSlide>
                 ))}
         </Swiper>
