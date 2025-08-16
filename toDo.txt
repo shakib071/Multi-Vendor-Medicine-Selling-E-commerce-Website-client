@@ -28,10 +28,6 @@ Main Tasks
     Manage banner Advertise: Here admin will see all Advertise medicine details (medicine image, medicine name, description, seller email). There will be a toggle button for each row, add to slide remove from slide. Added medicines images will be shown on the homepage slider section banner(user homepage).
 
 
-9. Seller Dashboard PAGE:
-    Ask For Advertisement: Here seller will see all of his referred medicine information for the advertisement slider, and their status(if they are getting used in the slider section or not). There will be an add advertise button, clicking the button modal will pop up where the seller can input a medicine image and some description for the advertisement slider.
-
-
 11. CHALLENGE PART:
     For all of  the medicine tables, you have to implement pagination, sort by price, and search for any information (medicine name, generic name, company name. etc)
     Store access token in local storage and verify it on every private route API calls
