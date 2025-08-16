@@ -24,9 +24,6 @@ Main Tasks
 
 
 8. Admin Dashboard PAGE:
-    Admin homepage: The admin will see the total sales revenue of the website. Paid total, pending total
-
-    Sales Report: The report can be downloaded in pdf/docs/CSV/xlsx any of these formats. (explore react data table related component libraries)
 
     Manage banner Advertise: Here admin will see all Advertise medicine details (medicine image, medicine name, description, seller email). There will be a toggle button for each row, add to slide remove from slide. Added medicines images will be shown on the homepage slider section banner(user homepage).
 
