@@ -13,7 +13,7 @@ import useAuth from '../../../Hooks/getAuth/useAuth';
 
 const Login = () => {
 
-    const {handleGoogleLogin,handleGithubLogin,login,addUserToDataBase} = useAuth();
+    const {handleGoogleLogin,handleGithubLogin,login,addUserToDataBase,setLoading} = useAuth();
     const navigate = useNavigate();
 
 
@@ -31,6 +31,7 @@ const Login = () => {
         })
         .catch((error)=> {
             console.log(error);
+            setLoading(false);
         })
 
     }
@@ -55,6 +56,7 @@ const Login = () => {
         })
         .catch((error) => {
             console.log(error);
+            setLoading(false);
         })
     }
 
@@ -77,6 +79,7 @@ const Login = () => {
         })
         .catch((error)=> {
             console.log(error);
+            setLoading(false);
         })
     }
 

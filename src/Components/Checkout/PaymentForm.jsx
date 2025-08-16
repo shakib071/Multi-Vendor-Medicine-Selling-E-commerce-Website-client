@@ -46,6 +46,9 @@ const PaymentForm = ({ total, navigate }) => {
       medicine.transaction_ID = transaction_ID,
       medicine.sbId = newBuySaleId?.idSB;
       medicine.buyerName = user?.displayName;
+      medicine.salerName = saler?.name;
+      medicine.salerEmail = saler?.email;
+      medicine.buyerEmail = user?.email;
       
       console.log('user info',user?.uid,medicine);
       const res = await axiosInstance.post(`/user-purchased-items/${user?.uid}`,{purchasedItem:medicine});

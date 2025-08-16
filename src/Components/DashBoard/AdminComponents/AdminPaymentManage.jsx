@@ -50,6 +50,7 @@ export default function AdminPaymentManagement() {
               key={i}
               className={`${i % 2 === 0 ? "bg-gray-100" : "bg-white"} text-lg hover:bg-indigo-50 transition-colors`}
             >
+              <td className="py-3 px-3 font-mono  text-gray-800">{i+1}</td>
               <td className="py-3 px-3 font-mono text-[12px] text-gray-800">{pay.transaction_ID}</td>
               <td className="py-3 px-3 text-gray-900 font-semibold">{pay.buyerName}</td>
               <td className="py-3 px-3 text-gray-800">{pay.name}</td>
