@@ -18,8 +18,6 @@ Main Tasks
 
     Discount products: here the user will see all the product cards that have discounts. This section will be a draggable multiple-card slider. (look at Swiperjs slider demos)
 
-    Make two extra sections related to your website.
-
 11. CHALLENGE PART:
     For all of  the medicine tables, you have to implement pagination, sort by price, and search for any information (medicine name, generic name, company name. etc)
     Store access token in local storage and verify it on every private route API calls
