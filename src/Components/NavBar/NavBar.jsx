@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logoImg  from '../../assets/medicalLogo.png'
 import { NavLink, useNavigate, useNavigation } from 'react-router';
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -13,10 +13,8 @@ const NavBar = () => {
     const {logOut,user,loading} = useAuth();
     const navigation = useNavigation();
     const navigate = useNavigate();
+    const [time, setTime] = useState(new Date());
 
-    if(loading || navigation.state === 'loading'){
-        return <Loading></Loading>;
-    }
 
     const handleLogout = () => {
         logOut()
@@ -26,6 +24,25 @@ const NavBar = () => {
         .catch((error)=>{
             console.log(error);
         })
+    }
+    useEffect(() => {
+        const timer = setInterval(() => {
+        setTime(new Date());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
+
+    const formattedTime = time.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+    });
+
+    
+    if(loading || navigation.state === 'loading'){
+        return <Loading></Loading>;
     }
     
     return (
@@ -66,6 +83,11 @@ const NavBar = () => {
 
                     
                 </div>
+
+                <div className='text-2xl font-semibold  px-4 py-1 rounded-lg'>
+                    <p>{formattedTime}</p>
+                </div>
+
                 <div className='hidden md:flex  gap-2 items-center md:gap-3 lg:gap-5 text-[11px] sm:text-lg md:text-xl lg:text-2xl xl:text-[29px] 2xl:text-[33px]'>
                    {
                         !user && <NavLink to='/login'><p className='font-semibold'>Join US</p></NavLink>

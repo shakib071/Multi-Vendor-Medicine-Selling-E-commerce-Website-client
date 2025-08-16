@@ -19,9 +19,5 @@ Show sweet alert/toast/notification for all the crud operations, successful auth
     Dynamic Title- react-helmet, re-title(https://www.npmjs.com/package/re-title)
 
 
-12. OPTIONAL PART:
-    Translate the whole website into different languages
-    Add a digital  time clock in the navbar of the website 
-
-13.. jwt and private route and discount calculation
+13.. jwt and private route and discount calculation and update profile
     
