@@ -13,8 +13,7 @@ const SalerAdvertisement = () => {
 
   const {user,loading} = useAuth();
   const axiosInstance = useAxios();
-  const {data:ads,isLoading} = useSalerAd(user?.uid);
-  console.log('adver',ads);
+  const {data:ads,isLoading,refetch} = useSalerAd(user?.uid);
   const [isModalOpen, setIsModalOpen] = useState(false);
  
 
@@ -34,7 +33,7 @@ const SalerAdvertisement = () => {
     const image = form.image.files[0];
     const description = form.description.value;
     const imageUrl = await uploadImageBB(image);
-    console.log(name,imageUrl,description);
+    // console.log(name,imageUrl,description);
 
     //add to database 
     const advertisement = {
@@ -47,7 +46,7 @@ const SalerAdvertisement = () => {
     }
     const res = await axiosInstance.post('add-advertisement', {advertisement : advertisement});
     console.log(res.data);
-    if(res.data.insertedId){
+    if(res?.data?.insertedId){
       Swal.fire({
         position: "center",
         icon: "success",
@@ -55,6 +54,7 @@ const SalerAdvertisement = () => {
         showConfirmButton: false,
         timer: 1500
       });
+      refetch();
       closeModal();
     }
   }
@@ -76,7 +76,7 @@ const SalerAdvertisement = () => {
       </button>
 
       <div className="space-y-4">
-        {ads.map((ad,index) => (
+        {ads?.map((ad,index) => (
           <div key={index} className="flex items-center gap-4 border p-4 rounded-xl">
             <img src={ad.imageUrl} alt={ad.name} className="w-24 h-24 object-cover rounded-lg" />
             <div className="flex-1">

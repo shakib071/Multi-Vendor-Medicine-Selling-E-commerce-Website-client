@@ -1,44 +1,38 @@
-// AdminManageAd.jsx
-import { useState } from "react";
+
+import Swal from "sweetalert2";
+import useAxios from "../../../Hooks/AxiosHook/useAxios";
+import useAllAdvertisement from "../../../Hooks/getAllAdversiment/useAllAdvertisement";
+import Loading from "../../Loading/Loading";
 
 const AdminManageAd = () => {
-  const [ads, setAds] = useState([
-    {
-      id: 1,
-      name: "Paracetamol 500mg",
-      description: "Effective for fever and mild pain relief.",
-      sellerEmail: "seller1@example.com",
-      image:
-        "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=80&q=80",
-      inSlide: false,
-    },
-    {
-      id: 2,
-      name: "Amoxicillin",
-      description: "Antibiotic for bacterial infections.",
-      sellerEmail: "seller2@example.com",
-      image:
-        "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=80&q=80",
-      inSlide: true,
-    },
-    {
-      id: 3,
-      name: "Vitamin C",
-      description: "Boosts immunity and prevents scurvy.",
-      sellerEmail: "seller3@example.com",
-      image:
-        "https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=80&q=80",
-      inSlide: false,
-    },
-  ]);
+  const {data:ads,isLoading,refetch} = useAllAdvertisement();
+  const axiosInstance = useAxios();
+  
 
-  const toggleSlide = (id) => {
-    setAds((prev) =>
-      prev.map((ad) =>
-        ad.id === id ? { ...ad, inSlide: !ad.inSlide } : ad
-      )
-    );
-  };
+  const addorRemoveToadSlide = async(status,ad) => {
+    
+    if(status=='inactive'){
+      //add to slide
+      const res = await axiosInstance.patch(`/add-ad-to-slide/${ad._id}`,{Status : "active"});
+
+      if(res?.data?.modifiedCount){
+       refetch();
+      }
+    }
+    else{
+      //remove from slide
+      const res = await axiosInstance.patch(`/add-ad-to-slide/${ad._id}`,{Status : "inactive"});
+
+      if(res?.data?.modifiedCount){
+       refetch();
+      }
+    }
+  }
+
+
+  if(isLoading){
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="p-6 bg-gray-50 rounded-2xl min-h-screen">
@@ -60,29 +54,29 @@ const AdminManageAd = () => {
           <tbody>
             {ads.map((ad) => (
               <tr
-                key={ad.id}
+                key={ad._id}
                 className="border-b hover:bg-gray-50 transition"
               >
                 <td className="p-3">
                   <img
-                    src={ad.image}
+                    src={ad.imageUrl}
                     alt={ad.name}
                     className="w-16 h-16 rounded-lg object-cover border"
                   />
                 </td>
-                <td className="p-3 font-medium">{ad.name}</td>
+                <td className="p-3 text-xl font-semibold ">{ad.name}</td>
                 <td className="p-3 text-gray-600">{ad.description}</td>
-                <td className="p-3 text-gray-500">{ad.sellerEmail}</td>
+                <td className="p-3 text-gray-500">{ad.adder_email}</td>
                 <td className="p-3 text-center">
                   <button
-                    onClick={() => toggleSlide(ad.id)}
+                    onClick={()=>addorRemoveToadSlide(ad.status,ad)}
                     className={`px-4 py-1 rounded-full text-sm font-semibold transition ${
-                      ad.inSlide
-                        ? "bg-red-100 text-red-600 hover:bg-red-200"
-                        : "bg-green-100 text-green-600 hover:bg-green-200"
+                      ad.status == 'inactive'
+                        ? "bg-green-100 text-green-600 hover:bg-green-200"
+                        : "bg-red-100 text-red-600 hover:bg-red-200"
                     }`}
                   >
-                    {ad.inSlide ? "Remove from Slide" : "Add to Slide"}
+                    {ad.status == 'inactive' ? "Add to Slide" : "Remove from Slide" }
                   </button>
                 </td>
               </tr>
