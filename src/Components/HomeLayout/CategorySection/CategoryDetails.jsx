@@ -27,7 +27,7 @@ const CategoryDetails = () => {
     console.log(catMedicine);
     // add to datbase 
     try{
-      const res = await axiosInstance.post(`/cart/${user.uid}`,catMedicine);
+      const res = await axiosInstance.post(`/cart/${user?.uid}`,catMedicine);
       // console.log(res.data);
       if(res.data.insertedId || res.data._id){
         Swal.fire({

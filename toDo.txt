@@ -2,21 +2,13 @@ Multi-Vendor Medicine Selling E-commerce Website
 
 Key Rules: 
 
-Include a minimum of 20 notable GitHub commits on the client side 
-Include a minimum of 12 notable GitHub commits on the server side 
 Add a meaningful readme.md file with the name of your website, Admin username, password and live site URL. Include a minimum of 10 bullet points to feature your website.  
 Make it responsive for all devices. You need to make it responsive for mobile, tablet and desktop views. Make the dashboard responsive as well. 
 After reloading the page of a private route, the user should not be redirected to the login page.
 Use the Environment variable to hide the Firebase config keys and Mongodb credentials.
 Don’t use any Lorem ipsum text in your website. 
-Show sweet alert/toast/notification for all the crud operations, successful authentication login, and sign-up. Don’t use the default browser alert. 
-Implement tanstack query in all the data fetching functionality (For GET method only)
+Show sweet alert/toast/notification for all the crud operations, successful authentication login, and sign-up. Don’t use the default browser alert.
 
-Main Tasks
-
-1. HOME PAGE:
-
-    Discount products: here the user will see all the product cards that have discounts. This section will be a draggable multiple-card slider. (look at Swiperjs slider demos)
 
 11. CHALLENGE PART:
     For all of  the medicine tables, you have to implement pagination, sort by price, and search for any information (medicine name, generic name, company name. etc)
@@ -31,5 +23,5 @@ Main Tasks
     Translate the whole website into different languages
     Add a digital  time clock in the navbar of the website 
 
-13.. jwt and private route
+13.. jwt and private route and discount calculation
     
