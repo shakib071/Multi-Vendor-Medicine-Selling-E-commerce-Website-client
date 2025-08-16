@@ -38,6 +38,7 @@ const UserDashboard = () => {
         <thead className="bg-gray-100">
           <tr>
             <th className="py-2 px-4 border-b">No</th>
+            <th className="py-2 px-4 border-b">Name</th>
             <th className="py-2 px-4 border-b">Transaction ID</th>
             <th className="py-2 px-4 border-b">Quantity</th>
             <th className="py-2 px-4 border-b">Amount</th>
@@ -49,6 +50,7 @@ const UserDashboard = () => {
           {payments?.purchasedItem?.map((purce,index) => (
             <tr key={index} className="text-center border-b hover:bg-gray-50">
               <td className="py-2 px-4">{index+1}</td>
+              <td className="py-2 px-4">{purce.name}</td>
               <td className="py-2 px-4">{purce.transaction_ID}</td>
               <td className="py-2 px-4">{purce.quantity}</td>
               <td className="py-2 px-4">${purce.price.toFixed(2)*purce.quantity}</td>

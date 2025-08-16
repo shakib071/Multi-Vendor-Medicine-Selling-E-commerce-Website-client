@@ -39,7 +39,7 @@ export default function SelerHome() {
           <div>
             <h2 className="text-gray-500 text-sm">Total Revenue</h2>
             <p className="text-xl font-bold text-gray-800">
-              ${calculateTotal()}
+              ${calculateTotal().toFixed(2)}
             </p>
           </div>
         </div>
@@ -50,7 +50,7 @@ export default function SelerHome() {
           <div>
             <h2 className="text-gray-500 text-sm">Paid Total</h2>
             <p className="text-xl font-bold text-gray-800">
-              ${calculateTotal() - calculatePendingTotal()}
+              ${(calculateTotal() - calculatePendingTotal()).toFixed(2)}
             </p>
           </div>
         </div>
@@ -61,7 +61,7 @@ export default function SelerHome() {
           <div>
             <h2 className="text-gray-500 text-sm">Pending Total</h2>
             <p className="text-xl font-bold text-gray-800">
-              ${calculatePendingTotal()}
+              ${calculatePendingTotal().toFixed(2)}
             </p>
           </div>
         </div>

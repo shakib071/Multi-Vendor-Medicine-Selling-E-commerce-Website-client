@@ -181,7 +181,7 @@ const Cart = () => {
                       </button>
                     </td>
                     <td className="px-4 py-3 text-blue-600 font-bold">
-                      {item.quantity*item.price}
+                      {(item.quantity*item.price)}
                     </td>
                     <td className="px-4 py-3 text-center">
                       <button
@@ -207,7 +207,7 @@ const Cart = () => {
             </button>
             <div className="flex items-center gap-6">
               <h2 className="text-lg font-bold">
-                Total: <span className="text-green-600">{total}</span>
+                Total: <span className="text-green-600">{total.toFixed(2)}</span>
               </h2>
               <button onClick={()=> handleCheckOut()} className="bg-blue-500 text-white px-5 py-2 rounded-lg hover:bg-blue-600">
                 Checkout

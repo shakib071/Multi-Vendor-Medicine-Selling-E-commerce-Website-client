@@ -7,7 +7,7 @@ const useSaleBuyId = () => {
     return useQuery({
         queryKey: ['salebuyId'],
         queryFn: async()=> await axiosInstance.get('/get-buy-sale-id').then(res=> res.data),
-        staleTime: 1000*60*5,
+        staleTime: 0,
     })
 };
 

@@ -14,38 +14,46 @@ const PaymentForm = ({ total, navigate }) => {
   const axiosInstance = useAxios()
   const [processing, setProcessing] = useState(false);
   const {data:cartData, isLoading} = useUserCartMed(user?.uid);
-  const {data:buysaleid, isLoading:bsLoading} = useSaleBuyId();
-  console.log(buysaleid?.idSB);
+  const {data:buysaleid, isLoading:bsLoading,refetch} = useSaleBuyId();
+  
+  // refetch()
 
-  const  addSaleToSalerInDatabase = async() => {
+  // const  addSaleToSalerInDatabase = async() => {
     
-    const medicines = cartData?.medicines;
-    const length = medicines?.length || 0;
-    for(let i=0;i<length;i++){
-      console.log(medicines[i]);
-      const {saler , ...medicine}= medicines[i];
-      // console.log('saler os',saler?.uid,medicine);
-      medicine.paid_status = "pending";
-      medicine.buyerName = user?.displayName;
-      medicine.sbId= buysaleid?.idSB;
-      const res = await axiosInstance.post(`/saler-sold-items/${saler?.uid}`,{soldItems:medicine});
-      console.log(res.data);
-    }
-  }
+  //   const medicines = cartData?.medicines;
+  //   const length = medicines?.length || 0;
+  //   for(let i=0;i<length;i++){
+  //     console.log(medicines[i]);
+  //     const {saler , ...medicine}= medicines[i];
+  //     // console.log('saler os',saler?.uid,medicine);
+  //     medicine.paid_status = "pending";
+  //     medicine.buyerName = user?.displayName;
+  //     medicine.sbId= buysaleid?.idSB;
+  //     const res = await axiosInstance.post(`/saler-sold-items/${saler?.uid}`,{soldItems:medicine});
+  //     console.log(res.data);
+  //   }
+  // }
 
 
   const addUserPurchasedToDatabase = async(transaction_ID) => {
     const medicines = cartData?.medicines;
     const length = medicines?.length || 0;
       for(let i=0;i<length;i++){
+      const { data: newBuySaleId } = await refetch();
       console.log(medicines[i]);
       const {saler , ...medicine}= medicines[i];
       medicine.paid_status = "pending";
       medicine.transaction_ID = transaction_ID,
-      medicine.sbId= buysaleid?.idSB;
+      medicine.sbId = newBuySaleId?.idSB;
+      medicine.buyerName = user?.displayName;
+      
       console.log('user info',user?.uid,medicine);
       const res = await axiosInstance.post(`/user-purchased-items/${user?.uid}`,{purchasedItem:medicine});
-      console.log(res.data);
+      const res2 = await axiosInstance.post(`/saler-sold-items/${saler?.uid}`,{soldItems:medicine});
+     
+      console.log(res.data, res2.data);
+      
+      
     }
   }
   
@@ -81,8 +89,9 @@ const PaymentForm = ({ total, navigate }) => {
 
       // 3. Handle successful payment
       if (paymentIntent.status === 'succeeded') {
-        addSaleToSalerInDatabase();
+      
         addUserPurchasedToDatabase(paymentIntent.id);
+        
         navigate('/invoice', { state: { paymentId: paymentIntent.id } });
       }
     } catch (err) {
