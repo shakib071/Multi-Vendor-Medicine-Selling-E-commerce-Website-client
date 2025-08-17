@@ -14,8 +14,8 @@ A full-featured online platform for buying and selling medicines with separate d
 ---
 
 ## Admin Credentials
-- **Username:** admin@example.com  
-- **Password:** Admin@123  
+- **Username:** shakibadmin@gmail.com 
+- **Password:** Admin071  
 
 **Live Site URL:** [https://your-website-link.com](https://your-website-link.com)
 
