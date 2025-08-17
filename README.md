@@ -21,6 +21,11 @@ A full-featured online platform for buying and selling medicines with separate d
 
 ---
 
+## Repositories 
+
+- **Client Side:** [https://github.com/shakib071/Multi-Vendor-Medicine-Selling-E-commerce-Website-client.git](https://github.com/shakib071/Multi-Vendor-Medicine-Selling-E-commerce-Website-client.git)\
+- **ServerSide:** [https://github.com/shakib071/Multi-Vendor-Medicine-Selling-E-commerce-Website-Server](https://github.com/shakib071/Multi-Vendor-Medicine-Selling-E-commerce-Website-Server)
+
 ## Features
 
 ### General Features
@@ -121,7 +126,7 @@ A full-featured online platform for buying and selling medicines with separate d
 ## Setup Instructions
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/shakib071/Multi-Vendor-Medicine-Selling-E-commerce-Website-client.git
 
 2. Navigate into the project folder:
     cd your-repo
