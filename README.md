@@ -28,7 +28,7 @@ A full-featured online platform for buying and selling medicines with separate d
 - **Username:** shakibadmin@gmail.com 
 - **Password:** Admin071  
 
-**Live Site URL:** [https://your-website-link.com](https://your-website-link.com)
+**Live Site URL:** [https://medicine-selling-website-3ee12.web.app/](https://medicine-selling-website-3ee12.web.app/)
 
 ---
 
