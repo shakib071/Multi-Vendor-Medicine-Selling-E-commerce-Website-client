@@ -6,9 +6,11 @@ import Loading from '../../Loading/Loading';
 import Swal from "sweetalert2";
 import jsPDF from "jspdf";
 import { toPng } from 'html-to-image';
+import { DownloadTableExcel } from "react-export-table-to-excel";
 
 const AdminSalesReport = () => {
   const reportRef = useRef(null);
+  const tableRef  = useRef(null);
   const { data, isLoading } = useAllSoldMed();
   const salesData = data?.flatMap((sale) => sale.soldItems);
 
@@ -81,10 +83,22 @@ const AdminSalesReport = () => {
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
         <h2 className="text-2xl font-bold text-blue-700">💊 Sales Report</h2>
-        <button onClick={generatePDF} className="flex items-center text-xl gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
-          <Download size={16} /> Download Report
-        </button>
+        <div className="flex flex-col gap-4 items-center">
+          <button onClick={generatePDF} className="flex items-center text-xl gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
+            <Download size={16} /> Download PDF
+          </button>
+          <DownloadTableExcel
+            filename="medicines"
+            sheet="medicines-data"
+            currentTableRef={tableRef.current}
+            >
+            <button className="flex items-center text-xl gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
+              <Download size={16} /> Export to Excel
+            </button>
+          </DownloadTableExcel>
+        </div>
       </div>
+     
 
      
       <div>
@@ -121,7 +135,7 @@ const AdminSalesReport = () => {
 
       
       <div ref={reportRef} className="bg-white shadow-lg rounded-lg overflow-hidden">
-        <table className="w-full text-left">
+        <table ref={tableRef} className="w-full text-left">
           <thead className="bg-blue-600 text-white text-sm uppercase">
             <tr>
               <th className="p-3">#</th>

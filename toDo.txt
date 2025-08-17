@@ -4,10 +4,6 @@ Make it responsive for all devices. You need to make it responsive for mobile, t
 After reloading the page of a private route, the user should not be redirected to the login page.
 
 11. CHALLENGE PART:
-    For all of  the medicine tables, sort by price, and search for any information (medicine name, generic name, company name. etc)
     Store access token in local storage and verify it on every private route API calls
-    Download pdf/excel format, for sales report page (https://www.npmjs.com/package/react-export-table-to-excel)
-    Date range filter for sales report page.
-    Use react hook form
 
 13.. jwt and private route and discount calculation and update profile
