@@ -155,9 +155,11 @@ A full-featured online platform for buying and selling medicines with separate d
    git clone https://github.com/shakib071/Multi-Vendor-Medicine-Selling-E-commerce-Website-client.git
 
 2. Navigate into the project folder:
+    ```bash 
     cd your-repo
 
 3. Install dependencies:
+    ```bash 
     npm install
 
 4. Create a .env file and add your credentials:
@@ -172,7 +174,10 @@ A full-featured online platform for buying and selling medicines with separate d
   -  VITE_Stripe_Publisher_key
 
 5. Start the development server:
+    ```bash 
     npm run dev
 
-6. Open your browser at http://localhost:5173/
+6. Open your browser at 
+    ```bash 
+     http://localhost:5173/
 
