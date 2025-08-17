@@ -85,6 +85,39 @@ A full-featured online platform for buying and selling medicines with separate d
 
 ---
 
+## Dependencies 
+
+### Frontend
+- **React** (`^19.1.1`) – UI library for building dynamic user interfaces  
+- **React DOM** (`^19.1.1`) – React renderer for the web  
+- **React Router** (`^7.8.0`) – Declarative routing for React apps  
+- **React Hook Form** (`^7.62.0`) – Easy and performant form handling  
+- **React Helmet** (`^6.1.0`) – Manage dynamic page titles and meta tags  
+- **React Icons** (`^5.5.0`) & **Lucide React** (`^0.539.0`) – Icon libraries for UI components  
+- **React Simple Typewriter** (`^5.0.1`) & **Typewriter Effect** (`^2.22.0`) – For typewriter text animations  
+- **React Data Table Component** (`^7.7.0`) – For responsive tables with sorting and pagination  
+- **React Export Table to Excel** (`^1.0.6`) – Export table data to Excel  
+- **React Toastify** (`^11.0.5`) – Elegant toast notifications  
+
+### Backend / Utilities
+- **Axios** (`^1.11.0`) – HTTP client for API requests  
+- **Firebase** (`^12.1.0`) – Authentication, Firestore, and cloud services  
+- **SweetAlert2** (`^11.22.4`) – Beautiful alerts and modals  
+
+### Styling & UI
+- **Tailwind CSS** (`^4.1.11`) & **@tailwindcss/vite** (`^4.1.11`) – Utility-first CSS framework  
+- **Swiper** (`^11.2.10`) – Mobile-friendly sliders and carousels  
+- **Lottie React** (`^2.4.1`) – Animations using Lottie JSON files  
+
+### PDF & Image Generation
+- **jspdf** (`^3.0.1`) & **jspdf-autotable** (`^5.0.2`) – Generate PDFs and tables dynamically  
+- **html-to-image** (`^1.11.13`) & **html2canvas** (`^1.4.1`) – Convert HTML to images  
+
+### Payments
+- **@stripe/react-stripe-js** (`^3.9.0`) & **@stripe/stripe-js** (`^7.8.0`) – Stripe integration for secure payment processing  
+
+---
+
 ## Setup Instructions
 1. Clone the repository:  
    ```bash
