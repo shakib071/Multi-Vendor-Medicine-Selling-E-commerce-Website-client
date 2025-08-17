@@ -7,12 +7,11 @@ import useAxios from "../../Hooks/AxiosHook/useAxios";
 import useAuth from "../../Hooks/getAuth/useAuth";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
-import useMedicineCount from "../../Hooks/getMedicineCounr/useMedicineCount";
 
 const Shop = () => {
-  const {data:medicineCount, isLoading:countLoading} = useMedicineCount();
-  // console.log(medicines);
-  console.log('medicine count', medicineCount?.count);
+  // const {data:medicineCount, isLoading:countLoading} = useMedicineCount();
+  // // console.log(medicines);
+  // console.log('medicine count', medicineCount?.count);
   const axiosInstance = useAxios();
   const {user,loading} = useAuth();
   const navigate = useNavigate();
@@ -21,8 +20,10 @@ const Shop = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [selectedPage , setSelectedPage] = useState(0);
   const [numberOfPage, setNumberOfPage] = useState(2);
+  const [sortOrder,setSortOrder] = useState(0);
+  const [SearchQuery,setsearchQuery] = useState("");
 
-  const {data:medicines,isLoading,refetch} = useAllMedicines(selectedPage,itemsPerPage);
+  const {data:medicines,isLoading,refetch} = useAllMedicines(selectedPage,itemsPerPage,sortOrder,SearchQuery);
 
   const [pages, setPages] = useState([]);
 
@@ -47,16 +48,16 @@ const Shop = () => {
   }, [selectedPage, numberOfPage]);
 
   useEffect(() => {
-  refetch();
-}, [selectedPage, itemsPerPage,itemsPerPage, refetch]);
+    refetch();
+  }, [selectedPage, itemsPerPage,itemsPerPage,sortOrder,SearchQuery ,refetch]);
 
   useEffect(()=>{
-    const medicinecount = medicineCount?.count;
+    const medicinecount = medicines?.count;
     
     const numofPage = Math.ceil(medicinecount/parseInt(itemsPerPage));
     setNumberOfPage(numofPage);
     refetch();
-  },[medicineCount?.count,itemsPerPage,refetch]);
+  },[medicines?.count,itemsPerPage,refetch]);
  
 
   console.log(pages);
@@ -66,6 +67,7 @@ const Shop = () => {
   const handleItemsPerPage = (e) => {
     const value = parseInt(e.target.value);
     setItemsPerPage(value);
+    setSelectedPage(0);
     
   }
 
@@ -73,7 +75,7 @@ const Shop = () => {
     const value = selectedPage-1
     if(selectedPage>0){
       setSelectedPage(value);
-   
+      
     }
     
   }
@@ -92,6 +94,21 @@ const Shop = () => {
     setSelectedPage(page);
 
   }
+
+  const handleSortOrder = (e) => {
+    const value = parseInt(e.target.value);
+    setSortOrder(value);
+    
+  }
+
+  const handleSearchQuery = (e) => {
+    e.preventDefault();
+    const value = e.target.searchQuery.value;
+    setsearchQuery(value);
+    setSelectedPage(0);
+  }
+
+
   
   console.log('items per page',itemsPerPage);
   console.log('selected page',selectedPage);
@@ -145,7 +162,8 @@ const Shop = () => {
     setSelectedMedicine(null);
   };
 
-  if(isLoading || loading || countLoading){
+
+  if(isLoading || loading ){
     return <Loading></Loading>;
   }
 
@@ -155,6 +173,35 @@ const Shop = () => {
       <h1 className="text-3xl text-center font-bold text-blue-700 mb-10">
         Shop Medicines
       </h1>
+
+      <div className="p-6 bg-white rounded-xl shadow-md flex items-center gap-4 mb-6">
+  
+        
+        <div className="flex-1">
+          <form onSubmit={handleSearchQuery} className="flex items-center  bg-white border rounded-lg shadow-sm px-3 py-2">
+            <input
+              type="text"
+              placeholder="Search medicine, company, generic , category name..."
+              name="searchQuery"
+              className="flex-1 outline-none text-gray-700 text-sm"
+            />
+            <button className="ml-2 text-lg   btn btn-primary px-3 py-1 ">
+              submit
+            </button>
+          </form>
+        </div>
+
+       
+        <div className="flex items-center gap-2">
+        <span className="text-gray-700 text-xl font-medium ">Sort by Price:</span>
+        <select onChange={(e)=>handleSortOrder(e)} className="border rounded-lg px-3 py-1 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="1">Low to High</option>
+          <option value="-1">High to Low</option>
+        </select>
+        </div>
+
+      </div>
+
 
       <div className="overflow-x-auto bg-white rounded-xl shadow-md">
         <table className="min-w-full text-lg">
@@ -169,7 +216,7 @@ const Shop = () => {
             </tr>
           </thead>
           <tbody>
-            {medicines.map((med,index) => (
+            {medicines?.allMedicines?.map((med,index) => (
               <tr
                 key={med._id}
                 className="border-b hover:bg-gray-50 transition"

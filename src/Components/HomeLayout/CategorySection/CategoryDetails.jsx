@@ -69,7 +69,7 @@ const CategoryDetails = () => {
     const handleItemsPerPage = (e) => {
       const value = parseInt(e.target.value);
       setItemsPerPage(value);
-      
+      setSelectedPage(0);
     }
   
     const handlePrevButton = () => {
