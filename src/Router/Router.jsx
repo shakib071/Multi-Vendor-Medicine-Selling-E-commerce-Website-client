@@ -13,6 +13,7 @@ import CategoryDetails from "../Components/HomeLayout/CategorySection/CategoryDe
 import Forbidden from "../Components/Forbidden/Forbidden";
 import PrivateRouter from "../PrivateRouter/PrivateRouter";
 import Error from "../Error/Error";
+import UpdateProfile from "../Components/AuthLayout/UpdateProfile/UpdateProfile";
 
 
 export const router = createBrowserRouter([
@@ -68,6 +69,11 @@ export const router = createBrowserRouter([
       {
         path: '/register',
         element: <Register></Register>,
+        errorElement: <Error></Error>,
+      },
+      {
+        path: '/update-profile',
+        element: <PrivateRouter><UpdateProfile></UpdateProfile></PrivateRouter>,
         errorElement: <Error></Error>,
       },
       {
