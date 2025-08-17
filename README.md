@@ -161,15 +161,15 @@ A full-featured online platform for buying and selling medicines with separate d
     npm install
 
 4. Create a .env file and add your credentials:
-    VITE_apiKey
-    VITE_authDomain
-    VITE_projectId
-    VITE_storageBucket
-    VITE_messagingSenderId
-    VITE_appId
-    VITE_Github_Client_Secrets_Key
-    VITE_ImgBB_API
-    VITE_Stripe_Publisher_key
+  -  VITE_apiKey
+  -  VITE_authDomain
+  -  VITE_projectId
+  -  VITE_storageBucket
+  -  VITE_messagingSenderId
+  -  VITE_appId
+  -  VITE_Github_Client_Secrets_Key
+  -  VITE_ImgBB_API
+  -  VITE_Stripe_Publisher_key
 
 5. Start the development server:
     npm run dev
