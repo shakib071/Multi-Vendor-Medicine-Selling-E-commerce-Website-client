@@ -7,6 +7,16 @@
 [![Express](https://img.shields.io/badge/Express-4.18.2-black?logo=express)](https://expressjs.com/)  
 [![Firebase](https://img.shields.io/badge/Firebase-9.22-yellow?logo=firebase)](https://firebase.google.com/)  
 [![Stripe](https://img.shields.io/badge/Stripe-8.0-purple?logo=stripe)](https://stripe.com/)  
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.1.11-blue?logo=tailwind-css)](https://tailwindcss.com/)
+[![React Router](https://img.shields.io/badge/React%20Router-7.8.0-red?logo=react-router)](https://reactrouter.com/)
+[![React Query](https://img.shields.io/badge/React%20Query-5.85.0-blue?logo=react-query)](https://tanstack.com/query/v5)
+[![Axios](https://img.shields.io/badge/Axios-1.11.0-lightgrey?logo=axios)](https://axios-http.com/)
+[![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-7.62.0-blueviolet?logo=react)](https://react-hook-form.com/)
+[![SweetAlert2](https://img.shields.io/badge/SweetAlert2-11.22.4-orange?logo=javascript)](https://sweetalert2.github.io/)
+[![React Toastify](https://img.shields.io/badge/React%20Toastify-11.0.5-yellowgreen?logo=react)](https://fkhadra.github.io/react-toastify/)
+[![Swiper](https://img.shields.io/badge/Swiper-11.2.10-skyblue?logo=swiper)](https://swiperjs.com/)
+[![Lottie](https://img.shields.io/badge/Lottie-2.4.1-pink?logo=lottie)](https://lottiefiles.com/)
+[![React Data Table](https://img.shields.io/badge/React%20Data%20Table-7.7.0-purple?logo=react)](https://www.npmjs.com/package/react-data-table-component)
 
 
 A full-featured online platform for buying and selling medicines with separate dashboards for users, sellers, and admins. Built with the **MERN stack** and designed for responsive, real-time, and secure operations.
