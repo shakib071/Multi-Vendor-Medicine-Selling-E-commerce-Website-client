@@ -37,6 +37,21 @@ A full-featured online platform for buying and selling medicines with separate d
 - Dynamic page titles using **react-helmet**  
 - Digital clock on navbar (optional feature)  
 
+### 4. Key Features (Bullet Points)
+
+  -  Multi-vendor support (Admin, Seller, User)
+  -  User authentication (Email/Password + Google/GitHub login)
+  -  Responsive UI for mobile, tablet, and desktop
+  -  Product search, filter, and sort functionality
+  -  Cart management and checkout with Stripe
+  -  Invoice generation as PDF
+  -  Admin & Seller dashboards for product & sales management
+  -  SweetAlert / Toast notifications for CRUD operations
+  -  Data fetching with TanStack React Query
+  -  Download sales reports in PDF/Excel/CSV
+  -  Dynamic page titles using React Helmet
+  -  Typewriter animations and Lottie animations for better UX
+
 ### Home Page
 - Navbar with logo, website name, home, shop, cart, languages dropdown, and login/profile  
 - Slider section for admin-managed product slides  
