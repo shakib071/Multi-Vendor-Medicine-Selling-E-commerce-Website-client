@@ -3,7 +3,5 @@ Add a meaningful readme.md file with the name of your website, Admin username, p
 Make it responsive for all devices. You need to make it responsive for mobile, tablet and desktop views. Make the dashboard responsive as well. 
 
 
-11. CHALLENGE PART:
-    Store access token in local storage and verify it on every private route API calls
 
 13.. jwt and  and discount calculation and update profile

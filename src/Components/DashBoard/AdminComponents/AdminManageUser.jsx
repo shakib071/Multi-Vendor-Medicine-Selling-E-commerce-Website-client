@@ -11,7 +11,7 @@ const AdminManageUser = () => {
  
   const roles = ["user", "saler", "admin"];
   const {user,loading} = useAuth();
-  const  {data: users, isLoading,refetch} = useUsers(user.uid);
+  const  {data: users, isLoading,refetch} = useUsers(user?.uid);
   const axiosInstance = useAxios();
   console.log(users);
 

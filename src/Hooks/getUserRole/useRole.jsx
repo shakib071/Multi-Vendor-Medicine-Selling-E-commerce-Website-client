@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import useAxios from '../AxiosHook/useAxios';
+import useAxiosSecure from '../AxiosSecure/useAxiosSecure';
 
 const useRole = (uid) => {
-    const axiosInstance = useAxios();
+    const axiosInstance = useAxiosSecure();
     return useQuery({
         queryKey: ['userRole', uid],
         queryFn: async()=>  await axiosInstance.get(`/users-role/${uid}`).then(res => res.data.role),

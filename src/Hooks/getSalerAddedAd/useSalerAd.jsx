@@ -1,9 +1,9 @@
 import React from 'react';
-import useAxios from '../AxiosHook/useAxios';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../AxiosSecure/useAxiosSecure';
 
 const useSalerAd = (uid) => {
-    const axiosInstance = useAxios();
+    const axiosInstance = useAxiosSecure();
     return useQuery({
         queryKey: ['salerAd',uid],
         queryFn: async()=> await axiosInstance.get(`/get-saler-ad/${uid}`).then(res=> res.data),

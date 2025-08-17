@@ -12,7 +12,7 @@ const Dashboard = () => {
     if(loading || isLoading){
         return <Loading></Loading>
     }
-    console.log(user.uid);
+    console.log(user?.uid);
     
     console.log(role, isLoading, error);
 

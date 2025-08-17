@@ -1,9 +1,9 @@
 import React from 'react';
-import useAxios from '../AxiosHook/useAxios';
 import { useQuery } from '@tanstack/react-query';
+import useAxiosSecure from '../AxiosSecure/useAxiosSecure';
 
 const usePurchasedmed = (uid) => {
-    const axiosInstance = useAxios();
+    const axiosInstance = useAxiosSecure();
     return useQuery({
         queryKey:['purchasedMed',uid],
         queryFn: async()=> await axiosInstance.get(`/purchased-med/${uid}`).then(res => res.data),
