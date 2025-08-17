@@ -1,7 +1,5 @@
 
-Add a meaningful readme.md file with the name of your website, Admin username, password and live site URL. Include a minimum of 10 bullet points to feature your website.  
-Make it responsive for all devices. You need to make it responsive for mobile, tablet and desktop views. Make the dashboard responsive as well. 
+Add a meaningful readme.md file with the name of your website, Admin username, password and live site URL. Include a minimum of  bullet points to feature your website.  
 
-
-
-13.. jwt and  and discount calculation and update profile
+1. update profile
+2.responsive (make sure handle navigation state )
