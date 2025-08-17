@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 import useAuth from '../getAuth/useAuth';
 
 const axiosSecure = axios.create({
-    baseURL: `http://localhost:5000`
+    baseURL: `https://medicine-selling-website-server.vercel.app`
 });
 
 const useAxiosSecure = () => {
