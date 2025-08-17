@@ -17,6 +17,7 @@
 [![Swiper](https://img.shields.io/badge/Swiper-11.2.10-skyblue?logo=swiper)](https://swiperjs.com/)
 [![Lottie](https://img.shields.io/badge/Lottie-2.4.1-pink?logo=lottie)](https://lottiefiles.com/)
 [![React Data Table](https://img.shields.io/badge/React%20Data%20Table-7.7.0-purple?logo=react)](https://www.npmjs.com/package/react-data-table-component)
+[![GitHub stars](https://img.shields.io/github/stars/username/repo.svg)]()
 
 
 A full-featured online platform for buying and selling medicines with separate dashboards for users, sellers, and admins. Built with the **MERN stack** and designed for responsive, real-time, and secure operations.
