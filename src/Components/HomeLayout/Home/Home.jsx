@@ -4,14 +4,17 @@ import CategoryCard from '../CategorySection/CategoryCard';
 import DiscountProducts from '../DiscountProducts/DiscountProducts';
 import Slider from '../Slider/Slider';
 import HealthTips from '../HealthTips/HealthTips';
-import HealthArticles from '../HealthArticles/HealthArticles'
+import HealthArticles from '../HealthArticles/HealthArticles';
+
 
 const Home = () => {
     const {user} = useAuth();
     console.log(user);
     return (
         <div>
-            
+         
+            <title>Home - CureCart</title>
+    
             <Slider></Slider>
             <CategoryCard></CategoryCard>
             <DiscountProducts></DiscountProducts>

@@ -116,6 +116,7 @@ export default function ManageMedicine() {
 
     
     <div className="p-1  min-h-screen">
+      <title>Manage Medicine - CureCart</title>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-semibold text-gray-800">Manage Medicines</h1>
         <button

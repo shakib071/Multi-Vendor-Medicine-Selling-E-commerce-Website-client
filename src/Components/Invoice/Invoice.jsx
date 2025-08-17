@@ -63,6 +63,7 @@ const Invoice = () => {
 
   return (
     <div className="flex justify-center p-4">
+      <title>Invoice - CureCart</title>
       <div 
         ref={invoiceRef}
         className="w-[210mm] bg-[#ffffff] p-8 " // A4 paper size

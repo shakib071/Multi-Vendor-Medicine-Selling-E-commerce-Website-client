@@ -28,6 +28,7 @@ export default function AdminPaymentManagement() {
 
   return (
     <div className="max-w-7xl mx-auto p-8 bg-white rounded-xl shadow-lg">
+      <title>Payment Management - CureCart</title>
       <h1 className="text-3xl font-extrabold text-gray-900 mb-8">
         Payment Management
       </h1>

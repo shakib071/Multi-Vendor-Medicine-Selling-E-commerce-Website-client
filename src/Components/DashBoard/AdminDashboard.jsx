@@ -27,6 +27,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="flex h-screen">
+      <title>Admin Dashboard - CureCart</title>
       {/* Sidebar */}
       <div
         className={`${

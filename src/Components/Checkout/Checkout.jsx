@@ -13,6 +13,7 @@ const Checkout = () => {
 
   return (
     <div className="max-w-3xl text-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+      <title>Checkout - CureCart</title>
       {/* Heading */}
       <h1 className="text-3xl font-bold text-blue-600 flex items-center gap-2 mb-6">
         <MdPayment className="text-green-500" /> Checkout

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEye, FaCartPlus } from "react-icons/fa";
 import { FaPills } from "react-icons/fa";
 import useCategoryMed from "../../../Hooks/getMedicineByCategory/useCategoryMed";
@@ -9,16 +9,92 @@ import { GiMedicinePills } from "react-icons/gi";
 import Cart from "../../Cart/Cart";
 import useAxios from "../../../Hooks/AxiosHook/useAxios";
 import Swal from "sweetalert2";
+import useCatMedCount from "../../../Hooks/getCategoryMedCount/useCatMedCount";
 
 
 const CategoryDetails = () => {
   const { category } = useParams();
+  const {data:medicineCount, isLoading:countLoading} = useCatMedCount(category);
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const {loading,user}= useAuth();
-  const {data: medicines, isLoading} = useCategoryMed(category);
+  console.log(medicineCount)
   const axiosInstance = useAxios();
   const navigate = useNavigate();
   const navigation = useNavigation();
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [selectedPage , setSelectedPage] = useState(0);
+  const [numberOfPage, setNumberOfPage] = useState(2);
+  const {data: medicines, isLoading,refetch} = useCategoryMed(category,selectedPage,itemsPerPage);
+
+
+  const [pages, setPages] = useState([]);
+  
+  useEffect(() => {
+    const pageWindowSize = 10;
+    let start = Math.max(selectedPage - Math.floor(pageWindowSize / 2), 0);
+    let end =  Math.min(selectedPage + Math.floor(pageWindowSize / 2), numberOfPage);
+
+    if(selectedPage - Math.floor(pageWindowSize / 2)<=0){
+      end = Math.min(pageWindowSize+start,numberOfPage);
+    }
+    if(selectedPage + Math.floor(pageWindowSize / 2)>numberOfPage){
+      start = Math.max(end-pageWindowSize,0)
+    }
+
+    const newPages = [];
+    for (let i = start; i < end; i++) {
+      newPages.push(i);
+    }
+
+    setPages(newPages); 
+  }, [selectedPage, numberOfPage]);
+
+  useEffect(() => {
+    refetch();
+  }, [selectedPage, itemsPerPage,itemsPerPage, refetch]);
+  
+  useEffect(()=>{
+    const medicinecount = medicineCount?.count;
+    
+    const numofPage = Math.ceil(medicinecount/parseInt(itemsPerPage));
+    setNumberOfPage(numofPage);
+    refetch();
+  },[medicineCount?.count,itemsPerPage,refetch]);
+  
+  
+  console.log(pages);
+  console.log('num of pages',numberOfPage);
+  
+  
+    const handleItemsPerPage = (e) => {
+      const value = parseInt(e.target.value);
+      setItemsPerPage(value);
+      
+    }
+  
+    const handlePrevButton = () => {
+      const value = selectedPage-1
+      if(selectedPage>0){
+        setSelectedPage(value);
+     
+      }
+      
+    }
+  
+    const handleNextButton = () => {
+      const value = selectedPage+1;
+      if(selectedPage<numberOfPage-1){
+        setSelectedPage(value);
+  
+      }
+      
+    }
+  
+    const handleKeyClick=(page) => {
+      
+      setSelectedPage(page);
+  
+    }
 
   const handleAddtoCart = async(medicine) => {
     const {_id, ...catMedicine}= medicine;
@@ -59,12 +135,13 @@ const CategoryDetails = () => {
     }
   }
 
-  if(loading || isLoading || navigation.state === 'loading'){
+  if(loading || isLoading || navigation.state === 'loading' || countLoading){
     return <Loading></Loading>;
   }
   // console.log(medicines);
   return (
      <div>
+      <title>Category - CureCart</title>
       { medicines.length != 0 ? ( 
       <div className="p-6 bg-gray-100 min-h-screen">
         <h2 className="text-3xl font-bold text-center text-blue-600 mb-8 flex items-center justify-center gap-2">
@@ -108,6 +185,52 @@ const CategoryDetails = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+
+        <div className="flex  justify-center  items-center mt-10 space-y-4 md:space-y-0">
+
+          <div className="flex items-center space-x-2">
+            {/* Prev */}
+            <button onClick={handlePrevButton} className="px-3 py-1 rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
+              Prev
+            </button>
+            {
+              pages?.map((page,index)=>
+                <button onClick={()=>{handleKeyClick(parseInt(page))}} key={index} className={`px-3 py-1  rounded-lg ${selectedPage==page ?'text-white bg-blue-500 ': 'bg-white text-black'} border text-black  hover:bg-blue-500 border-gray-300`}>
+                  {page + 1}
+                </button>
+              )
+            }
+            
+            {/* <span className="px-2 text-gray-500">...</span>
+            <button className="px-3 py-1 rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
+              10
+            </button> */}
+
+            {/* Next */}
+            <button onClick={handleNextButton} className="px-3 py-1 rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
+              Next
+            </button>
+
+            <div className="flex items-center space-x-2">
+            <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
+              Items per page:
+            </label>
+            <select 
+              onChange={handleItemsPerPage}
+              value={itemsPerPage}
+              id="itemsPerPage"
+              className="border rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+            </div>
+          </div>
+
         </div>
 
         {/* Medicine Modal */}

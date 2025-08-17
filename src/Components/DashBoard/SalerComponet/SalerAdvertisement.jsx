@@ -67,6 +67,7 @@ const SalerAdvertisement = () => {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
+      <title>Ask For Advertisement - CureCart</title>
       <h2 className="text-2xl font-bold mb-6">Ask For Advertisement</h2>
       <button
         onClick={openModal}

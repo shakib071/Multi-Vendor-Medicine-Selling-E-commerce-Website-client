@@ -32,6 +32,7 @@ const UserDashboard = () => {
   }
   return (
     <div className='pt-6 min-h-screen bg-[#aaa6a669]'>
+      <title>User DashBoard - CureCart</title>
     <div className="p-7 rounded-2xl bg-white  shadow-md max-w-5xl mx-auto">
       <h2 className="text-2xl text-center font-bold mb-6">Payment History</h2>
       <table className="min-w-full border border-gray-300">

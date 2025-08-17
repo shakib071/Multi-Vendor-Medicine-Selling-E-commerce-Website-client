@@ -51,6 +51,7 @@ const SalerPaymentHistory = () => {
 
   return (
     <div className="p-5 bg-white rounded-lg shadow-md">
+      <title>Payment History - CureCart</title>
       <h2 className="text-2xl font-bold mb-6">Payment History</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-200">

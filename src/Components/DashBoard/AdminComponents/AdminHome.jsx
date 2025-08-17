@@ -31,6 +31,7 @@ const AdminHome = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-8 bg-[#ffffff] rounded-xl shadow-lg">
+      <title>Admin Dashboard - CureCart</title>
       <h2 className="text-4xl font-extrabold mb-10 text-center text-gray-800">
         Total Sales
       </h2>

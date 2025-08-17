@@ -1,23 +1,13 @@
-Multi-Vendor Medicine Selling E-commerce Website
-
-Key Rules: 
 
 Add a meaningful readme.md file with the name of your website, Admin username, password and live site URL. Include a minimum of 10 bullet points to feature your website.  
 Make it responsive for all devices. You need to make it responsive for mobile, tablet and desktop views. Make the dashboard responsive as well. 
 After reloading the page of a private route, the user should not be redirected to the login page.
-Use the Environment variable to hide the Firebase config keys and Mongodb credentials.
-Don’t use any Lorem ipsum text in your website. 
-Show sweet alert/toast/notification for all the crud operations, successful authentication login, and sign-up. Don’t use the default browser alert.
-
 
 11. CHALLENGE PART:
-    For all of  the medicine tables, you have to implement pagination, sort by price, and search for any information (medicine name, generic name, company name. etc)
+    For all of  the medicine tables, sort by price, and search for any information (medicine name, generic name, company name. etc)
     Store access token in local storage and verify it on every private route API calls
-    Download pdf/excel format, for sales report page (link)
+    Download pdf/excel format, for sales report page (https://www.npmjs.com/package/react-export-table-to-excel)
     Date range filter for sales report page.
     Use react hook form
-    Dynamic Title- react-helmet, re-title(https://www.npmjs.com/package/re-title)
-
 
 13.. jwt and private route and discount calculation and update profile
-    

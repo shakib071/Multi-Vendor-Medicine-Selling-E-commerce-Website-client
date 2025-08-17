@@ -127,6 +127,7 @@ const Cart = () => {
 
   return (
     <div className="p-6">
+      <title>Cart - CureCart</title>
       <h1 className="text-4xl  font-bold text-blue-600 mb-10  flex justify-center items-center gap-2">
         <FaShoppingCart className="text-green-400" /> Your Cart
       </h1>

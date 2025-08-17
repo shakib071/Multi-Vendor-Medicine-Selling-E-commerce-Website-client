@@ -39,6 +39,7 @@ const AdminManageUser = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <title>Manage User - CureCart</title>
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Manage Users</h1>
 
       <table className="w-full border-collapse">

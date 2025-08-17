@@ -23,6 +23,7 @@ export default function SalerDashboard() {
 
   return (
     <div className="flex h-screen">
+      <title>Saler Dashboard - CureCart</title>
       {/* Sidebar */}
       <div
         className={`${

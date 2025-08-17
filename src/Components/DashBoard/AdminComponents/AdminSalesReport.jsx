@@ -77,6 +77,7 @@ const AdminSalesReport = () => {
 
   return (
     <div className="p-6 bg-gray-50 rounded-2xl min-h-screen">
+      <title>Sales Report - CureCart</title>
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
         <h2 className="text-2xl font-bold text-blue-700">💊 Sales Report</h2>

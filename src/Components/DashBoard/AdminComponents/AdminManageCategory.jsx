@@ -160,6 +160,7 @@ export default function AdminManageCategory() {
 
   return (
     <div className="max-w-7xl mx-auto p-8 bg-white rounded-xl shadow-lg">
+      <title>Manage Category - CureCart</title>
       <header className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
           Manage Categories
