@@ -48,7 +48,7 @@ A full-featured online platform for buying and selling medicines with separate d
 - Dynamic page titles using **react-helmet**  
 - Digital clock on navbar (optional feature)  
 
-### 4. Key Features (Bullet Points)
+###  Key Features (Bullet Points)
 
   -  Multi-vendor support (Admin, Seller, User)
   -  User authentication (Email/Password + Google/GitHub login)
