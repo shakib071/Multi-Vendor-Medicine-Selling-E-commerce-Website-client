@@ -119,36 +119,46 @@ const Shop = () => {
     catMedicine.quantity = parseInt(1);
     console.log(catMedicine);
     // add to datbase 
-    try{
-      const res = await axiosInstance.post(`/cart/${user.uid}`,catMedicine);
-      // console.log(res.data);
-      if(res.data.insertedId || res.data._id){
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Medicine has been added to cart ",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        navigate(`/cart/${user.uid}`)
-      }
+    if(user){
 
-      else{
+    
+      try{
+        const res = await axiosInstance.post(`/cart/${user.uid}`,catMedicine);
+        // console.log(res.data);
+        if(res.data.insertedId || res.data._id){
           Swal.fire({
-          position: "center",
-          icon: "warning",
-          title: "Medicine already exist in your cart",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        navigate(`/cart/${user.uid}`)
+            position: "center",
+            icon: "success",
+            title: "Medicine has been added to cart ",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          
+          navigate(`/cart/${user?.uid}`)
+          
+          
+        }
+
+        else{
+            Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Medicine already exist in your cart",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          navigate(`/cart/${user.uid}`)
+        }
+
+        
+
       }
-
-      
-
+      catch(error){
+        console.log(error);
+      }
     }
-    catch(error){
-      console.log(error);
+    else {
+      navigate('/login');
     }
   }
 

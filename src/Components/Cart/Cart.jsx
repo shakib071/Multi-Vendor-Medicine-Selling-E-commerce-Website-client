@@ -131,7 +131,7 @@ const Cart = () => {
       <h1 className="text-4xl  font-bold text-blue-600 mb-10  flex justify-center items-center gap-2">
         <FaShoppingCart className="text-green-400" /> Your Cart
       </h1>
-          {cart.length === 0 ? (
+          {cart?.length === 0 ? (
         <p className="text-gray-500 text-center text-4xl">Your cart is empty.</p>
       ) : (
         <>
@@ -149,7 +149,7 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-                {cart.medicines.map((item,index) => (
+                {cart?.medicines?.map((item,index) => (
                   <tr
                     key={index}
                     className="bg-white border-b hover:bg-gray-50"

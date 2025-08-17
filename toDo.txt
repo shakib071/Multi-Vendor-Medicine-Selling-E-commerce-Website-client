@@ -1,9 +1,9 @@
 
 Add a meaningful readme.md file with the name of your website, Admin username, password and live site URL. Include a minimum of 10 bullet points to feature your website.  
 Make it responsive for all devices. You need to make it responsive for mobile, tablet and desktop views. Make the dashboard responsive as well. 
-After reloading the page of a private route, the user should not be redirected to the login page.
+
 
 11. CHALLENGE PART:
     Store access token in local storage and verify it on every private route API calls
 
-13.. jwt and private route and discount calculation and update profile
+13.. jwt and  and discount calculation and update profile

@@ -11,6 +11,7 @@ import Checkout from "../Components/Checkout/Checkout";
 import Invoice from "../Components/Invoice/Invoice";
 import CategoryDetails from "../Components/HomeLayout/CategorySection/CategoryDetails";
 import Forbidden from "../Components/Forbidden/Forbidden";
+import PrivateRouter from "../PrivateRouter/PrivateRouter";
 
 
 export const router = createBrowserRouter([
@@ -28,15 +29,15 @@ export const router = createBrowserRouter([
       },
       {
         path:'/cart/:userId',
-        element: <Cart></Cart>,
+        element: <PrivateRouter><Cart></Cart></PrivateRouter>,
       },
       {
         path: '/checkout',
-        element: <Checkout></Checkout>,
+        element: <PrivateRouter><Checkout></Checkout></PrivateRouter>,
       },
       {
         path:'/invoice',
-        element: <Invoice></Invoice>,
+        element: <PrivateRouter><Invoice></Invoice></PrivateRouter>,
       },
       {
         path: '/category-details/:category',
@@ -60,7 +61,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: <Dashboard></Dashboard>,
+        element: <PrivateRouter><Dashboard></Dashboard></PrivateRouter>,
       }
     ]
   },
