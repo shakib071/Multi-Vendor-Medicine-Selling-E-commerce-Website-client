@@ -7,6 +7,7 @@ import AdminManageCategory from './AdminComponents/AdminManageCategory';
 import AdminPaymentManage from './AdminComponents/AdminPaymentManage';
 import AdminSalesReport from "./AdminComponents/AdminSalesReport";
 import AdminManageAd from "./AdminComponents/AdminManageAd";
+import { useNavigation } from "react-router";
 
 
 const NavButton = ({ icon, label, active, setActive, collapsed }) => (
@@ -24,6 +25,9 @@ const NavButton = ({ icon, label, active, setActive, collapsed }) => (
 export default function AdminDashboard() {
   const [active, setActive] = useState("Home");
   const [collapsed, setCollapsed] = useState(false);
+  const navigation = useNavigation();
+
+  if(navigation.state == 'loading');
 
   return (
     <div className="flex h-screen">
@@ -56,12 +60,12 @@ export default function AdminDashboard() {
 
       {/* Main content */}
       <div className="flex-1 p-6 bg-gray-200">
-        {active === "Home" && <div className="text-2xl font-bold"><AdminHome></AdminHome></div>}
-        {active === "Manage Users" && <div className="text-2xl font-bold"><AdminManageUser></AdminManageUser></div>}
-        {active === "Manage Category" && <div className="text-2xl font-bold"><AdminManageCategory></AdminManageCategory></div>}
-        {active === "Payment management" && <div className="text-2xl font-bold"><AdminPaymentManage></AdminPaymentManage></div>}
-        {active === "Sales Report" && <div className="text-2xl font-bold"><AdminSalesReport></AdminSalesReport></div>}
-        {active === "Manage Advertise" && <div className="text-2xl font-bold"><AdminManageAd></AdminManageAd></div>}
+        {active === "Home" && <div className="text-sm md:text-2xl font-bold"><AdminHome></AdminHome></div>}
+        {active === "Manage Users" && <div className="text-sm md:text-2xl font-bold"><AdminManageUser></AdminManageUser></div>}
+        {active === "Manage Category" && <div className="text-sm md:text-2xl font-bold"><AdminManageCategory></AdminManageCategory></div>}
+        {active === "Payment management" && <div className="text-sm md:text-2xl font-bold"><AdminPaymentManage></AdminPaymentManage></div>}
+        {active === "Sales Report" && <div className="text-sm md:text-2xl font-bold"><AdminSalesReport></AdminSalesReport></div>}
+        {active === "Manage Advertise" && <div className="text-sm md:text-2xl font-bold"><AdminManageAd></AdminManageAd></div>}
       </div>
     </div>
   );

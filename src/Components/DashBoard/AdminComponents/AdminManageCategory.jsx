@@ -154,32 +154,32 @@ export default function AdminManageCategory() {
     
   }
 
-  if(loading || Navigation.state == 'loading' || isLoading){
+  if(loading || Navigation.state == 'loading'|| Navigation.state=='submitting' || isLoading){
     return <Loading></Loading>;
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-8 bg-white rounded-xl shadow-lg">
+    <div className="max-w-7xl mx-auto p-2 lg:p-8 bg-white rounded-xl shadow-lg">
       <title>Manage Category - CureCart</title>
       <header className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
+        <h1 className="text-xl lg:text-4xl font-extrabold text-gray-900 tracking-tight">
           Manage Categories
         </h1>
         <button
           onClick={() => openModal()}
-          className="px-6 py-3 bg-indigo-600 text-xl hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md transition"
+          className="px-6 py-3 bg-indigo-600 text-[14px] lg:text-xl hover:bg-indigo-700 text-white rounded-lg font-semibold shadow-md transition"
         >
           + Add Category
         </button>
       </header>
 
       <table className="w-full table-auto border-collapse shadow-md rounded-lg overflow-hidden">
-        <thead className="bg-indigo-600 text-white text-left text-lg">
+        <thead className="bg-indigo-600 text-white text-left text-xs lg:text-lg">
           <tr>
-            <th className="py-4 px-6 font-semibold">No</th>
-            <th className="py-4 px-6 font-semibold">Image</th>
-            <th className="py-4 px-6 font-semibold">Category Name</th>
-            <th className="py-4 px-6 font-semibold">Actions</th>
+            <th className="py-4 px-3 lg:px-6 font-semibold">No</th>
+            <th className="py-4 px-6 lg:px-6 font-semibold">Image</th>
+            <th className="py-4 px-3 lg:px-6 font-semibold">Category Name</th>
+            <th className="py-4 px-3 lg:px-6 font-semibold">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -188,10 +188,10 @@ export default function AdminManageCategory() {
               key={_id}
               className={`${
                 i % 2 === 0 ? "bg-gray-300" : "bg-white"
-              } hover:bg-indigo-50 transition-colors`}
+              } hover:bg-indigo-50 transition-colors `}
             >
-              <td className="text-center">{i+1}</td>
-              <td className="p-4">
+              <td className="text-center text-xs lg:text-lg">{i+1}</td>
+              <td className="p-4 text-xs lg:text-lg">
                 {categoryImage ? (
                   <img
                     src={categoryImage}
@@ -205,19 +205,19 @@ export default function AdminManageCategory() {
                   </div>
                 )}
               </td>
-              <td className="py-4 px-6 text-gray-900 font-semibold text-lg">
+              <td className="py-4 px-2 lg:px-6 text-gray-900 font-semibold text-xs lg:text-lg">
                 {categoryName}
               </td>
-              <td className="py-4 px-6 space-x-3">
+              <td className="py-4 px-2 lg:px-6 flex flex-col gap-2 lg:flex-row space-x-3">
                 <button
                   onClick={() => handleUpdateModal(_id, categoryName, categoryImage)}
-                  className="px-4 py-2 text-xl rounded-md bg-yellow-400 text-gray-900 hover:bg-yellow-500 font-semibold transition"
+                  className="px-2 lg:px-6 py-2 text-sm lg:text-xl rounded-md bg-yellow-400 text-gray-900 hover:bg-yellow-500 font-semibold transition"
                 >
                   Update
                 </button>
                 <button
                   onClick={() => deleteCategory(_id)}
-                  className="px-4 py-2 text-xl rounded-md bg-red-600 text-white hover:bg-red-700 font-semibold transition"
+                  className="px-2 lg:px-6 py-2 text-sm lg:text-xl rounded-md bg-red-600 text-white hover:bg-red-700 font-semibold transition"
                 >
                   Delete
                 </button>
