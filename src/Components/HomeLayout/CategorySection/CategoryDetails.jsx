@@ -102,37 +102,48 @@ const CategoryDetails = () => {
     catMedicine.quantity = parseInt(1);
     console.log(catMedicine);
     // add to datbase 
-    try{
-      const res = await axiosInstance.post(`/cart/${user?.uid}`,catMedicine);
-      // console.log(res.data);
-      if(res.data.insertedId || res.data._id){
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Medicine has been added to cart ",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        navigate(`/cart/${user.uid}`)
-      }
+  
 
-      else{
+      try{
+        const res = await axiosInstance.post(`/cart/${user?.uid}`,catMedicine);
+        // console.log(res.data);
+        if(res?.data?.insertedId || res?.data?._id){
           Swal.fire({
-          position: "center",
-          icon: "warning",
-          title: "Medicine already exist in your cart",
-          showConfirmButton: false,
-          timer: 1500
-        });
-        navigate(`/cart/${user.uid}`)
+            position: "center",
+            icon: "success",
+            title: "Medicine has been added to cart ",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          navigate(`/cart/${user?.uid}`)
+        }
+
+        else{
+            Swal.fire({
+            position: "center",
+            icon: "warning",
+            title: "Medicine already exist in your cart",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          navigate(`/cart/${user?.uid}`)
+        }
+
+        
+
+      }
+      catch(error){
+        console.log(error);
+        Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+       
+      });
       }
 
-      
 
-    }
-    catch(error){
-      console.log(error);
-    }
+   
   }
 
   if(loading || isLoading || navigation.state === 'loading' || countLoading){
@@ -140,36 +151,36 @@ const CategoryDetails = () => {
   }
   // console.log(medicines);
   return (
-     <div>
+     <div className=" xl:max-w-[90%] 2xl:max-w-[87%] mx-auto">
       <title>Category - CureCart</title>
       { medicines.length != 0 ? ( 
-      <div className="p-6 bg-gray-100 min-h-screen">
-        <h2 className="text-3xl font-bold text-center text-blue-600 mb-8 flex items-center justify-center gap-2">
+      <div className="p-2 md:p-6  bg-gray-100 min-h-screen">
+        <h2 className="text-xl md:text-3xl  mt-5  font-bold text-center text-blue-600 mb-8 flex items-center justify-center gap-2">
           <FaPills className="text-red-500" />
           Medicines in <span className="text-red-400">{category}</span> Category
         </h2>
 
         <div className="overflow-x-auto bg-white rounded-xl shadow-lg">
-          <table className="min-w-full divide-y text-lg divide-gray-200">
+          <table className="min-w-full  divide-y text-[12px] md:text-lg divide-gray-200">
             <thead className="bg-blue-100">
               <tr>
-                <th className="px-6 py-3 text-left text-lg font-medium text-gray-800">#</th>
-                <th className="px-6 py-3 text-left text-lg font-medium text-gray-800">Name</th>
-                <th className="px-6 py-3 text-left text-lg font-medium text-gray-800">Type</th>
-                <th className="px-6 py-3 text-left text-lg font-medium text-gray-800">Company</th>
-                <th className="px-6 py-3 text-left text-lg font-medium text-gray-800">Price</th>
-                <th className="px-6 py-3 text-center text-lg font-medium text-gray-800">Actions</th>
+                <th className="px-1 md:px-6 py-3 text-left text-[12px] md:text-lg font-medium text-gray-800">#</th>
+                <th className="px-1 md:px-6 py-3 text-left text-[12px] md:text-lg font-medium text-gray-800">Name</th>
+                <th className="px-1 md:px-6 py-3 text-left text-[12px] md:text-lg font-medium text-gray-800">Type</th>
+                <th className="px-1 md:px-6 py-3 text-left text-[12px] md:text-lg font-medium text-gray-800">Company</th>
+                <th className="px-1 md:px-6 py-3 text-left text-[12px] md:text-lg font-medium text-gray-800">Price</th>
+                <th className="px-1 md:px-6 py-3 text-center text-[12px] md:text-lg font-medium text-gray-800">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {medicines.map((med, idx) => (
                 <tr key={med._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4">{idx + 1}</td>
-                  <td className="px-6 py-4">{med.name}</td>
-                  <td className="px-6 py-4">{med.category}</td>
-                  <td className="px-6 py-4">{med.company}</td>
-                  <td className="px-6 py-4">${med.price.toFixed(2)}</td>
-                  <td className="px-6 py-4 flex justify-center gap-3">
+                  <td className="p-1 md:px-6 py-4">{idx + 1}</td>
+                  <td className="p-1 md:px-6 py-4">{med.name}</td>
+                  <td className="p-1 md:px-6 py-4">{med.category}</td>
+                  <td className="p-1 md:px-6 py-4">{med.company}</td>
+                  <td className="p-1 md:px-6 py-4">${med.price.toFixed(2)}</td>
+                  <td className="p-1 md:px-6 py-4 flex justify-center gap-3">
                     <button
                       onClick={() => setSelectedMedicine(med)}
                       className="text-blue-600 hover:text-blue-800"
@@ -188,16 +199,16 @@ const CategoryDetails = () => {
         </div>
 
 
-        <div className="flex  justify-center  items-center mt-10 space-y-4 md:space-y-0">
+        <div className="flex  flex-col md:flex-row justify-center  items-center md:gap-4 mt-10 space-y-4 md:space-y-0">
 
-          <div className="flex items-center space-x-2">
+          <div className="flex  items-center sm:space-x-1 md:space-x-2">
             {/* Prev */}
-            <button onClick={handlePrevButton} className="px-3 py-1 rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
+            <button onClick={handlePrevButton} className="px-1 md:px-3 py-1 text-[10px] sm:text-[14px] md:text-[16px] rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
               Prev
             </button>
             {
               pages?.map((page,index)=>
-                <button onClick={()=>{handleKeyClick(parseInt(page))}} key={index} className={`px-3 py-1  rounded-lg ${selectedPage==page ?'text-white bg-blue-500 ': 'bg-white text-black'} border text-black  hover:bg-blue-500 border-gray-300`}>
+                <button onClick={()=>{handleKeyClick(parseInt(page))}} key={index} className={`px-3 py-1  rounded-lg ${selectedPage==page ?'text-white bg-blue-500 ': 'bg-white text-black'} border text-[10px] sm:text-[14px] md:text-[16px] text-black  hover:bg-blue-500 border-gray-300`}>
                   {page + 1}
                 </button>
               )
@@ -209,7 +220,7 @@ const CategoryDetails = () => {
             </button> */}
 
             {/* Next */}
-            <button onClick={handleNextButton} className="px-3 py-1 rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
+            <button onClick={handleNextButton} className="px-1 md:px-3 py-1 text-[10px] sm:text-[14px] md:text-[16px] rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
               Next
             </button>
 

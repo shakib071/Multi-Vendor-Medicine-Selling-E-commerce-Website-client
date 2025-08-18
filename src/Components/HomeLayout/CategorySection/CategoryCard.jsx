@@ -29,7 +29,7 @@ const CategoryCard = () => {
         <FaFolderOpen className="text-red-500" /> Medicine Categories
       </h2>
 
-      <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
         {categories.map((category) => (
           <div onClick={()=> handleCategory(category.categoryName)}
             key={category._id}

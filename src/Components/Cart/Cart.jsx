@@ -44,6 +44,12 @@ const Cart = () => {
     }
     catch(error){
       console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+        footer: '<a href="#">Why do I have this issue?</a>'
+      });
     }
   }
 
@@ -64,6 +70,12 @@ const Cart = () => {
       }
       catch(error){
         console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        
+        });
       }
     }
     
@@ -114,6 +126,7 @@ const Cart = () => {
     });
       refetch();
     }
+    
   }
 
   const handleCheckOut = () => {
