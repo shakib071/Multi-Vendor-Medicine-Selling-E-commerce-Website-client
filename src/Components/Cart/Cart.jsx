@@ -25,7 +25,7 @@ const Cart = () => {
       if (user?.uid) {
         refetch();
       }
-    }, [user?.uid]);
+    }, [user?.uid,refetch]);
   
 
   
@@ -126,7 +126,7 @@ const Cart = () => {
   }
 
   return (
-    <div className="p-6">
+    <div className="p-1 sm:p-2 md:p-6 xl:max-w-[90%] 2xl:max-w-[87%] mx-auto">
       <title>Cart - CureCart</title>
       <h1 className="text-4xl  font-bold text-blue-600 mb-10  flex justify-center items-center gap-2">
         <FaShoppingCart className="text-green-400" /> Your Cart
@@ -136,16 +136,16 @@ const Cart = () => {
       ) : (
         <>
           <div className="overflow-x-auto shadow-lg rounded-lg">
-            <table className="w-full text-lg text-left text-gray-700">
-              <thead className="bg-blue-100 text-blue-800 uppercase text-xs">
+            <table className="w-full text-[9px] sm:text-lg lg:text-xl 2xl:text-2xl  text-left text-gray-700">
+              <thead className="bg-blue-100 text-blue-800 uppercase text-[9px] sm:text-xs lg:text-lg 2xl:text-xl">
                 <tr>
-                  <th className="px-4 py-3">Image</th>
-                  <th className="px-4 py-3">Medicine Name</th>
-                  <th className="px-4 py-3">Company</th>
-                  <th className="px-4 py-3">Price/Unit</th>
-                  <th className="px-4 py-3">Quantity</th>
-                  <th className="px-4 py-3">Total</th>
-                  <th className="px-4 py-3 text-center">Action</th>
+                  <th className="p-1 md:px-4 py-3">Image</th>
+                  <th className="p-1 md:px-4 py-3">Medicine Name</th>
+                  <th className="p-1 md:px-4 py-3">Company</th>
+                  <th className="p-1 md:px-4 py-3">Price/Unit</th>
+                  <th className="p-1 md:px-4 py-3">Quantity</th>
+                  <th className="p-1 md:px-4 py-3">Total</th>
+                  <th className="p-1 md:px-4 py-3 text-center">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -154,19 +154,19 @@ const Cart = () => {
                     key={index}
                     className="bg-white border-b hover:bg-gray-50"
                   >
-                    <td className="px-4 py-3">
+                    <td className="p-1 md:px-4 py-3">
                       <img
                         src={item.photo}
                         alt={item.name}
                         className="w-12 h-12 object-cover rounded"
                       />
                     </td>
-                    <td className="px-4 py-3 font-medium">{item.name}</td>
-                    <td className="px-4 py-3">{item.company}</td>
-                    <td className="px-4 py-3 text-green-600 font-semibold">
+                    <td className="p-1 md:px-4 py-3 font-medium">{item.name}</td>
+                    <td className="p-1 md:px-4 py-3">{item.company}</td>
+                    <td className="p-1 md:px-4 py-3 text-green-600 font-semibold">
                       ${item.price}
                     </td>
-                    <td className="px-4 py-3 flex items-center gap-2">
+                    <td className="p-1 md:px-4 py-3 flex items-center gap-2">
                       <button
                         onClick={()=> handleQuantityDecrement(item.name,item.quantity)}
                         className="p-1 border rounded hover:bg-gray-200"
@@ -184,7 +184,7 @@ const Cart = () => {
                     <td className="px-4 py-3 text-blue-600 font-bold">
                       {(item.quantity*item.price)}
                     </td>
-                    <td className="px-4 py-3 text-center">
+                    <td className="p-1 md:px-4 py-3 text-center">
                       <button
                         onClick={()=> deleteCartItem(item.name)}
                         className="text-red-500 hover:text-red-700"

@@ -62,13 +62,13 @@ const Invoice = () => {
   if (loading || isLoading) return <Loading />;
 
   return (
-    <div className="flex justify-center p-4">
+    <div className="flex flex-col sm:flex-row justify-center items-center p-1 sm:p-4 xl:max-w-[90%] 2xl:max-w-[87%] mx-auto">
       <title>Invoice - CureCart</title>
       <div 
         ref={invoiceRef}
-        className="w-[210mm] bg-[#ffffff] p-8 " // A4 paper size
+        className="sm:w-[125mm] md:w-[210mm] min-h-[297mm] bg-[#ffffff] p-0 sm:p-8 " // A4 paper size
         style={{
-          minHeight: '297mm', // A4 height
+          
           boxSizing: 'border-box'
         }}
       >
@@ -90,7 +90,7 @@ const Invoice = () => {
         {/* Customer Info */}
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-2">Bill To:</h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:gap-4">
             <div>
               <p className="font-medium">Customer Name:</p>
               <p>{user?.displayName || 'N/A'}</p>
@@ -107,11 +107,11 @@ const Invoice = () => {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-[#f3f4f6]">
-                <th className="border p-3 text-left">Medicine</th>
-                <th className="border p-3 text-left">Company</th>
-                <th className="border p-3 text-center">Qty</th>
-                <th className="border p-3 text-center">Price</th>
-                <th className="border p-3 text-center">Total</th>
+                <th className="border p-1 md:p-3 text-left">Medicine</th>
+                <th className="border p-1 md:p-3 text-left">Company</th>
+                <th className="border p-1 md:p-3 text-center">Qty</th>
+                <th className="border p-1 md:p-3 text-center">Price</th>
+                <th className="border p-1 md:p-3 text-center">Total</th>
               </tr>
             </thead>
             <tbody>
@@ -151,7 +151,7 @@ const Invoice = () => {
       </div>
 
       {/* Download Button (outside printable area) */}
-      <div className="fixed bottom-20 right-20">
+      <div className="fixed bottom-20 right-3 sm:right-20 ">
         <button
           onClick={generatePDF}
           className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-lg transition-all"
