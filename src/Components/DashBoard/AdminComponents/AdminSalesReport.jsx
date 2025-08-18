@@ -7,12 +7,14 @@ import Swal from "sweetalert2";
 import jsPDF from "jspdf";
 import { toPng } from 'html-to-image';
 import { DownloadTableExcel } from "react-export-table-to-excel";
+import { useNavigation } from "react-router";
 
 const AdminSalesReport = () => {
   const reportRef = useRef(null);
   const tableRef  = useRef(null);
   const { data, isLoading } = useAllSoldMed();
   const salesData = data?.flatMap((sale) => sale.soldItems);
+  const navigation = useNavigation();
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -75,25 +77,26 @@ const AdminSalesReport = () => {
   });
 
 
-  if (isLoading) return <Loading />;
+  if (isLoading || navigation.state == 'loading') return <Loading />;
 
   return (
-    <div className="p-6 bg-gray-50 rounded-2xl min-h-screen">
+    <div className="p-2 lg:p-6 bg-gray-50 rounded-2xl min-h-screen">
       <title>Sales Report - CureCart</title>
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
         <h2 className="text-2xl font-bold text-blue-700">💊 Sales Report</h2>
-        <div className="flex flex-col gap-4 items-center">
-          <button onClick={generatePDF} className="flex items-center text-xl gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
-            <Download size={16} /> Download PDF
+        
+        <div className="flex md:flex-col justify-center gap-2 lg:gap-4 items-center">
+          <button onClick={generatePDF} className="flex items-center text-[7px] lg:text-xl gap-2 bg-green-600 hover:bg-green-700 text-white px-2 lg:px-4 py-1 lg:py-2 rounded-lg shadow">
+            <Download  className="w-3 lg:w-7" /> Download PDF
           </button>
           <DownloadTableExcel
             filename="medicines"
             sheet="medicines-data"
             currentTableRef={tableRef.current}
             >
-            <button className="flex items-center text-xl gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow">
-              <Download size={16} /> Export to Excel
+            <button className="flex items-center text-[7px] lg:text-xl gap-2 bg-green-600 hover:bg-green-700 text-white px-2 lg:px-4 py-1 lg:py-2 rounded-lg shadow">
+              <Download className="w-3 lg:w-7" /> Export to Excel
             </button>
           </DownloadTableExcel>
         </div>
@@ -102,7 +105,7 @@ const AdminSalesReport = () => {
 
      
       <div>
-        <p className="text-xl mb-2">Filter</p>
+        <p className="text-sm lg:text-xl mb-2">Filter</p>
         <div className="flex flex-wrap items-center gap-5 bg-white p-3 mb-4 rounded-lg shadow">
           {/* Date filter */}
           <Filter size={18} className="text-gray-500" />
@@ -110,14 +113,14 @@ const AdminSalesReport = () => {
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
-            className="outline-none text-sm text-gray-700"
+            className="outline-none text-[7px] lg:text-sm text-gray-700"
           />
-          <span className="text-gray-400 text-lg">to</span>
+          <span className="text-gray-400 text-[10px] lg:text-lg">to</span>
           <input
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
-            className="outline-none text-sm text-gray-700"
+            className="outline-none text-[7px] lg:text-sm text-gray-700"
           />
 
           {/* Sorting button */}
@@ -125,7 +128,7 @@ const AdminSalesReport = () => {
             onClick={() =>
               setSortOrder(sortOrder === "asc" ? "desc" : "asc")
             }
-            className="flex items-center gap-2 bg-blue-200 hover:bg-blue-700 hover:text-white px-3 py-1 rounded-lg ml-auto"
+            className="flex items-center gap-2 text-[8px] lg:text-[16px] bg-blue-200 hover:bg-blue-700 hover:text-white px-3 py-1 rounded-lg ml-auto"
           >
             <ArrowUpDown size={16} />
             Sort by Price ({sortOrder === "asc" ? "Low → High" : "High → Low"})
@@ -136,14 +139,14 @@ const AdminSalesReport = () => {
       
       <div ref={reportRef} className="bg-white shadow-lg rounded-lg overflow-hidden">
         <table ref={tableRef} className="w-full text-left">
-          <thead className="bg-blue-600 text-white text-sm uppercase">
+          <thead className="bg-blue-600 text-white text-[5px] lg:text-sm uppercase">
             <tr>
-              <th className="p-3">#</th>
-              <th className="p-3">Medicine Name</th>
-              <th className="p-3">Seller Email</th>
-              <th className="p-3">Buyer Email</th>
-              <th className="p-3 cursor-pointer">Total Price</th>
-              <th className="p-3">Date</th>
+              <th className="p-1 md:p-3">#</th>
+              <th className="p-1 md:p-3">Medicine Name</th>
+              <th className="p-1 md:p-3">Seller Email</th>
+              <th className="p-1 md:p-3">Buyer Email</th>
+              <th className="p-1 md:p-3 cursor-pointer">Total Price</th>
+              <th className="p-1 md:p-3">Date</th>
             </tr>
           </thead>
           <tbody>
@@ -151,18 +154,18 @@ const AdminSalesReport = () => {
               sortedSales.map((sale, index) => (
                 <tr
                   key={index}
-                  className={`border-b text-lg hover:bg-blue-50 ${
+                  className={`border-b text-[6px] md:text-[9px] lg:text-lg hover:bg-blue-50 ${
                     index % 2 === 0 ? "bg-gray-50" : "bg-white"
                   }`}
                 >
-                  <td className="p-3">{index + 1}</td>
-                  <td className="p-3 font-medium text-gray-800">{sale.name}</td>
-                  <td className="p-3 text-gray-600">{sale.salerEmail}</td>
-                  <td className="p-3 text-gray-600">{sale.buyerEmail}</td>
-                  <td className="p-3 font-semibold text-green-600">
+                  <td className="p-1 md:p-3">{index + 1}</td>
+                  <td className="p-1 md:p-3 font-medium text-gray-800">{sale.name}</td>
+                  <td className="p-1 md:p-3 text-gray-600">{sale.salerEmail}</td>
+                  <td className="p-1 md:p-3 text-gray-600">{sale.buyerEmail}</td>
+                  <td className="p-1 md:p-3 font-semibold text-green-600">
                     ${(sale.price * sale.quantity).toFixed(2)}
                   </td>
-                  <td className="p-3 text-gray-500">
+                  <td className="p-1 md:p-3 text-gray-500">
                     {getTimeAndDate(sale.addedDate)}
                   </td>
                 </tr>
