@@ -104,7 +104,7 @@ export default function ManageMedicine() {
     closeModal();
   };
 
-  if(loading || isLoading || navigation.state === 'loading' ||categoriesLoading){
+  if(loading || isLoading || navigation.state === 'loading' ||categoriesLoading || navigation.state == 'submitting'){
     return <Loading></Loading>;
   }
 
@@ -118,10 +118,10 @@ export default function ManageMedicine() {
     <div className="p-1  min-h-screen">
       <title>Manage Medicine - CureCart</title>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-semibold text-gray-800">Manage Medicines</h1>
+        <h1 className="text-lg lg:text-2xl font-semibold text-gray-800">Manage Medicines</h1>
         <button
           onClick={openModal}
-          className="bg-indigo-600 text-xl hover:bg-indigo-700 text-white px-5 py-2 rounded-md shadow"
+          className="bg-indigo-600 text-sm lg:text-xl hover:bg-indigo-700 text-white px-5 py-2 rounded-md shadow"
         >
           + Add Medicine
         </button>
@@ -143,7 +143,7 @@ export default function ManageMedicine() {
               ].map((header) => (
                 <th
                   key={header}
-                  className="px-2 py-3 text-left text-xs font-medium text-indigo-700 uppercase tracking-wider"
+                  className=" md:px-2 py-3 text-[5px] sm:text-[7px] text-center whitespace-nowrap lg:text-[16px] lg:font-medium text-indigo-700 uppercase "
                 >
                   {header}
                 </th>
@@ -151,28 +151,28 @@ export default function ManageMedicine() {
             </tr>
           </thead>
 
-          <tbody className="divide-y text-[16px] text-center divide-gray-50">
+          <tbody className="divide-y text-[5px] sm:text-[7px]  lg:text-[16px] text-center divide-gray-50">
             {medicines.map((med) => (
               <tr key={med._id} className="hover:bg-indigo-50 transition">
-                <td className="px-2 py-4 whitespace-nowrap text-[16px] font-medium text-gray-900">
+                <td className="px-1 md:px-2 py-4 whitespace-nowrap  lg:font-medium text-gray-900">
                   {med.name}
                 </td>
-                <td className="px-2 py-4 whitespace-nowrap text-[16px] text-gray-700">
+                <td className="px-1 md:px-2 py-4 whitespace-nowrap  text-gray-700">
                   {med.genericName}
                 </td>
-                <td className="px-2 py-4 whitespace-nowrap text-[16px] text-gray-700">
+                <td className="px-1 md:px-2 py-4 whitespace-nowrap  text-gray-700">
                   {med.category}
                 </td>
-                <td className="px-2 py-4 whitespace-nowrap text-[16px] text-gray-700">
+                <td className="px-1 md:px-2 py-4 whitespace-nowrap  text-gray-700">
                   {med.company}
                 </td>
-                <td className="px-2 py-4 whitespace-nowrap text-[16px] text-gray-700">
+                <td className="px-1 md:px-2 py-4 whitespace-nowrap  text-gray-700">
                   {med.itemMassUnit}
                 </td>
-                <td className="px-2 py-4 whitespace-nowrap text-[16px] text-gray-700">
+                <td className="px-1 md:px-2 py-4 whitespace-nowrap  text-gray-700">
                   ${med.price.toFixed(2)}
                 </td>
-                <td className="px-2 py-4 whitespace-nowrap text-[16px] text-gray-700">
+                <td className="px-1 md:px-2 py-4 whitespace-nowrap text-gray-700">
                   {med.discount}%
                 </td>
                
@@ -188,7 +188,7 @@ export default function ManageMedicine() {
 
         <div className="mt-5 fixed inset-0  bg-opacity-40 flex justify-center items-center z-50 p-4 overflow-auto">
             <div className="bg-white rounded-xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl ring-1 ring-gray-3000">
-                <h2 className="text-2xl font-bold  mb-6 text-gray-900 tracking-wide">
+                <h2 className="text-xl md:text-2xl font-bold  mb-6 text-gray-900 tracking-wide">
                 Add New Medicine
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-2">
@@ -197,31 +197,31 @@ export default function ManageMedicine() {
                     name="name"
                     placeholder="Item Name"
                     required
-                    className="w-full border border-gray-300 rounded-lg text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    className="w-full border border-gray-300 rounded-lg text-sm md:text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
                 <input
                     type="text"
                     name="genericName"
                     placeholder="Generic Name"
                     required
-                    className="w-full border border-gray-300 rounded-lg text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    className="w-full border border-gray-300 rounded-lg text-sm md:text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
                 <textarea
                     name="description"
                     placeholder="Short Description"
                     rows={3}
-                    className="w-full border border-gray-300 rounded-lg text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none transition"
+                    className="w-full border border-gray-300 rounded-lg text-sm md:text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none transition"
                 ></textarea>
                 <input
                     type="file"
                     name="image"
                     accept="image/*"
-                    className="w-full text-lg px-5 py-2 border border-gray-300 rounded-lg text-gray-700"
+                    className="w-full text-sm md:text-lg px-5 py-2 border border-gray-300 rounded-lg text-gray-700"
                 />
                 <select
                     name="category"
                     required
-                    className="w-full border border-gray-300 rounded-lg text-lg px-5 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    className="w-full border border-gray-300 rounded-lg text-sm md:text-lg px-5 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 >
                     <option value="">Select Category</option>
                     {
@@ -234,7 +234,7 @@ export default function ManageMedicine() {
                 <select
                     name="company"
                     required
-                    className="w-full border border-gray-300 rounded-lg text-lg px-5 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    className="w-full border border-gray-300 rounded-lg text-sm md:text-lg px-5 py-2 text-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 >
                     <option value="">Select Company</option>
                     <option value="Pharma Inc">Pharma Inc</option>
@@ -245,8 +245,8 @@ export default function ManageMedicine() {
                     <option value="LifeWell Pharma">LifeWell Pharma</option>
                     <option value="MediLife Labs">MediLife Labs</option>
                 </select>
-                <label className="text-xl pl-2">Item Mass Unit</label>
-                <div className="flex gap-6 text-lg px-5 py-2 items-center">
+                <label className="text-sm md:text-xl pl-2">Item Mass Unit</label>
+                <div className="flex gap-6 text-sm md:text-lg px-5 py-2 items-center">
                   
                     <label className="flex items-center gap-3 cursor-pointer text-gray-700">
                     <input
@@ -279,9 +279,9 @@ export default function ManageMedicine() {
                     min="0"
                     step="0.01"
                     required
-                    className="w-full border border-gray-300 rounded-lg text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    className="w-full border border-gray-300 rounded-lg text-sm md:text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
-                <label className="text-xl">Discount</label>
+                <label className="text-sm md:text-xl">Discount</label>
                 <input
                     type="number"
                     name="discount"
@@ -289,20 +289,20 @@ export default function ManageMedicine() {
                     min="0"
                     max="100"
                     defaultValue={0}
-                    className="w-full border border-gray-300 rounded-lg text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+                    className="w-full border border-gray-300 rounded-lg text-sm md:text-lg px-5 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
                 />
 
                 <div className="flex justify-end gap-2 mt-2">
                     <button
                     type="button"
                     onClick={closeModal}
-                    className="px-6 py-2 rounded-lg text-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition"
+                    className="px-6 py-2 rounded-lg text-sm md:text-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition"
                     >
                     Cancel
                     </button>
                     <button
                     type="submit"
-                    className="px-6 py-2 rounded-lg text-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"
+                    className="px-6 py-2 rounded-lg text-sm md:text-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"
                     >
                     Add Medicine
                     </button>

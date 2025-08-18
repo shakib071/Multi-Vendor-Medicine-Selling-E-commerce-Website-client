@@ -2,10 +2,12 @@ import { FaMoneyBillWave, FaClock, FaCheckCircle } from "react-icons/fa";
 import useAuth from "../../../Hooks/getAuth/useAuth";
 import useSoldMeds from "../../../Hooks/getSalerSoldItems/useSoldMeds";
 import Loading from "../../Loading/Loading";
+import { useNavigation } from "react-router";
 
 export default function SelerHome() {
   const {user,loading} = useAuth();
   const {data:purchases,isLoading} = useSoldMeds(user?.uid);
+  const navigation = useNavigation();
 
 
   const calculateTotal = () => {
@@ -24,7 +26,7 @@ export default function SelerHome() {
 
   
 
-  if(loading || isLoading){
+  if(loading || isLoading || navigation.state == 'loading'){
     return <Loading></Loading>;
   }
 

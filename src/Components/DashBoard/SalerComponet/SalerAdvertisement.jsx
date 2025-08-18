@@ -5,6 +5,7 @@ import useAxios from '../../../Hooks/AxiosHook/useAxios'
 import Loading from '../../Loading/Loading';
 import Swal from 'sweetalert2';
 import useSalerAd from '../../../Hooks/getSalerAddedAd/useSalerAd';
+import { useNavigation } from 'react-router';
 
 
 
@@ -15,6 +16,7 @@ const SalerAdvertisement = () => {
   const axiosInstance = useAxios();
   const {data:ads,isLoading,refetch} = useSalerAd(user?.uid);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigation = useNavigation();
  
 
   const openModal = () => setIsModalOpen(true);
@@ -60,7 +62,7 @@ const SalerAdvertisement = () => {
   }
 
  
-  if(loading || isLoading){
+  if(loading || isLoading || navigation.state == 'loading' || navigation.state == 'submitting'){
     return <Loading></Loading>;
   }
 
@@ -68,21 +70,21 @@ const SalerAdvertisement = () => {
   return (
     <div className="p-6 bg-white rounded-lg shadow-md">
       <title>Ask For Advertisement - CureCart</title>
-      <h2 className="text-2xl font-bold mb-6">Ask For Advertisement</h2>
+      <h2 className="text-lg md:text-2xl font-bold mb-6">Ask For Advertisement</h2>
       <button
         onClick={openModal}
-        className="mb-4 px-5 py-2 text-xl bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+        className="mb-4 px-5 py-2 text-sm md:text-xl bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
       >
         Add Advertisement
       </button>
 
       <div className="space-y-4">
         {ads?.map((ad,index) => (
-          <div key={index} className="flex items-center gap-4 border p-4 rounded-xl">
-            <img src={ad.imageUrl} alt={ad.name} className="w-24 h-24 object-cover rounded-lg" />
+          <div key={index} className="flex items-center gap-1 md:gap-4 border p-1 md:p-4 rounded-xl">
+            <img src={ad.imageUrl} alt={ad.name} className="w-15 h-15 md:w-24 md:h-24 object-cover rounded-lg" />
             <div className="flex-1">
-              <h3 className="font-semibold text-[24px]">{ad.name}</h3>
-              <p className="text-gray-600 text-[16px]">{ad.description}</p>
+              <h3 className="font-semibold text-[16px] md:text-[24px]">{ad.name}</h3>
+              <p className="text-gray-600 text-[10px] md:text-[16px]">{ad.description}</p>
             </div>
             <span
               className={`px-3 py-1 rounded-full text-xs font-semibold ${
