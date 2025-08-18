@@ -165,27 +165,27 @@ const Register = () => {
             </div>
 
             <div className='relative z-10 bg-[#b6f7ca56] mx-2 px-8 py-11 sm:px-18 md:px-10 md:py-5 lg:px-40 lg:py-20 xl:px-18 xl:py-15 rounded-2xl shadow-2xl font-semibold'>
-                <p className='text-center text-3xl text-[#f60b71]'>Register Your Account</p>
+                <p className='text-center text-xl sm:text-3xl text-[#f60b71]'>Register Your Account</p>
                 <form onSubmit={handleRegister}  className='' >
                     <div className='flex mt-4 flex-col'>
                         <label className='text-[#f60b71] font-semibold text-xl'>Username</label>
-                        <input className='input w-[400px] input-accent' name='username' placeholder='UserName' type="text" required/>
+                        <input className='input sm:w-[400px] input-accent' name='username' placeholder='UserName' type="text" required/>
                     </div>  
                     <div className='flex mt-4 flex-col'>
                         <label className='text-[#f60b71] font-semibold text-xl'>Email</label>
-                        <input className='input w-[400px] input-accent' name='email' placeholder='Email' type="email" required/>
+                        <input className='input sm:w-[400px] input-accent' name='email' placeholder='Email' type="email" required/>
                     </div> 
                     <div className='flex mt-4 flex-col'>
                         <label className='text-[#f60b71] font-semibold text-xl'>Photo</label>
-                        <input className='bg-[#ffffff] py-2 px-3 rounded-lg w-[400px] ' name='photo'  type="file" accept="image/*" required/>
+                        <input className='bg-[#ffffff] py-2 px-3 rounded-lg sm:w-[400px] ' name='photo'  type="file" accept="image/*" required/>
                     </div>
                     <div className='flex mt-4 flex-col'>
                         <label className='text-[#f60b71] font-semibold text-xl'>Password</label>
-                        <input className='input w-[400px] input-accent' name='password' placeholder='Password' type="password" required/>
+                        <input className='input sm:w-[400px] input-accent' name='password' placeholder='Password' type="password" required/>
                     </div> 
                     <div className='flex mt-4 flex-col'>
                         <label className='text-[#f60b71] font-semibold text-xl'>Role</label>
-                        <select defaultValue="" onChange={handleRoleChange} className="select w-[400px] select-secondary">
+                        <select defaultValue="" onChange={handleRoleChange} className="select sm:w-[400px] select-secondary">
                             <option value='' disabled={true}>Select a Role</option>
                             <option value='user'>User</option>
                             <option value='saler'>Saler</option>
