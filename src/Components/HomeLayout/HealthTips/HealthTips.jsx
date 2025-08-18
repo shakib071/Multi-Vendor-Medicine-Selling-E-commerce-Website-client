@@ -83,7 +83,7 @@ const HealthTips = () => {
     return <Loading></Loading>;
   }
   return (
-    <div className="py-10 xl:max-w-6xl 2xl:max-w-7xl mx-auto">
+    <div className="py-10 xl:max-w-[90%] 2xl:max-w-[87%] mx-auto">
     <h2 className="text-3xl font-bold text-center text-green-600 mb-8 flex items-center justify-center gap-3">
       <FaHeartbeat className="text-red-500" />
       Health Tips & Guides

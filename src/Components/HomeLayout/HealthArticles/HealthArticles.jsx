@@ -78,7 +78,7 @@ const HealthArticles = () => {
     return <Loading></Loading>;
   }
   return (
-    <div className="py-10 xl:max-w-6xl 2xl:max-w-7xl mx-auto px-4">
+    <div className="py-10 xl:max-w-[90%] 2xl:max-w-[87%] mx-auto px-4">
       <h2 className="text-3xl font-bold text-center text-blue-600 mb-8 flex items-center justify-center gap-2">
         <FaBookMedical /> Latest Health Articles
       </h2>

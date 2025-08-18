@@ -6,7 +6,7 @@ import Loading from "../Loading/Loading";
 import useAxios from "../../Hooks/AxiosHook/useAxios";
 import useAuth from "../../Hooks/getAuth/useAuth";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
+import { useNavigate, useNavigation } from "react-router";
 
 const Shop = () => {
   // const {data:medicineCount, isLoading:countLoading} = useMedicineCount();
@@ -15,6 +15,7 @@ const Shop = () => {
   const axiosInstance = useAxios();
   const {user,loading} = useAuth();
   const navigate = useNavigate();
+  const navigation = useNavigation();
   const [selectedMedicine, setSelectedMedicine] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -155,6 +156,11 @@ const Shop = () => {
       }
       catch(error){
         console.log(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
       }
     }
     else {
@@ -173,18 +179,18 @@ const Shop = () => {
   };
 
 
-  if(isLoading || loading ){
+  if(isLoading || loading || navigation.state == 'loading'){
     return <Loading></Loading>;
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-1 md:p-6 bg-gray-50 xl:max-w-[90%] 2xl:max-w-[87%] mx-auto rounded-2xl mt-5 min-h-screen">
       <title>Shop - CureCart</title>
       <h1 className="text-3xl text-center font-bold text-blue-700 mb-10">
         Shop Medicines
       </h1>
 
-      <div className="p-6 bg-white rounded-xl shadow-md flex items-center gap-4 mb-6">
+      <div className="p-6 bg-white rounded-xl shadow-md flex flex-col md:flex-row items-center gap-4 mb-6">
   
         
         <div className="flex-1">
@@ -195,34 +201,34 @@ const Shop = () => {
               name="searchQuery"
               className="flex-1 outline-none text-gray-700 text-sm"
             />
-            <button className="ml-2 text-lg   btn btn-primary px-3 py-1 ">
+            <button className="ml-2 md:text-lg   btn btn-primary px-3 py-1 ">
               submit
             </button>
           </form>
         </div>
 
        
-        <div className="flex items-center gap-2">
-        <span className="text-gray-700 text-xl font-medium ">Sort by Price:</span>
-        <select onChange={(e)=>handleSortOrder(e)} className="border rounded-lg px-3 py-1 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="1">Low to High</option>
-          <option value="-1">High to Low</option>
-        </select>
+        <div className="flex  items-center gap-2">
+          <span className="text-gray-700 text-lg md:text-xl font-medium ">Sort by Price:</span>
+          <select onChange={(e)=>handleSortOrder(e)} className="border rounded-lg px-3 py-1 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="1">Low to High</option>
+            <option value="-1">High to Low</option>
+          </select>
         </div>
 
       </div>
 
 
-      <div className="overflow-x-auto bg-white rounded-xl shadow-md">
-        <table className="min-w-full text-lg">
+      <div className="overflow-x-auto  bg-white rounded-xl shadow-md">
+        <table className="min-w-full text-[13px] md:text-lg">
           <thead className="bg-blue-100">
             <tr>
-              <th className="p-3 text-left">No</th>
-              <th className="p-3 text-left">Name</th>
-              <th className="p-3 text-left">Category</th>
-              <th className="p-3 text-left">Price</th>
-              <th className="p-3 text-left">Company</th>
-              <th className="p-3 text-center">Actions</th>
+              <th className="p-1 md:p-3 text-left">No</th>
+              <th className="p-1 md:p-3 text-left">Name</th>
+              <th className="p-1 md:p-3 text-left">Category</th>
+              <th className="p-1 md:p-3 text-left">Price</th>
+              <th className="p-1 md:p-3 text-left">Company</th>
+              <th className="p-1 md:p-3 text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -231,12 +237,12 @@ const Shop = () => {
                 key={med._id}
                 className="border-b hover:bg-gray-50 transition"
               >
-                <td className="p-3 font-medium">{index+1}</td>
-                <td className="p-3 font-medium">{med.name}</td>
-                <td className="p-3">{med.category}</td>
-                <td className="p-3">${med.price}</td>
-                <td className="p-3">{med.company}</td>
-                <td className="p-3 flex justify-center gap-2">
+                <td className="p-1 md:p-3 font-medium">{index+1}</td>
+                <td className="p-1 md:p-3 font-medium">{med.name}</td>
+                <td className="p-1 md:p-3">{med.category}</td>
+                <td className="p-1 md:p-3">${med.price}</td>
+                <td className="p-1 md:p-3">{med.company}</td>
+                <td className="p-1 md:p-3 flex justify-center gap-1 md:gap-2">
                   <button
                     onClick={() => openModal(med)}
                     className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition"
@@ -257,30 +263,30 @@ const Shop = () => {
       </div>
 
       
-    <div className="flex  justify-center  items-center mt-10 space-y-4 md:space-y-0">
+    <div className="flex  flex-col md:flex-row justify-center  items-center md:gap-4 mt-10 space-y-4 md:space-y-0">
 
-      <div className="flex items-center space-x-2">
+      <div className="flex  items-center sm:space-x-1 md:space-x-2">
         {/* Prev */}
-        <button onClick={handlePrevButton} className="px-3 py-1 rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
+        <button onClick={handlePrevButton} className=" px-1 md:px-3 py-1 text-[10px] sm:text-[14px] md:text-[16px] rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
           Prev
         </button>
         {
           pages?.map((page,index)=>
-             <button onClick={()=>{handleKeyClick(parseInt(page))}} key={index} className={`px-3 py-1  rounded-lg ${selectedPage==page ?'text-white bg-blue-500 ': 'bg-white text-black'} border text-black  hover:bg-blue-500 border-gray-300`}>
+             <button  onClick={()=>{handleKeyClick(parseInt(page))}} key={index} className={`px-3 py-1  rounded-lg ${selectedPage==page ?'text-white bg-blue-500 ': 'bg-white text-black'} border text-[10px] sm:text-[14px] md:text-[16px] text-black  hover:bg-blue-500 border-gray-300`}>
               {page + 1}
             </button>
           )
         }
         
-        {/* <span className="px-2 text-gray-500">...</span>
-        <button className="px-3 py-1 rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
-          10
-        </button> */}
-
+    
         {/* Next */}
-        <button onClick={handleNextButton} className="px-3 py-1 rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
+        <button onClick={handleNextButton} className="px-1 md:px-3 py-1 text-[10px] sm:text-[14px] md:text-[16px] rounded-lg border bg-white hover:bg-blue-500 hover:text-white border-gray-300">
           Next
         </button>
+
+        
+        </div>
+
 
         <div className="flex items-center space-x-2">
         <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
@@ -298,7 +304,6 @@ const Shop = () => {
           <option value="50">50</option>
         </select>
         </div>
-      </div>
 
     </div>
 

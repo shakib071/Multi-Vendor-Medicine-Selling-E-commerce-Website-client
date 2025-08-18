@@ -74,7 +74,7 @@ const DiscountProducts = () => {
   }
 
   return (
-    <div className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 py-10">
+    <div className=" xl:max-w-[90%] 2xl:max-w-[87%] mx-auto px-4 py-10">
 
       <h2 className="text-3xl font-bold text-center text-blue-600 mb-8 flex items-center justify-center gap-2">
         <FaTag className="text-red-500" /> Discount Products
@@ -94,11 +94,11 @@ const DiscountProducts = () => {
           1024: { slidesPerView: 3 },
           1280: { slidesPerView: 4 },
         }}
-        className="pb-10 "
+        className="md:pb-10 "
       >
         {discountProducts && discountProducts.map((product) => (
           <SwiperSlide key={product._id}>
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-200 w-90">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-200   w-90">
              
               <div className="relative aspect-square w-full">
                 <img
