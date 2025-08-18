@@ -68,7 +68,7 @@ const DiscountProducts = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="max-w-6xl 2xl:max-w-7xl mx-auto px-4 py-10">
 
       <h2 className="text-3xl font-bold text-center text-blue-600 mb-8 flex items-center justify-center gap-2">
         <FaTag className="text-red-500" /> Discount Products
@@ -88,7 +88,7 @@ const DiscountProducts = () => {
           1024: { slidesPerView: 3 },
           1280: { slidesPerView: 4 },
         }}
-        className="pb-10"
+        className="pb-10 "
       >
         {discountProducts && discountProducts.map((product) => (
           <SwiperSlide key={product._id}>

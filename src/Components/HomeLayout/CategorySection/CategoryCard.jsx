@@ -23,7 +23,7 @@ const CategoryCard = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
+    <div className="md:max-w-6xl 2xl:max-w-7xl  mx-auto px-4 py-10">
       <h2 className="text-3xl font-bold text-center text-blue-600 mb-8 flex justify-center items-center gap-2">
         <FaFolderOpen className="text-red-500" /> Medicine Categories
       </h2>

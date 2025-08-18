@@ -27,7 +27,7 @@ const Slider = () => {
   }
   
   return (
-    <div className="py-10 w-[90%] mx-auto rounded-2xl">
+    <div className="py-10 md:max-w-6xl 2xl:max-w-7xl mx-auto rounded-2xl">
       <h2 className="text-3xl font-bold text-center  text-blue-600 mb-8">
         🩺 Featured Products
       </h2>
@@ -44,9 +44,9 @@ const Slider = () => {
         className="mySwiper"
         >
                 {slidesData.map((slide) => (
-                    <SwiperSlide key={slide.id}>
+                    <SwiperSlide key={slide.id} className="rounded-3xl">
                     
-                      <div className="relative w-full h-140 bg-center bg-no-repeat  bg-contain transition-transform duration-500 hover:scale-110" style={{backgroundImage: `url(${slide.imageUrl})`}}>
+                      <div className="relative w-full h-80 md:h-140 xl:160 2xl:h-170 bg-center bg-no-repeat  bg-contain transition-transform duration-500 hover:scale-110" style={{backgroundImage: `url(${slide.imageUrl})`}}>
                                      <div className='absolute bottom-3 sm:bottom-10 w-[60%] sm:w-[40%]  px-2 sm:px-6'>
                                         <p className="text-sm sm:text-5xl 2xl:text-6xl font-bold text-[#E11D48]">
                                            <Typewriter
