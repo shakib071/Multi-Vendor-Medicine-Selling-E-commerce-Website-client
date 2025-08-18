@@ -34,7 +34,7 @@ export default function ManageMedicine() {
           Swal.fire({
             position: "center",
             icon: "success",
-            title: "Your work has been saved",
+            title: "Your medicine has been added",
             showConfirmButton: false,
             timer: 1500
           });

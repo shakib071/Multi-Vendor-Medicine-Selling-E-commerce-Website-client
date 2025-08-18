@@ -8,6 +8,7 @@ import bg from '../../../assets/bg.jpg';
 import girl from '../../../assets/girl.png';
 import { Link, useNavigate } from 'react-router';
 import useAuth from '../../../Hooks/getAuth/useAuth';
+import Swal from 'sweetalert2';
 
 
 
@@ -32,6 +33,12 @@ const Login = () => {
         .catch((error)=> {
             console.log(error);
             setLoading(false);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                footer: '<a href="/">Go to Home</a>'
+            });
         })
 
     }
@@ -57,6 +64,12 @@ const Login = () => {
         .catch((error) => {
             console.log(error);
             setLoading(false);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                footer: '<a href="/">Go to Home</a>'
+            });
         })
     }
 
@@ -80,6 +93,12 @@ const Login = () => {
         .catch((error)=> {
             console.log(error);
             setLoading(false);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                footer: '<a href="/">Go to Home</a>'
+            });
         })
     }
 

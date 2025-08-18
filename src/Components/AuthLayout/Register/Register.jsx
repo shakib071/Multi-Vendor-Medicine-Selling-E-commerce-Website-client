@@ -5,6 +5,7 @@ import Lottie from "lottie-react";
 import registerAnimation from './register.json';
 import { toast } from 'react-toastify';
 import useAuth from '../../../Hooks/getAuth/useAuth';
+import Swal from 'sweetalert2';
 
 const Register = () => {
     const [error,setError] = useState('');
@@ -101,13 +102,24 @@ const Register = () => {
             }
             else{
                 toast.error('Photo Upload Failed');
-                return;
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                    footer: '<a href="/">Go to Home</a>'
+                });
+                                    
             }
         }
         catch(error){
             console.log(error);
             toast.error('Photo Upload Failed');
-            return;
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong!",
+                footer: '<a href="/">Go to Home</a>'
+            });
         }
         
         console.log(role);
@@ -132,6 +144,12 @@ const Register = () => {
         })
         .catch((error) => {
             console.log(error);
+            Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                    footer: '<a href="/">Go to Home</a>'
+                });
         })
     }
 
@@ -154,6 +172,12 @@ const Register = () => {
         })
         .catch((error)=> {
             console.log(error);
+            Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                    footer: '<a href="/">Go to Home</a>'
+                });
         })
     }
 
