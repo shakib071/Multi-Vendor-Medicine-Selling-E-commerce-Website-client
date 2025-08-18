@@ -7,6 +7,7 @@ import { Link } from 'react-router';
 import useAuth from '../../Hooks/getAuth/useAuth';
 import Loading from '../Loading/Loading';
 import { FaShoppingCart } from "react-icons/fa";
+import Swal from 'sweetalert2';
 
 const NavBar = () => {
 
@@ -23,6 +24,11 @@ const NavBar = () => {
         })
         .catch((error)=>{
             console.log(error);
+            Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            });
         })
     }
     useEffect(() => {

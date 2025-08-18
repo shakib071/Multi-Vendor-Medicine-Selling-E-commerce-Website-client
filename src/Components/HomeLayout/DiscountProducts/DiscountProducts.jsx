@@ -8,7 +8,7 @@ import { FaTag } from "react-icons/fa";
 import useTopDiscountedMed from "../../../Hooks/getTopDicountedMed/useTopDiscountedMed";
 import Loading from "../../Loading/Loading";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router";
+import { useNavigate, useNavigation } from "react-router";
 import useAuth from "../../../Hooks/getAuth/useAuth";
 import useAxios from "../../../Hooks/AxiosHook/useAxios";
 
@@ -16,6 +16,7 @@ import useAxios from "../../../Hooks/AxiosHook/useAxios";
 
 const DiscountProducts = () => {
   const {data:discountProducts,isLoading} = useTopDiscountedMed();
+  const navigation = useNavigation();
   const navigate = useNavigate();
   const {user,loading} = useAuth();
   const axiosInstance = useAxios();
@@ -60,10 +61,15 @@ const DiscountProducts = () => {
     }
     catch(error){
       console.log(error);
-    }
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          });
+        }
   }
 
-  if(isLoading || loading){
+  if(isLoading || loading || navigation.state=='loading'){
     return <Loading></Loading>;
   }
 

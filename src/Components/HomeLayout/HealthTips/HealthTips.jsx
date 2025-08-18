@@ -1,4 +1,6 @@
 import { FaHeartbeat } from "react-icons/fa";
+import { useNavigation } from "react-router";
+import Loading from "../../Loading/Loading";
 
 const healthTips = [
   { 
@@ -75,8 +77,13 @@ const healthTips = [
 ];
 
 
-const HealthTips = () => (
-  <div className="py-10 xl:max-w-6xl 2xl:max-w-7xl mx-auto">
+const HealthTips = () => {
+  const navigation = useNavigation();
+  if(navigation.state=='loading'){
+    return <Loading></Loading>;
+  }
+  return (
+    <div className="py-10 xl:max-w-6xl 2xl:max-w-7xl mx-auto">
     <h2 className="text-3xl font-bold text-center text-green-600 mb-8 flex items-center justify-center gap-3">
       <FaHeartbeat className="text-red-500" />
       Health Tips & Guides
@@ -102,6 +109,7 @@ const HealthTips = () => (
       ))}
     </div>
   </div>
-);
+  )
+};
 
 export default HealthTips;

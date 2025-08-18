@@ -1,5 +1,5 @@
 
-import { useNavigate } from "react-router";
+import { useNavigate, useNavigation } from "react-router";
 import { FaFolderOpen } from "react-icons/fa";
 import useCategories from "../../../Hooks/getCategories/useCategories";
 import useAuth from "../../../Hooks/getAuth/useAuth";
@@ -9,6 +9,7 @@ import Loading from "../../Loading/Loading";
 const CategoryCard = () => {
   const navigate = useNavigate();
   const {loading} = useAuth();
+  const navigation = useNavigation();
 
   const {data:categories,isLoading } = useCategories();
 
@@ -18,7 +19,7 @@ const CategoryCard = () => {
     navigate(`/category-details/${category}`);
   }
 
-  if(loading || isLoading ){
+  if(loading || isLoading || navigation.state=='loading'){
     return <Loading></Loading>;
   }
 

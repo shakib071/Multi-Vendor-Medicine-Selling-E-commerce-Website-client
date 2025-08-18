@@ -12,17 +12,18 @@ import 'swiper/css/navigation';
 import './slider.css';
 import useAllAdvertisement from "../../../Hooks/getAllAdversiment/useAllAdvertisement";
 import Loading from "../../Loading/Loading";
+import { useNavigation } from "react-router";
 
 
 
 const Slider = () => {
 
   const {data,isLoading} = useAllAdvertisement();
-
+  const navigation = useNavigation();
   const slidesData = data?.filter(item => item.status == 'active');
   console.log(slidesData);
 
-  if(isLoading){
+  if(isLoading || navigation.state == 'loading'){
     return <Loading></Loading>;
   }
   

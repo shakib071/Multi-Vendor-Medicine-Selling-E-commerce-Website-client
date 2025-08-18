@@ -1,5 +1,7 @@
 import React from "react";
 import { FaBookMedical } from "react-icons/fa";
+import { useNavigation } from "react-router";
+import Loading from "../../Loading/Loading";
 
 const articles = [
   {
@@ -71,6 +73,10 @@ const articles = [
 
 
 const HealthArticles = () => {
+  const navigation = useNavigation();
+  if(navigation.state == 'loading'){
+    return <Loading></Loading>;
+  }
   return (
     <div className="py-10 xl:max-w-6xl 2xl:max-w-7xl mx-auto px-4">
       <h2 className="text-3xl font-bold text-center text-blue-600 mb-8 flex items-center justify-center gap-2">
