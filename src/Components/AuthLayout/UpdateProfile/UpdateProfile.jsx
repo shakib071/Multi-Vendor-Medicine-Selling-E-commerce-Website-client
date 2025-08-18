@@ -49,7 +49,7 @@ const UpdateProfile = () => {
     
     return (
         <div className="max-w-md bg-gray-200 mx-auto mt-10 p-5 border rounded shadow">
-      <h2 className="text-2xl font-bold mb-5">Profile Form</h2>
+      <h2 className="text-2xl font-bold mb-5">Update Profile Form</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Name Field */}
         <div className="mb-4">

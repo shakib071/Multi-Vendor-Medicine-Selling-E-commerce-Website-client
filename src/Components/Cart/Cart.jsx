@@ -7,7 +7,7 @@ import Loading from "../Loading/Loading";
 import useAxios from "../../Hooks/AxiosHook/useAxios";
 import Swal from "sweetalert2";
 import useAuth from "../../Hooks/getAuth/useAuth";
-import { useNavigate } from "react-router";
+import { useNavigate, useNavigation } from "react-router";
 
 
 const Cart = () => {
@@ -19,6 +19,7 @@ const Cart = () => {
   const [total,setTotal] = useState(0);
   const axiosInstance = useAxios();
   const navigate = useNavigate();
+  const navigation = useNavigation();
 
 
     useEffect(() => {
@@ -134,7 +135,7 @@ const Cart = () => {
   }
 
 
-  if( isLoading || loading){
+  if( isLoading || loading || navigation.state == 'loading'){
     return <Loading></Loading>;
   }
 

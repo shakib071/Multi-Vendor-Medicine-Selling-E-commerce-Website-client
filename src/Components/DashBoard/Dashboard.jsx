@@ -5,14 +5,16 @@ import useAuth from '../../Hooks/getAuth/useAuth';
 import Loading from '../Loading/Loading';
 import AdminDashboard from './AdminDashboard'
 import UserDashboard from './UserDashboard'
+import { useNavigation } from 'react-router';
 
 const Dashboard = () => {
     const {user,loading} = useAuth();
     const {data: role , isLoading , error} = useRole(user?.uid);
-    if(loading || isLoading){
+    const navigation = useNavigation();
+    if(loading || isLoading || navigation.state == 'loading'){
         return <Loading></Loading>
     }
-    console.log(user?.uid);
+    
     
     console.log(role, isLoading, error);
 
