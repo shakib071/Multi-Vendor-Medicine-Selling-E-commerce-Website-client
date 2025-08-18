@@ -20,6 +20,7 @@ const Home = () => {
             <DiscountProducts></DiscountProducts>
             <HealthTips></HealthTips>
             <HealthArticles></HealthArticles>
+            
         </div>
     );
 };
